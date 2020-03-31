@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Functions\TaskHandler;
+namespace taskForce\classes;
 
 class Task
 {
