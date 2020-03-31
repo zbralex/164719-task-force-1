@@ -1,6 +1,8 @@
 <?php
 
 require_once 'classes/Task.php';
+use classes\Task;
+
 
 $task = new Task();
 
