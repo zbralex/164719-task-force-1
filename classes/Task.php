@@ -1,4 +1,5 @@
 <?php
+
 namespace classes;
 class Task
 {
@@ -28,19 +29,29 @@ class Task
         self::STATUS_FAIL => 'Провалено',
     ];
 
-    public $mapAction = [
+    public $executorID; // исполнитель
+    public $customerId; // заказчик
+
+    public function __construct($executorID, $customerId)
+    {
+        $this->customerId = $customerId;
+        $this->executorID = $executorID;
+    }
+    public static $mapAction = [
         self::ACTION_CANCEL => 'Отменить',
         self::ACTION_RESPONSE => 'Откликнуться',
         self::ACTION_COMPLETE => 'Выполнено',
         self::ACTION_REFUSE => 'Отказаться'
     ];
 
+
+
     /**
      * @return string[]
      */
     public function getMapAction()
     {
-        return $this->mapAction;
+        return self::$mapAction;
     }
 
     /**
@@ -48,7 +59,7 @@ class Task
      */
     public function getMapStatus()
     {
-        return $this->mapStatus;
+        return self::$mapStatus;
     }
 
     public function getStatus($action)
