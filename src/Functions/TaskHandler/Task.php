@@ -1,6 +1,7 @@
 <?php
 
-namespace classes;
+namespace src\Functions\TaskHandler;
+
 class Task
 {
 

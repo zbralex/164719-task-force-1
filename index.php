@@ -1,7 +1,8 @@
 <?php
 
-require_once 'classes/Task.php';
-use classes\Task;
+require_once './src/Functions/TaskHandler/Task.php';
+
+use src\Functions\TaskHandler\Task;
 
 
 $task = new Task('',1,4);
