@@ -4,7 +4,7 @@ require_once 'classes/Task.php';
 use classes\Task;
 
 
-$task = new Task(1,4);
+$task = new Task('',1,4);
 
 assert($task->getStatus(Task::ACTION_NEW) === Task::STATUS_NEW, print('Новое'));
 assert($task->getStatus(Task::ACTION_CANCEL) === Task::STATUS_CANCEL, print('Отменено'));

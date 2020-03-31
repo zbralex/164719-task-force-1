@@ -31,11 +31,13 @@ class Task
 
     public $executorID; // исполнитель
     public $customerId; // заказчик
+    public $status = '';
 
-    public function __construct($executorID, $customerId)
+    public function __construct($status, $executorID, $customerId) // конструктор
     {
         $this->customerId = $customerId;
         $this->executorID = $executorID;
+        $this->status = $status;
     }
     public static $mapAction = [
         self::ACTION_CANCEL => 'Отменить',
@@ -64,22 +66,21 @@ class Task
 
     public function getStatus($action)
     {
-
         switch ($action) {
             case self::ACTION_NEW:
-                return self::STATUS_NEW;
+                return $this->status == self::STATUS_NEW;
 
             case self::ACTION_CANCEL:
-                return self::STATUS_CANCEL;
+                return $this->status == self::STATUS_CANCEL;
 
             case self::ACTION_RESPONSE:
-                return self::STATUS_PROGRESS;
+                return $this->status == self::STATUS_PROGRESS;
 
             case self::ACTION_COMPLETE:
-                return self::STATUS_COMPLETE;
+                return $this->status == self::STATUS_COMPLETE;
 
             case self::ACTION_REFUSE:
-                return self::STATUS_FAIL;
+                return $this->status == self::STATUS_FAIL;
         }
         return null;
     }
