@@ -20,18 +20,36 @@ class Task
     const ACTION_COMPLETE = 'complete'; // завершить - заказчик
     const ACTION_REFUSE = 'refuse'; // отказаться - исполнитель
 
-//    public $mapStatusAndAction = [ // вернуть статус на русском языке
-//        self::STATUS_NEW => 'Новое',
-//        self::STATUS_PROGRESS => 'В работе',
-//        self::STATUS_CANCEL => 'Отменено',
-//        self::STATUS_COMPLETE => 'Выполнено',
-//        self::STATUS_FAIL => 'Провалено',
-//
-//        self::ACTION_CANCEL => 'Отменить',
-//        self::ACTION_RESPONSE => 'Откликнуться',
-//        self::ACTION_COMPLETE => 'Выполнено',
-//        self::ACTION_REFUSE => 'Отказаться'
-//    ];
+    public $mapStatus = [ // вернуть статус на русском языке
+        self::STATUS_NEW => 'Новое',
+        self::STATUS_PROGRESS => 'В работе',
+        self::STATUS_CANCEL => 'Отменено',
+        self::STATUS_COMPLETE => 'Выполнено',
+        self::STATUS_FAIL => 'Провалено',
+    ];
+
+    public $mapAction = [
+        self::ACTION_CANCEL => 'Отменить',
+        self::ACTION_RESPONSE => 'Откликнуться',
+        self::ACTION_COMPLETE => 'Выполнено',
+        self::ACTION_REFUSE => 'Отказаться'
+    ];
+
+    /**
+     * @return string[]
+     */
+    public function getMapAction()
+    {
+        return $this->mapAction;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getMapStatus()
+    {
+        return $this->mapStatus;
+    }
 
     public function getStatus($action)
     {
