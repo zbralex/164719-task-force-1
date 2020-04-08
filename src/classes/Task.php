@@ -1,7 +1,8 @@
 <?php
 
 namespace taskForce\classes;
-
+use taskForce\classes\action\ActionNew;
+$new = new ActionNew();
 class Task
 {
 
