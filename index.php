@@ -16,16 +16,14 @@ $task = new Task('', 1, 4);
 $actionNew =  new ActionNew();
 $actionCancel = new ActionCancel();
 $actionComplete = new ActionComplete();
-//var_dump($actionNew -> getName());
-//var_dump($actionCancel -> getName());
+$actionRefuse = new ActionRefuse();
+$actionResponse = new ActionResponse();
 
-var_dump($actionCancel ->getRole(233, 233, 233), $actionCancel->getName());
-var_dump($actionComplete ->getRole(233, 233, 233), $actionComplete->getName());
 
-//assert($task->getStatus(Task::ACTION_NEW) === Task::STATUS_NEW, print('Новое'));
-//assert($task->getStatus(Task::ACTION_CANCEL) === Task::STATUS_CANCEL, print('Отменено'));
-//assert($task->getStatus(Task::ACTION_RESPONSE) === Task::STATUS_PROGRESS, print('В работе'));
-//assert($task->getStatus(Task::ACTION_COMPLETE) === Task::STATUS_COMPLETE, print('Выполнено'));
-//assert($task->getStatus(Task::ACTION_REFUSE) === Task::STATUS_FAIL, print('Провалено'));
+assert($actionComplete->getRole(233, 233, 233) == $actionComplete->getName(), print('Выполнено'));
+assert($actionCancel->getRole(233, 233, 233) == $actionCancel->getName(), print('Отменено'));
+assert($actionResponse->getRole(233, 233, 233) == $actionResponse->getName(), print('В работе'));
+assert($actionRefuse->getRole(233, 233, 233) == $actionRefuse->getName(), print('Провалено'));
+assert($actionNew->getRole(233, 233, 233) == $actionNew->getName(), print('Новое'));
 
 
