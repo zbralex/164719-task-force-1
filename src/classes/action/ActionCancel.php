@@ -12,14 +12,11 @@ class ActionCancel extends Action
         if ($this->getRole($this->executorId, $this->clientId, $this->currentUserId)) {
             return self::STATUS_CANCEL;
         }
+        return null;
     }
 
     public function getRole($executorId, $clientId, $currentUserId)
     {
-        $this->clientId = $clientId;
-        $this->executorId = $executorId;
-        $this->currentUserId = $currentUserId;
-
         if ($clientId == $currentUserId) {
             return true;
         }

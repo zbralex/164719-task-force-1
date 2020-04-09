@@ -14,6 +14,7 @@ abstract class Action
     const STATUS_FAIL = 'failed'; // провалено
 
 
+
     // actions
     const ACTION_NEW = 'new task';
     const ACTION_CANCEL = 'cancel'; // отменить - заказчик
@@ -21,9 +22,13 @@ abstract class Action
     const ACTION_COMPLETE = 'complete'; // завершить - заказчик
     const ACTION_REFUSE = 'refuse'; // отказаться - исполнитель
 
+    public $clientId, $executorId, $currentUserId;
+
+    abstract public function getRole($executorId, $clientId, $currentUserId);
+
     abstract public function getName();
 
     abstract public function getInnerName();
 
-    abstract public function getRole($executorId, $clientId, $currentUserId);
+
 }
