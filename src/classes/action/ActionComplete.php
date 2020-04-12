@@ -5,23 +5,30 @@ namespace taskForce\classes\action;
 
 class ActionComplete extends Action
 {
-    public function getName()
+    public function __construct()
     {
-        if ($this->getRole($this->executorId, $this->clientId, $this->currentUserId)) {
-            return self::STATUS_COMPLETE;
-        }
+        $this->actionName = 'Выполнено';
+        $this->innerName = 'complete';
+
     }
 
-    public function getRole($executorId, $clientId, $currentUserId)
+    public function checkAccess($executorId, $clientId, $currentUserId): bool
     {
-        if ($executorId == $currentUserId) {
+        if ($clientId == $currentUserId) {
             return true;
         }
         return false;
     }
 
-    public function getInnerName()
+
+    public function getInnerName(): string
     {
-        return self::ACTION_COMPLETE;
+        return $this->innerName;
+    }
+
+
+    public function getPublicName(): string
+    {
+        return $this->actionName;
     }
 }

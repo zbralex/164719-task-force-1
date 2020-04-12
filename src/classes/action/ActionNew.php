@@ -6,24 +6,30 @@ namespace taskForce\classes\action;
 class ActionNew extends Action
 {
 
-    public function getName()
+    public function __construct()
     {
-        if ($this->getRole($this->executorId, $this->clientId, $this->currentUserId)) {
-            return self::STATUS_NEW;
-        }
-        return null;
+        $this->actionName = 'Откликнуться';
+        $this->innerName = 'response';
+
     }
 
-    public function getRole($executorId, $clientId, $currentUserId)
+    public function checkAccess($executorId, $clientId, $currentUserId): bool
     {
-        if ($this->executorId == $this->currentUserId || $this->currentUserId == $this->clientId) {
+        if ($clientId == $currentUserId) {
             return true;
         }
         return false;
     }
 
-    public function getInnerName()
+
+    public function getInnerName(): string
     {
-        return self::ACTION_NEW;
+        return $this->innerName;
+    }
+
+
+    public function getPublicName(): string
+    {
+        return $this->actionName;
     }
 }

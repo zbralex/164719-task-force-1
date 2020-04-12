@@ -5,28 +5,30 @@ namespace taskForce\classes\action;
 
 class ActionResponse extends Action
 {
-
-    // отклик на задание
-    // откликнуться может пользователь, чей id равен id текущего польз-ля
-    // и не равен id заказчика
-    public function getName()
+    public function __construct()
     {
-        if ($this->getRole($this->executorId, $this->clientId, $this->currentUserId) && self::STATUS_NEW) {
-            return self::STATUS_PROGRESS;
-        }
-        return null;
+        $this->actionName = 'Откликнуться';
+        $this->innerName = 'response';
+
     }
 
-    public function getRole($executorId, $clientId, $currentUserId)
+    public function checkAccess($executorId, $clientId, $currentUserId): bool
     {
-        if ($this->executorId == $this->currentUserId && !$this->clientId) {
+        if ($clientId == $currentUserId) {
             return true;
         }
         return false;
     }
 
-    public function getInnerName()
+
+    public function getInnerName(): string
     {
-        return self::ACTION_RESPONSE;
+        return $this->innerName;
+    }
+
+
+    public function getPublicName(): string
+    {
+        return $this->actionName;
     }
 }

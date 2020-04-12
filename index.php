@@ -11,7 +11,9 @@ use taskForce\classes\action\ActionResponse;
 require_once 'vendor/autoload.php';
 
 
-$task = new Task('', 1, 4);
+$task = new Task('new', 1, 2, 2);
+$task1 = new Task('progress', 1, 2, 1);
+
 
 $actionNew =  new ActionNew();
 $actionCancel = new ActionCancel();
@@ -19,11 +21,16 @@ $actionComplete = new ActionComplete();
 $actionRefuse = new ActionRefuse();
 $actionResponse = new ActionResponse();
 
-
-assert($actionComplete->getRole(233, 233, 233) == $actionComplete->getName(), print('Выполнено'));
-assert($actionCancel->getRole(233, 233, 233) == $actionCancel->getName(), print('Отменено'));
-assert($actionResponse->getRole(233, 233, 233) == $actionResponse->getName(), print('В работе'));
-assert($actionRefuse->getRole(233, 233, 233) == $actionRefuse->getName(), print('Провалено'));
-assert($actionNew->getRole(233, 233, 233) == $actionNew->getName(), print('Новое'));
+//var_dump($task->getAvailableActions($actionResponse));
+var_dump($task->getAvailableActions());
+print ('<br>');
+var_dump($task1->getAvailableActions());
+//
+//
+//assert($actionComplete->checkAccess(233, 233, 233) == $actionComplete->getName(), print('Выполнено'));
+//assert($actionCancel->checkAccess(233, 233, 233) == $actionCancel->getName(), print('Отменено'));
+//assert($actionResponse->checkAccess(233, 233, 233) == $actionResponse->getName(), print('В работе'));
+//assert($actionRefuse->checkAccess(233, 233, 233) == $actionRefuse->getName(), print('Провалено'));
+//assert($actionNew->checkAccess(233, 233, 233) == $actionNew->getName(), print('Новое'));
 
 

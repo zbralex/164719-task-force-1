@@ -4,18 +4,14 @@ namespace taskForce\classes\action;
 
 class ActionCancel extends Action
 {
-
-    public $executorId, $clientId, $currentUserId;
-
-    public function getName()
+    public function __construct()
     {
-        if ($this->getRole($this->executorId, $this->clientId, $this->currentUserId)) {
-            return self::STATUS_CANCEL;
-        }
-        return null;
+        $this->actionName = 'Отменить';
+        $this->innerName = 'action_cancel';
+
     }
 
-    public function getRole($executorId, $clientId, $currentUserId)
+    public function checkAccess($executorId, $clientId, $currentUserId): bool
     {
         if ($clientId == $currentUserId) {
             return true;
@@ -23,8 +19,15 @@ class ActionCancel extends Action
         return false;
     }
 
-    public function getInnerName()
+
+    public function getInnerName(): string
     {
-        return self::ACTION_CANCEL;
+        return $this->innerName;
+    }
+
+
+    public function getPublicName(): string
+    {
+        return $this->actionName;
     }
 }

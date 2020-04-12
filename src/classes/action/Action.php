@@ -4,7 +4,8 @@ namespace taskForce\classes\action;
 
 abstract class Action
 {
-
+public $actionName;
+public $innerName;
     // statuses
 
     const STATUS_NEW = 'new'; // новое
@@ -24,9 +25,9 @@ abstract class Action
 
     public $clientId, $executorId, $currentUserId;
 
-    abstract public function getRole($executorId, $clientId, $currentUserId);
+    abstract public function checkAccess($executorId, $clientId, $currentUserId);
 
-    abstract public function getName();
+    abstract public function getPublicName();
 
     abstract public function getInnerName();
 
