@@ -2,9 +2,21 @@
 
 namespace taskForce\classes;
 
+
+use taskForce\classes\action\ActionCancel;
+use taskForce\classes\action\ActionComplete;
+use taskForce\classes\action\ActionNew;
+use taskForce\classes\action\ActionRefuse;
+use taskForce\classes\action\ActionResponse;
+
+
+
+
+
 class Task
 {
 
+    public $actionNew, $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
     // statuses
 
     const STATUS_NEW = 'new'; // Новое	Задание опубликовано, исполнитель ещё не найден
@@ -46,6 +58,13 @@ class Task
         $this->executorID = $executorID;
         $this->currentUserId = $currentUserId;
         $this->status = $status;
+
+        $this->actionNew = new ActionNew();
+        $this->actionCancel = new ActionCancel();
+        $this->actionComplete = new ActionComplete();
+        $this->actionRefuse = new ActionRefuse();
+        $this->actionResponse = new ActionResponse();
+
     }
 
     public function getAvailableActions()
@@ -55,15 +74,15 @@ class Task
         $client = $this->currentUserId == $this->clientId; // заказчик
 
 
-       switch ($this->status) {
-           case self::STATUS_NEW and $executor:
-               $actions = [self::ACTION_RESPONSE, self::ACTION_CANCEL];
-               break;
+        switch ($this->status) {
+            case self::STATUS_NEW and $executor:
+                $actions = [$this->actionResponse, $this->actionCancel];
+                break;
 
-           case self::STATUS_PROGRESS and $client:
-               $actions = [self::ACTION_REFUSE, self::ACTION_CANCEL];
-               break;
-       }
+            case self::STATUS_PROGRESS and $client:
+                $actions = [$this->actionRefuse, $this->actionCancel];
+                break;
+        }
         return $actions;
     }
     // он должен возвращать список доступных классов-действий
