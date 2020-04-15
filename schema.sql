@@ -56,28 +56,24 @@ CREATE TABLE `attachment` (
                               `url` varchar(255) NOT NULL
 );
 
-CREATE TABLE `role` (
-                        `id` int PRIMARY KEY AUTO_INCREMENT,
-                        `name` varchar(255) NOT NULL,
-                        `action` varchar(255) NOT NULL
-);
-
 CREATE TABLE `category` (
                             `id` int PRIMARY KEY AUTO_INCREMENT,
                             `name` varchar(255) NOT NULL
 );
 
-CREATE TABLE `supported_category` (
-                                      `id` int PRIMARY KEY AUTO_INCREMENT,
-                                      `user_id` int NOT NULL,
-                                      `name` varchar(255) NOT NULL
+CREATE TABLE `user_category` (
+                                 `id` int PRIMARY KEY AUTO_INCREMENT,
+                                 `user_id` int NOT NULL,
+                                 `category_id` int NOT NULL,
+                                 `name` varchar(255) NOT NULL
 );
 
 CREATE TABLE `message` (
                            `id` int PRIMARY KEY AUTO_INCREMENT,
                            `text` varchar(255) NOT NULL,
                            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                           `user_id` int NOT NULL
+                           `user_id` int NOT NULL,
+                           `task_id` int NOT NULL
 );
 
 CREATE TABLE `review` (
@@ -111,14 +107,16 @@ CREATE TABLE `notification` (
                                 `task_id` int NOT NULL
 );
 
-CREATE TABLE `favorit_list` (
-                                `id` int PRIMARY KEY AUTO_INCREMENT,
-                                `user_id` int NOT NULL
+CREATE TABLE `favorite_list` (
+                                 `id` int PRIMARY KEY AUTO_INCREMENT,
+                                 `user_selected_id` int NOT NULL,
+                                 `user_who_select_id` int NOT NULL
 );
 
 CREATE TABLE `user_visit` (
                               `id` int PRIMARY KEY AUTO_INCREMENT,
-                              `user_id` int NOT NULL
+                              `user_visitor_id` int NOT NULL,
+                              `user_guest_id` int NOT NULL
 );
 
 CREATE TABLE `site_settings` (
@@ -146,8 +144,6 @@ ALTER TABLE `user_info` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `user_info` ADD FOREIGN KEY (`city_id`) REFERENCES `city` (`id`);
 
-ALTER TABLE `user_info` ADD FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
-
 ALTER TABLE `task` ADD FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 ALTER TABLE `task` ADD FOREIGN KEY (`author_id`) REFERENCES `user` (`id`);
@@ -158,9 +154,13 @@ ALTER TABLE `task` ADD FOREIGN KEY (`city_id`) REFERENCES `city` (`id`);
 
 ALTER TABLE `attachment` ADD FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
 
-ALTER TABLE `supported_category` ADD FOREIGN KEY (`user_id`) REFERENCES `user_info` (`user_id`);
+ALTER TABLE `user_category` ADD FOREIGN KEY (`user_id`) REFERENCES `user_info` (`user_id`);
+
+ALTER TABLE `user_category` ADD FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 ALTER TABLE `message` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+ALTER TABLE `message` ADD FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
 
 ALTER TABLE `review` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
@@ -172,9 +172,13 @@ ALTER TABLE `notification` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `notification` ADD FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
 
-ALTER TABLE `favorit_list` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+ALTER TABLE `favorite_list` ADD FOREIGN KEY (`user_selected_id`) REFERENCES `user` (`id`);
 
-ALTER TABLE `user_visit` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+ALTER TABLE `favorite_list` ADD FOREIGN KEY (`user_who_select_id`) REFERENCES `user` (`id`);
+
+ALTER TABLE `user_visit` ADD FOREIGN KEY (`user_visitor_id`) REFERENCES `user` (`id`);
+
+ALTER TABLE `user_visit` ADD FOREIGN KEY (`user_guest_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `site_settings` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 

@@ -2,16 +2,28 @@
 
 namespace taskForce\classes;
 
+
+use taskForce\classes\action\ActionCancel;
+use taskForce\classes\action\ActionComplete;
+use taskForce\classes\action\ActionNew;
+use taskForce\classes\action\ActionRefuse;
+use taskForce\classes\action\ActionResponse;
+
+
+
+
+
 class Task
 {
 
+    public $actionNew, $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
     // statuses
 
-    const STATUS_NEW = 'new'; // новое
-    const STATUS_PROGRESS = 'progress'; // в работе
-    const STATUS_CANCEL = 'cancelled'; // отменено
-    const STATUS_COMPLETE = 'completed'; // выполнено
-    const STATUS_FAIL = 'failed'; // провалено
+    const STATUS_NEW = 'new'; // Новое	Задание опубликовано, исполнитель ещё не найден
+    const STATUS_PROGRESS = 'progress'; // В работе	Заказчик выбрал исполнителя для задания
+    const STATUS_CANCEL = 'cancelled'; // Отменено	Заказчик отменил задание
+    const STATUS_COMPLETE = 'completed'; // Выполнено	Заказчик отметил задание как выполненное
+    const STATUS_FAIL = 'failed'; // Провалено	Исполнитель отказался от выполнения задания
 
 
     // actions
@@ -21,7 +33,12 @@ class Task
 
     const ACTION_COMPLETE = 'complete'; // завершить - заказчик
     const ACTION_REFUSE = 'refuse'; // отказаться - исполнитель
-
+    public static $mapAction = [
+        self::ACTION_CANCEL => 'Отменить',
+        self::ACTION_RESPONSE => 'Откликнуться',
+        self::ACTION_COMPLETE => 'Выполнено',
+        self::ACTION_REFUSE => 'Отказаться'
+    ];
     public $mapStatus = [ // вернуть статус на русском языке
         self::STATUS_NEW => 'Новое',
         self::STATUS_PROGRESS => 'В работе',
@@ -31,58 +48,43 @@ class Task
     ];
 
     public $executorID; // исполнитель
-    public $customerId; // заказчик
-    public $status = '';
+    public $clientId;// заказчик
+    public $currentUserId;
+    public $status = ''; // статус
 
-    public function __construct($status, $executorID, $customerId) // конструктор
+    public function __construct($status, $executorID, $clientId, $currentUserId) // конструктор
     {
-        $this->customerId = $customerId;
+        $this->clientId = $clientId;
         $this->executorID = $executorID;
+        $this->currentUserId = $currentUserId;
         $this->status = $status;
-    }
-    public static $mapAction = [
-        self::ACTION_CANCEL => 'Отменить',
-        self::ACTION_RESPONSE => 'Откликнуться',
-        self::ACTION_COMPLETE => 'Выполнено',
-        self::ACTION_REFUSE => 'Отказаться'
-    ];
 
+        $this->actionNew = new ActionNew();
+        $this->actionCancel = new ActionCancel();
+        $this->actionComplete = new ActionComplete();
+        $this->actionRefuse = new ActionRefuse();
+        $this->actionResponse = new ActionResponse();
 
-
-    /**
-     * @return string[]
-     */
-    public function getMapAction()
-    {
-        return self::$mapAction;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getMapStatus()
+    public function getAvailableActions()
     {
-        return self::$mapStatus;
-    }
+        $actions = []; // пустой массив действий
+        $executor = $this->currentUserId !== $this->clientId; // исполнитель
+        $client = $this->currentUserId == $this->clientId; // заказчик
 
-    public function getStatus($action)
-    {
-        switch ($action) {
-            case self::ACTION_NEW:
-                return $this->status == self::STATUS_NEW;
 
-            case self::ACTION_CANCEL:
-                return $this->status == self::STATUS_CANCEL;
+        switch ($this->status) {
+            case self::STATUS_NEW and $executor:
+                $actions = [$this->actionResponse, $this->actionCancel];
+                break;
 
-            case self::ACTION_RESPONSE:
-                return $this->status == self::STATUS_PROGRESS;
-
-            case self::ACTION_COMPLETE:
-                return $this->status == self::STATUS_COMPLETE;
-
-            case self::ACTION_REFUSE:
-                return $this->status == self::STATUS_FAIL;
+            case self::STATUS_PROGRESS and $client:
+                $actions = [$this->actionRefuse, $this->actionCancel];
+                break;
         }
-        return null;
+        return $actions;
     }
+    // он должен возвращать список доступных классов-действий
+    // в зависимости от статуса задания и ID пользователя
 }
