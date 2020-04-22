@@ -9,8 +9,8 @@ use taskForce\classes\action\ActionNew;
 use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
 
-
-
+use taskForce\exceptions\ActionException;
+use taskForce\exceptions\StatusException;
 
 
 class Task
@@ -54,6 +54,10 @@ class Task
 
     public function __construct($status, $executorID, $clientId, $currentUserId) // конструктор
     {
+        if($status === '') {
+           throw new StatusException('Статус не передан');
+        }
+
         $this->clientId = $clientId;
         $this->executorID = $executorID;
         $this->currentUserId = $currentUserId;

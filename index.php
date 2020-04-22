@@ -8,6 +8,9 @@ use taskForce\classes\action\ActionNew;
 use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
 
+
+use taskForce\exceptions\ActionException;
+use taskForce\exceptions\StatusException;
 require_once 'vendor/autoload.php';
 
 
@@ -21,10 +24,16 @@ $actionComplete = new ActionComplete();
 $actionRefuse = new ActionRefuse();
 $actionResponse = new ActionResponse();
 
+try {
+    $task->getAvailableActions();
+    $task->getAvailableActions($actionResponse);
+}
+catch (StatusException $e) {
+    error_log('Error: ' . $e->getMessage());
+}
 //var_dump($task->getAvailableActions($actionResponse));
-var_dump($task->getAvailableActions());
-print ('<br>');
-var_dump($task1->getAvailableActions());
+//print ('<br>');
+//var_dump($task1->getAvailableActions());
 //
 //
 //assert($actionComplete->checkAccess(233, 233, 233) == $actionComplete->getName(), print('Выполнено'));
