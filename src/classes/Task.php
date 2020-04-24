@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace taskForce\classes;
 
 
@@ -8,37 +8,33 @@ use taskForce\classes\action\ActionComplete;
 use taskForce\classes\action\ActionNew;
 use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
-
-use taskForce\exceptions\ActionException;
-use taskForce\exceptions\StatusException;
+use taskForce\exceptions\TaskException;
 
 
 class Task
 {
 
-    public $actionNew, $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
+const STATUS_NEW = 'new';
     // statuses
-
-    const STATUS_NEW = 'new'; // Новое	Задание опубликовано, исполнитель ещё не найден
-    const STATUS_PROGRESS = 'progress'; // В работе	Заказчик выбрал исполнителя для задания
-    const STATUS_CANCEL = 'cancelled'; // Отменено	Заказчик отменил задание
-    const STATUS_COMPLETE = 'completed'; // Выполнено	Заказчик отметил задание как выполненное
-    const STATUS_FAIL = 'failed'; // Провалено	Исполнитель отказался от выполнения задания
+const STATUS_PROGRESS = 'progress'; // Новое	Задание опубликовано, исполнитель ещё не найден
+    const STATUS_CANCEL = 'cancelled'; // В работе	Заказчик выбрал исполнителя для задания
+    const STATUS_COMPLETE = 'completed'; // Отменено	Заказчик отменил задание
+    const STATUS_FAIL = 'failed'; // Выполнено	Заказчик отметил задание как выполненное
+        const ACTION_NEW = 'new task'; // Провалено	Исполнитель отказался от выполнения задания
 
 
     // actions
-    const ACTION_NEW = 'new task';
-    const ACTION_CANCEL = 'cancel'; // отменить - заказчик
-    const ACTION_RESPONSE = 'response'; // откликнуться - исполнитель
-
-    const ACTION_COMPLETE = 'complete'; // завершить - заказчик
-    const ACTION_REFUSE = 'refuse'; // отказаться - исполнитель
-    public static $mapAction = [
+const ACTION_CANCEL = 'cancel';
+    const ACTION_RESPONSE = 'response'; // отменить - заказчик
+    const ACTION_COMPLETE = 'complete'; // откликнуться - исполнитель
+const ACTION_REFUSE = 'refuse'; // завершить - заказчик
+        public static $mapAction = [
         self::ACTION_CANCEL => 'Отменить',
         self::ACTION_RESPONSE => 'Откликнуться',
         self::ACTION_COMPLETE => 'Выполнено',
         self::ACTION_REFUSE => 'Отказаться'
-    ];
+    ]; // отказаться - исполнитель
+    public $actionNew, $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
     public $mapStatus = [ // вернуть статус на русском языке
         self::STATUS_NEW => 'Новое',
         self::STATUS_PROGRESS => 'В работе',
@@ -52,10 +48,10 @@ class Task
     public $currentUserId;
     public $status = ''; // статус
 
-    public function __construct($status, $executorID, $clientId, $currentUserId) // конструктор
+    public function __construct(string $status, int $executorID, int $clientId, int $currentUserId) // конструктор
     {
-        if($status === '') {
-           throw new StatusException('Статус не передан');
+        if ($status === '') {
+            throw new TaskException('Пустое поле статуса');
         }
 
         $this->clientId = $clientId;
@@ -71,20 +67,31 @@ class Task
 
     }
 
-    public function getAvailableActions()
+    public function getAvailableActions():array
     {
         $actions = []; // пустой массив действий
         $executor = $this->currentUserId !== $this->clientId; // исполнитель
         $client = $this->currentUserId == $this->clientId; // заказчик
 
+        if (!isset($executor)) {
+            throw new TaskException('исполнитель не найден');
+        }
+
+        if (!isset($client)) {
+            throw new TaskException('заказчик не найден');
+        }
 
         switch ($this->status) {
             case self::STATUS_NEW and $executor:
+
                 $actions = [$this->actionResponse, $this->actionCancel];
+
                 break;
 
             case self::STATUS_PROGRESS and $client:
+
                 $actions = [$this->actionRefuse, $this->actionCancel];
+
                 break;
         }
         return $actions;

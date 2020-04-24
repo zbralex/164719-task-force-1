@@ -12,7 +12,7 @@ class ActionNew extends Action
         $this->innerName = 'response';
     }
 
-    public function checkAccess($executorId, $clientId, $currentUserId): bool
+    public function checkAccess(int $executorId, int $clientId, int $currentUserId): bool
     {
         if ($clientId == $currentUserId) {
             return true;

@@ -8,7 +8,7 @@ public $actionName;
 public $innerName;
 
 
-    abstract public function checkAccess($executorId, $clientId, $currentUserId);
+    abstract public function checkAccess(int $executorId, int $clientId, int $currentUserId);
 
     abstract public function getPublicName();
 

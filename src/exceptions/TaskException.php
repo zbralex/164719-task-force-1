@@ -2,6 +2,6 @@
 
 namespace taskForce\exceptions;
 
-class ActionException extends \Exception {
+class TaskException extends \Exception {
 
 }

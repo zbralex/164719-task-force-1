@@ -11,7 +11,7 @@ class ActionCancel extends Action
 
     }
 
-    public function checkAccess($executorId, $clientId, $currentUserId): bool
+    public function checkAccess(int $executorId, int $clientId, int $currentUserId): bool
     {
         if ($clientId == $currentUserId) {
             return true;

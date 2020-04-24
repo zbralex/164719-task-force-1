@@ -8,9 +8,8 @@ use taskForce\classes\action\ActionNew;
 use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
 
+use taskForce\exceptions\TaskException;
 
-use taskForce\exceptions\ActionException;
-use taskForce\exceptions\StatusException;
 require_once 'vendor/autoload.php';
 
 
@@ -26,11 +25,13 @@ $actionResponse = new ActionResponse();
 
 try {
     $task->getAvailableActions();
-    $task->getAvailableActions($actionResponse);
+    $task1->getAvailableActions();
 }
-catch (StatusException $e) {
-    error_log('Error: ' . $e->getMessage());
+catch (TaskException $e) {
+    printf('Error: ' . $e->getMessage());
 }
+
+
 //var_dump($task->getAvailableActions($actionResponse));
 //print ('<br>');
 //var_dump($task1->getAvailableActions());
