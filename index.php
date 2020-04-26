@@ -8,11 +8,13 @@ use taskForce\classes\action\ActionNew;
 use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
 
+use taskForce\exceptions\TaskException;
+
 require_once 'vendor/autoload.php';
 
 
-$task = new Task('new', 1, 2, 2);
-$task1 = new Task('progress', 1, 2, 1);
+$task = new Task('new');
+$task1 = new Task('progress');
 
 
 $actionNew =  new ActionNew();
@@ -21,10 +23,20 @@ $actionComplete = new ActionComplete();
 $actionRefuse = new ActionRefuse();
 $actionResponse = new ActionResponse();
 
+try {
+    $task->getAvailableActions('executor');
+    $task1->getAvailableActions('client');
+    $task1->getAvailableActions('');
+
+}
+catch (TaskException $e) {
+    printf('Error: ' . $e->getMessage());
+}
+
+
 //var_dump($task->getAvailableActions($actionResponse));
-var_dump($task->getAvailableActions());
-print ('<br>');
-var_dump($task1->getAvailableActions());
+//print ('<br>');
+//var_dump($task1->getAvailableActions());
 //
 //
 //assert($actionComplete->checkAccess(233, 233, 233) == $actionComplete->getName(), print('Выполнено'));

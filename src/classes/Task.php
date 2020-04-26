@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace taskForce\classes;
 
@@ -8,37 +9,36 @@ use taskForce\classes\action\ActionComplete;
 use taskForce\classes\action\ActionNew;
 use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
-
-
-
+use taskForce\exceptions\TaskException;
 
 
 class Task
 {
 
-    public $actionNew, $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
+    const STATUS_NEW = 'new';
     // statuses
-
-    const STATUS_NEW = 'new'; // Новое	Задание опубликовано, исполнитель ещё не найден
-    const STATUS_PROGRESS = 'progress'; // В работе	Заказчик выбрал исполнителя для задания
-    const STATUS_CANCEL = 'cancelled'; // Отменено	Заказчик отменил задание
-    const STATUS_COMPLETE = 'completed'; // Выполнено	Заказчик отметил задание как выполненное
-    const STATUS_FAIL = 'failed'; // Провалено	Исполнитель отказался от выполнения задания
+    const STATUS_PROGRESS = 'progress'; // Новое	Задание опубликовано, исполнитель ещё не найден
+    const STATUS_CANCEL = 'cancelled'; // В работе	Заказчик выбрал исполнителя для задания
+    const STATUS_COMPLETE = 'completed'; // Отменено	Заказчик отменил задание
+    const STATUS_FAIL = 'failed'; // Выполнено	Заказчик отметил задание как выполненное
+    const ACTION_NEW = 'new task'; // Провалено	Исполнитель отказался от выполнения задания
 
 
     // actions
-    const ACTION_NEW = 'new task';
-    const ACTION_CANCEL = 'cancel'; // отменить - заказчик
-    const ACTION_RESPONSE = 'response'; // откликнуться - исполнитель
+    const ACTION_CANCEL = 'cancel';
+    const ACTION_RESPONSE = 'response'; // отменить - заказчик
+    const ACTION_COMPLETE = 'complete'; // откликнуться - исполнитель
+    const ACTION_REFUSE = 'refuse'; // завершить - заказчик
 
-    const ACTION_COMPLETE = 'complete'; // завершить - заказчик
-    const ACTION_REFUSE = 'refuse'; // отказаться - исполнитель
     public static $mapAction = [
         self::ACTION_CANCEL => 'Отменить',
         self::ACTION_RESPONSE => 'Откликнуться',
         self::ACTION_COMPLETE => 'Выполнено',
         self::ACTION_REFUSE => 'Отказаться'
     ];
+
+    public $actionNew, $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
+
     public $mapStatus = [ // вернуть статус на русском языке
         self::STATUS_NEW => 'Новое',
         self::STATUS_PROGRESS => 'В работе',
@@ -49,14 +49,17 @@ class Task
 
     public $executorID; // исполнитель
     public $clientId;// заказчик
-    public $currentUserId;
+    public $currentUserId; // текущий пользователь
     public $status = ''; // статус
 
-    public function __construct($status, $executorID, $clientId, $currentUserId) // конструктор
+    public function __construct(string $status) // конструктор
     {
-        $this->clientId = $clientId;
-        $this->executorID = $executorID;
-        $this->currentUserId = $currentUserId;
+        if (!isset($this->mapStatus[$status])) {
+            throw new TaskException('Неверно передан статус');
+        }
+
+
+
         $this->status = $status;
 
         $this->actionNew = new ActionNew();
@@ -67,21 +70,29 @@ class Task
 
     }
 
-    public function getAvailableActions()
+    public function getAvailableActions($role): array
     {
         $actions = []; // пустой массив действий
-        $executor = $this->currentUserId !== $this->clientId; // исполнитель
-        $client = $this->currentUserId == $this->clientId; // заказчик
+
+
+        //Чтобы стать исполнителем необходимо отметить хотя бы одну специализацию у себя в профиле
+        // исполнитель
+        if (empty($role)) {
+            throw new TaskException('Не передано имя роли в параметрах');
+        }
 
 
         switch ($this->status) {
-            case self::STATUS_NEW and $executor:
+            case self::STATUS_NEW and $role === 'executor':
                 $actions = [$this->actionResponse, $this->actionCancel];
                 break;
 
-            case self::STATUS_PROGRESS and $client:
+            case self::STATUS_PROGRESS and $role === 'client':
                 $actions = [$this->actionRefuse, $this->actionCancel];
                 break;
+            // если ни одно из действий не найдено, вернуть исключение
+            default:
+                throw new TaskException('Действие не найдено');
         }
         return $actions;
     }
