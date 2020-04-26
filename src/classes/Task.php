@@ -49,18 +49,17 @@ class Task
 
     public $executorID; // исполнитель
     public $clientId;// заказчик
-    public $currentUserId;
+    public $currentUserId; // текущий пользователь
     public $status = ''; // статус
 
-    public function __construct(string $status, int $executorID, int $clientId, int $currentUserId) // конструктор
+    public function __construct(string $status) // конструктор
     {
         if (!isset($this->mapStatus[$status])) {
             throw new TaskException('Неверно передан статус');
         }
 
-        $this->clientId = $clientId;
-        $this->executorID = $executorID;
-        $this->currentUserId = $currentUserId;
+
+
         $this->status = $status;
 
         $this->actionNew = new ActionNew();
@@ -71,25 +70,29 @@ class Task
 
     }
 
-    public function getAvailableActions(): array
+    public function getAvailableActions($role): array
     {
         $actions = []; // пустой массив действий
-        $executor = $this->currentUserId !== $this->clientId; // исполнитель
-        $client = $this->currentUserId == $this->clientId; // заказчик
+
+
+        //Чтобы стать исполнителем необходимо отметить хотя бы одну специализацию у себя в профиле
+        // исполнитель
+        if (empty($role)) {
+            throw new TaskException('Не передано имя роли в параметрах');
+        }
 
 
         switch ($this->status) {
-            case self::STATUS_NEW and $executor:
-
+            case self::STATUS_NEW and $role === 'executor':
                 $actions = [$this->actionResponse, $this->actionCancel];
-
                 break;
 
-            case self::STATUS_PROGRESS and $client:
-
+            case self::STATUS_PROGRESS and $role === 'client':
                 $actions = [$this->actionRefuse, $this->actionCancel];
-
                 break;
+            // если ни одно из действий не найдено, вернуть исключение
+            default:
+                throw new TaskException('Действие не найдено');
         }
         return $actions;
     }

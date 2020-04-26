@@ -13,8 +13,8 @@ use taskForce\exceptions\TaskException;
 require_once 'vendor/autoload.php';
 
 
-$task = new Task('new', 1, 2, 2);
-$task1 = new Task('progress', 1, 2, 1);
+$task = new Task('new');
+$task1 = new Task('progress');
 
 
 $actionNew =  new ActionNew();
@@ -24,8 +24,10 @@ $actionRefuse = new ActionRefuse();
 $actionResponse = new ActionResponse();
 
 try {
-    $task->getAvailableActions();
-    $task1->getAvailableActions();
+    $task->getAvailableActions('executor');
+    $task1->getAvailableActions('client');
+    $task1->getAvailableActions('');
+
 }
 catch (TaskException $e) {
     printf('Error: ' . $e->getMessage());
