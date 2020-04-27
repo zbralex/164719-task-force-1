@@ -10,7 +10,7 @@ use taskForce\classes\action\ActionNew;
 use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
 use taskForce\exceptions\TaskException;
-
+use taskForce\exceptions\RoleException;
 
 class Task
 {
@@ -70,7 +70,7 @@ class Task
 
     }
 
-    public function getAvailableActions($role): array
+    public function getAvailableActions(string $role): array
     {
         $actions = []; // пустой массив действий
 
@@ -78,7 +78,7 @@ class Task
         //Чтобы стать исполнителем необходимо отметить хотя бы одну специализацию у себя в профиле
         // исполнитель
         if (empty($role)) {
-            throw new TaskException('Не передано имя роли в параметрах');
+            throw new RoleException('Не передано имя роли в параметрах');
         }
 
 

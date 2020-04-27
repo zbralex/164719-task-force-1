@@ -9,6 +9,7 @@ use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
 
 use taskForce\exceptions\TaskException;
+use taskForce\exceptions\RoleException;
 
 require_once 'vendor/autoload.php';
 
@@ -32,7 +33,9 @@ try {
 catch (TaskException $e) {
     printf('Error: ' . $e->getMessage());
 }
-
+catch (RoleException $e) {
+    printf('Error: ' . $e->getMessage());
+}
 
 //var_dump($task->getAvailableActions($actionResponse));
 //print ('<br>');
