@@ -80,47 +80,24 @@ class DataLoader extends Data
         return $result;
     }
 
-    public function mergeArrays($path)
-    {
+    public function parseFromCsvToSql(string $path) {
+        $file = new \SplFileObject($path);
 
-        $catName = basename($path, ".csv");
-        $openFile = fopen($catName . ".sql", "w+");
+        $file->setFlags(\SplFileObject::DROP_NEW_LINE | \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY | \SplFileObject::READ_CSV);
 
-        $handle = fopen($path, "r"); //открываем файл для чтения
+        // получаем первую строку
+        $firstLine = "INSERT INTO " . "(" . implode(", ", $file->current()) . ")" ."\n\t". "VALUES";
 
-        $data = fgetcsv($handle, 0, ",");
-        $queryColumnNames = '';
-        $colon = ', ';
-        for ($i = 0; $i < count($data); $i++) {
+        print_r($firstLine); print "<br>";
 
-            if (array_key_last($data) == $i) {
-                $colon = '';
-            }
 
-            $queryColumnNames .= $data[$i] . $colon;
+        while (!$file->eof()) {
+            var_dump($file->fgetcsv());
+            print "<br>";
         }
 
-        $firstQueryLine = 'INSERT INTO ' . $catName . '(' . $queryColumnNames . ')' ."\n\t". 'VALUES' . "\n";
-
-        fwrite($openFile, $firstQueryLine);
-
-
-        while (($data = fgetcsv($handle, 0, ',')) !== FALSE) {
-            $ar = join("','", $data);
-            $queryData = "\t" . "('" . $ar . "')" . "," . "\n";
-            fwrite($openFile, $queryData);
-
-        }
-
-        $a = fopen($catName . ".sql", "r+");
-        $n = file_get_contents($catName . ".sql");
-        $r = rtrim($n, "\n");
-        $v = substr($r, 0, -1) . ';';
-
-        fwrite($a, $v);
-
-        fclose($handle);
     }
+
 
     public function getData()
     {

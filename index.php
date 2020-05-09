@@ -21,12 +21,13 @@ require_once 'vendor/autoload.php';
 $task = new Task('new');
 $task1 = new Task('progress');
 
-$loader = new DataLoader('./data/profiles.csv', ['address','bd','about','phone','skype']);
+$loader = new DataLoader('./data/categories.csv', ['name','icon']);
 $records = [];
 $loader -> import();
-$records = $loader->mergeArrays('./data/profiles.csv');
+$records = $loader->parseFromCsvToSql('./data/categories.csv');
 
-print $records;
+
+//var_dump($records);
 
 
 
