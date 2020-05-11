@@ -79,24 +79,76 @@ class DataLoader extends Data
 
         return $result;
     }
+    public function scanDirectory($dir)
+    {
+        $filename = [];
+        if ($handle = opendir($dir)) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != "." && $file != "..") {
 
-    public function parseFromCsvToSql(string $path) {
-        $file = new \SplFileObject($path);
-
-        $file->setFlags(\SplFileObject::DROP_NEW_LINE | \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY | \SplFileObject::READ_CSV);
-
-        // получаем первую строку
-        $firstLine = "INSERT INTO " . "(" . implode(", ", $file->current()) . ")" ."\n\t". "VALUES";
-
-        print_r($firstLine); print "<br>";
-
-
-        while (!$file->eof()) {
-            var_dump($file->fgetcsv());
-            print "<br>";
+                    $filename [] = $dir . "/" . $file;
+                }
+            }
+            closedir($handle);
+        }
+        foreach ($filename as $item) {
+            $this->parseFromCsvToSql($item);
         }
 
     }
+
+    public function parseFromCsvToSql($path)
+    {
+        //$path = "./data/categories.csv";
+
+        $file = new \SplFileObject($path);
+
+
+        $catName = basename($path, '.csv');
+
+        $openFileSql = new \SplFileObject($catName . ".sql", "w+");
+
+        $file->setFlags(\SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE | \SplFileObject::READ_AHEAD | \SplFileObject::READ_CSV);
+
+        // получаем первую строку
+        $firstLine = "INSERT INTO " . $catName . "(" . implode(", ", $file->current()) . ")" . "\n\t" . "VALUES" . "\n";
+
+        // записываем в файл первую строку с именами полей
+        $openFileSql->fwrite($firstLine);
+
+
+        // записываем остальные строки с данными, перебирая построчно в цикле
+        while (!$file->eof()) {
+
+            $line = $file->fgetcsv();
+            //продолжаем цикл, если в нем есть перенос строки
+            if ($line === null) {
+                continue;
+            }
+
+            // склеиваем в строку данные массива
+            $data = implode("\",\"", $line);
+            // записываем данные запросов
+            $queryData = "\t" . "(\"" . $data . "\")" . "," . "\n";
+
+            $openFileSql->fwrite($queryData);
+        }
+        //открываем для очистки от пустых строк и переносов
+        $r = new \SplFileObject($catName . '.sql', "r+");
+        //открываем файл для перезаписи
+        $reWriteFile = new \SplFileObject($catName . '.sql', "c");
+        $fileToString = '';
+        while (!$r->eof()) {
+            $fileToString .= $r->fgets();
+        }
+        //удаляем перенос в конце последней строки
+        $trimBrake = rtrim($fileToString, "\n");
+        // удаляем запятую в конце последней строки
+        $trimColon = substr($trimBrake, 0, -1);
+        // перезаписываем файл, добавляя в конце ";"
+        $reWriteFile->fwrite($trimColon . ";");
+    }
+
 
 
     public function getData()

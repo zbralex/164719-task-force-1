@@ -24,7 +24,8 @@ $task1 = new Task('progress');
 $loader = new DataLoader('./data/categories.csv', ['name','icon']);
 $records = [];
 $loader -> import();
-$records = $loader->parseFromCsvToSql('./data/categories.csv');
+//$records = $loader->parseFromCsvToSql();
+$r = $loader->scanDirectory('./data');
 
 
 //var_dump($records);
