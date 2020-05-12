@@ -79,6 +79,7 @@ class DataLoader extends Data
 
         return $result;
     }
+
     public function scanDirectory($dir)
     {
         $filename = [];
@@ -99,7 +100,7 @@ class DataLoader extends Data
 
     public function parseFromCsvToSql($path)
     {
-        //$path = "./data/categories.csv";
+
 
         $file = new \SplFileObject($path);
 
@@ -147,8 +148,23 @@ class DataLoader extends Data
         $trimColon = substr($trimBrake, 0, -1);
         // перезаписываем файл, добавляя в конце ";"
         $reWriteFile->fwrite($trimColon . ";");
-    }
 
+
+        // перемещаем все файлы в отдельную папку
+        $folder = "queries";
+        // проверяем, существует ли папка. Если нет, то создаем
+        if (!is_dir($folder)) {
+            mkdir($folder);
+        }
+        $movedFile = $catName . '.sql';
+
+        chmod($folder, 0777);
+        $new_file = $folder . "/" . $movedFile;
+        // копируем
+        copy($movedFile, $new_file);
+        // удаляем
+        unlink($movedFile);
+    }
 
 
     public function getData()
