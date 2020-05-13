@@ -81,15 +81,15 @@ class DataLoader extends Data
         return $result;
     }
 
-    public function scanDirectory($dir):array
-    {
-        if ($handle = opendir($dir)) {
-            while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != "..") {
-                    $this->fileArray [] = $dir . "/" . $file;
-                }
+
+    public function scanDirectory($path){
+        $iterator = new \DirectoryIterator($path);
+        while($iterator->valid()) {
+            $file = $iterator->current();
+            if ($file != "." && $file != "..") {
+                $this->fileArray [] = $path . "/" . $file->getFilename();
             }
-            closedir($handle);
+            $iterator->next();
         }
         return $this->fileArray;
     }
@@ -100,6 +100,7 @@ class DataLoader extends Data
             $this->convertFromCsvToSql($item);
         }
     }
+
 
     protected function convertFromCsvToSql($path):void
     {

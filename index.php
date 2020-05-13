@@ -28,6 +28,7 @@ $loader -> import();
 $r = $loader->scanDirectory('./data');
 $loader->scanDirectory('./data');
 $loader->toSql();
+//$loader->test('./data');
 
 
 
