@@ -8,6 +8,8 @@ class DataLoader extends Data
     private $columns;
     private $fp;
 
+
+    private $fileArray = [];
     private $result = [];
     private $error = null;
 
@@ -76,32 +78,34 @@ class DataLoader extends Data
         if (!feof($this->fp)) {
             $result = fgetcsv($this->fp);
         }
-
         return $result;
     }
 
-    public function scanDirectory($dir)
+    public function scanDirectory($dir):array
     {
-        $filename = [];
         if ($handle = opendir($dir)) {
             while (false !== ($file = readdir($handle))) {
                 if ($file != "." && $file != "..") {
-
-                    $filename [] = $dir . "/" . $file;
+                    $this->fileArray [] = $dir . "/" . $file;
                 }
             }
             closedir($handle);
         }
-        foreach ($filename as $item) {
-            $this->parseFromCsvToSql($item);
-        }
-
+        return $this->fileArray;
     }
 
-    public function parseFromCsvToSql($path)
+    public function toSql():void {
+        $fileArray = $this->fileArray;
+        foreach ($fileArray as $item) {
+            $this->convertFromCsvToSql($item);
+        }
+    }
+
+    protected function convertFromCsvToSql($path):void
     {
-
-
+        if(empty($path)) {
+            throw new \Exception('не указан путь для файла');
+        }
         $file = new \SplFileObject($path);
 
 
@@ -117,7 +121,6 @@ class DataLoader extends Data
         // записываем в файл первую строку с именами полей
         $openFileSql->fwrite($firstLine);
 
-
         // записываем остальные строки с данными, перебирая построчно в цикле
         while (!$file->eof()) {
 
@@ -129,6 +132,7 @@ class DataLoader extends Data
 
             // склеиваем в строку данные массива
             $data = implode("\",\"", $line);
+
             // записываем данные запросов
             $queryData = "\t" . "(\"" . $data . "\")" . "," . "\n";
 
@@ -136,9 +140,12 @@ class DataLoader extends Data
         }
         //открываем для очистки от пустых строк и переносов
         $r = new \SplFileObject($catName . '.sql', "r+");
+
         //открываем файл для перезаписи
         $reWriteFile = new \SplFileObject($catName . '.sql', "c");
+
         $fileToString = '';
+
         while (!$r->eof()) {
             $fileToString .= $r->fgets();
         }
@@ -152,16 +159,21 @@ class DataLoader extends Data
 
         // перемещаем все файлы в отдельную папку
         $folder = "queries";
+
         // проверяем, существует ли папка. Если нет, то создаем
         if (!is_dir($folder)) {
             mkdir($folder);
         }
+
         $movedFile = $catName . '.sql';
 
         chmod($folder, 0777);
+
         $new_file = $folder . "/" . $movedFile;
+
         // копируем
         copy($movedFile, $new_file);
+
         // удаляем
         unlink($movedFile);
     }

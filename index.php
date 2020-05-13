@@ -26,10 +26,8 @@ $records = [];
 $loader -> import();
 //$records = $loader->parseFromCsvToSql();
 $r = $loader->scanDirectory('./data');
-
-
-
-//var_dump($records);
+$loader->scanDirectory('./data');
+$loader->toSql();
 
 
 
