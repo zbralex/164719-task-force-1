@@ -21,14 +21,10 @@ require_once 'vendor/autoload.php';
 $task = new Task('new');
 $task1 = new Task('progress');
 
-$loader = new DataLoader('./data/categories.csv', ['name','icon']);
-$records = [];
-$loader -> import();
-//$records = $loader->parseFromCsvToSql();
-$r = $loader->scanDirectory('./data');
-$loader->scanDirectory('./data');
-$loader->toSql();
-//$loader->test('./data');
+$converter = new DataLoader();
+$converter->scanDirectory('./data');
+$converter->toSql();
+
 
 
 
@@ -41,11 +37,6 @@ $actionResponse = new ActionResponse();
 try {
     $task->getAvailableActions('executor');
     $task1->getAvailableActions('client');
-    //$task1->getAvailableActions('');
-    $loader->import();
-    $records = $loader->getData();
-
-
 }
 catch (TaskException $e) {
     printf('Error: ' . $e->getMessage());

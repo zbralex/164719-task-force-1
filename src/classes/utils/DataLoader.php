@@ -5,25 +5,10 @@ namespace taskForce\classes\utils;
 class DataLoader extends Data
 {
     private $filename;
-    private $columns;
-    private $fp;
-
-
     private $fileArray = [];
-    private $result = [];
-    private $error = null;
-
-    public function __construct($filename, $columns)
-    {
-        $this->filename = $filename;
-        $this->columns = $columns;
-    }
 
     public function import()
     {
-        if (!$this->validateColumns($this->columns)) {
-            throw new \Exception("Заданы неверные заголовки столбцов");
-        }
 
         if (!file_exists($this->filename)) {
             throw new \Exception("Файл не существует");
@@ -46,40 +31,9 @@ class DataLoader extends Data
         }
     }
 
-    public function validateColumns($columns)
-    {
-        $result = true;
 
-        if (count($columns)) {
-            foreach ($columns as $column) {
-                if (!is_string($column)) {
-                    $result = false;
-                }
-            }
-        } else {
-            $result = false;
-        }
 
-        return $result;
-    }
 
-    public function getHeaderData()
-    {
-        rewind($this->fp);
-        $data = fgetcsv($this->fp);
-
-        return $data;
-    }
-
-    public function getNextLine()
-    {
-        $result = false;
-
-        if (!feof($this->fp)) {
-            $result = fgetcsv($this->fp);
-        }
-        return $result;
-    }
 
 
     public function scanDirectory($path){
@@ -117,7 +71,7 @@ class DataLoader extends Data
         $file->setFlags(\SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE | \SplFileObject::READ_AHEAD | \SplFileObject::READ_CSV);
 
         // получаем первую строку
-        $firstLine = "INSERT INTO " . $catName . "(" . implode(", ", $file->current()) . ")" . "\n\t" . "VALUES" . "\n";
+        $firstLine = "INSERT INTO TASK_FORCE." . $catName . "(" . implode(", ", $file->current()) . ")" . "\n\t" . "VALUES" . "\n";
 
         // записываем в файл первую строку с именами полей
         $openFileSql->fwrite($firstLine);
@@ -177,12 +131,6 @@ class DataLoader extends Data
 
         // удаляем
         unlink($movedFile);
-    }
-
-
-    public function getData()
-    {
-        return $this->result;
     }
 
 }

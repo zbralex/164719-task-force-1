@@ -5,7 +5,7 @@ namespace taskForce\classes\utils;
 
 abstract class Data
 {
-    abstract public function validateColumns($columns);
-    abstract public function getHeaderData();
-    abstract public function getNextLine();
+    abstract public function toSql();
+    abstract public function scanDirectory($path);
+    abstract protected function convertFromCsvToSql($path);
 }

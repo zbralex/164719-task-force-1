@@ -4,7 +4,6 @@ CREATE DATABASE TASK_FORCE
 
 USE TASK_FORCE;
 
-
 CREATE TABLE `user` (
                         `id` int PRIMARY KEY AUTO_INCREMENT,
                         `email` varchar(255) UNIQUE NOT NULL,
@@ -56,9 +55,10 @@ CREATE TABLE `attachment` (
                               `url` varchar(255) NOT NULL
 );
 
-CREATE TABLE `category` (
-                            `id` int PRIMARY KEY AUTO_INCREMENT,
-                            `name` varchar(255) NOT NULL
+CREATE TABLE `categories` (
+                              `id` int PRIMARY KEY AUTO_INCREMENT,
+                              `name` varchar(255) NOT NULL,
+                              `icon` varchar(255) NOT NULL
 );
 
 CREATE TABLE `user_category` (
@@ -144,7 +144,7 @@ ALTER TABLE `user_info` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `user_info` ADD FOREIGN KEY (`city_id`) REFERENCES `city` (`id`);
 
-ALTER TABLE `task` ADD FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+ALTER TABLE `task` ADD FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 
 ALTER TABLE `task` ADD FOREIGN KEY (`author_id`) REFERENCES `user` (`id`);
 
@@ -156,7 +156,7 @@ ALTER TABLE `attachment` ADD FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
 
 ALTER TABLE `user_category` ADD FOREIGN KEY (`user_id`) REFERENCES `user_info` (`user_id`);
 
-ALTER TABLE `user_category` ADD FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+ALTER TABLE `user_category` ADD FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 
 ALTER TABLE `message` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
@@ -185,3 +185,4 @@ ALTER TABLE `site_settings` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ALTER TABLE `response` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `response` ADD FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
+
