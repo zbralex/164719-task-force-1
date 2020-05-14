@@ -7,6 +7,7 @@ use taskForce\exceptions\DataLoaderException;
 class DataLoader extends Data
 {
     private $fileArray = [];
+    private $path = "";
 
 
     public function import()
@@ -14,6 +15,10 @@ class DataLoader extends Data
         if (empty($this->fileArray)) {
             throw new DataLoaderException("Указанная директория пуста");
         }
+
+        // иключение для пустого файла
+
+
 
     }
 
@@ -40,11 +45,7 @@ class DataLoader extends Data
 
     protected function convertFromCsvToSql($path):void
     {
-        if(empty($path)) {
-            throw new \Exception('не указан путь для файла');
-        }
         $file = new \SplFileObject($path);
-
 
         $catName = basename($path, '.csv');
 
@@ -53,14 +54,9 @@ class DataLoader extends Data
         $file->setFlags(\SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE | \SplFileObject::READ_AHEAD | \SplFileObject::READ_CSV);
         $dataLine = implode(',', $file->current());
 
-
-        // получаем первую строку
-
-
         // записываем в файл первую строку с именами полей
-        $openFileSql->fwrite("INSERT INTO TASK_FORCE.");
-        $openFileSql->fwrite($catName);
-        $openFileSql->fwrite("({$dataLine}) VALUES");
+        $openFileSql->fwrite("INSERT INTO TASK_FORCE.{$catName}({$dataLine}) VALUES \n");
+
         // записываем остальные строки с данными, перебирая построчно в цикле
         while (!$file->eof()) {
 
