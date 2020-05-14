@@ -2,38 +2,20 @@
 
 namespace taskForce\classes\utils;
 
+use taskForce\exceptions\DataLoaderException;
+
 class DataLoader extends Data
 {
-    private $filename;
     private $fileArray = [];
+
 
     public function import()
     {
-
-        if (!file_exists($this->filename)) {
-            throw new \Exception("Файл не существует");
+        if (empty($this->fileArray)) {
+            throw new DataLoaderException("Указанная директория пуста");
         }
 
-        $this->fp = fopen($this->filename, 'r');
-
-        if (!$this->fp) {
-            throw new \Exception("Не удалось открыть файл на чтение");
-        }
-
-        $header_data = $this->getHeaderData();
-
-        if ($header_data !== $this->columns) {
-            throw new \Exception("Исходный файл не содержит необходимых столбцов");
-        }
-
-        while ($line = $this->getNextLine()) {
-            $this->result[] = $line;
-        }
     }
-
-
-
-
 
 
     public function scanDirectory($path){

@@ -13,6 +13,7 @@ use taskForce\classes\utils\DataLoader;
 
 use taskForce\exceptions\TaskException;
 use taskForce\exceptions\RoleException;
+use taskForce\exceptions\DataLoaderException;
 
 
 require_once 'vendor/autoload.php';
@@ -26,8 +27,6 @@ $converter->scanDirectory('./data');
 $converter->toSql();
 
 
-
-
 $actionNew =  new ActionNew();
 $actionCancel = new ActionCancel();
 $actionComplete = new ActionComplete();
@@ -37,6 +36,7 @@ $actionResponse = new ActionResponse();
 try {
     $task->getAvailableActions('executor');
     $task1->getAvailableActions('client');
+    $converter->import();
 }
 catch (TaskException $e) {
     printf('Error: ' . $e->getMessage());
@@ -44,8 +44,8 @@ catch (TaskException $e) {
 catch (RoleException $e) {
     printf('Error: ' . $e->getMessage());
 }
-catch (\Exception $e) {
-    error_log("Не удалось обработать csv файл: " . $e->getMessage());
-}
 
+catch (DataLoaderException $e) {
+    printf('Error: ' . $e->getMessage());
+}
 

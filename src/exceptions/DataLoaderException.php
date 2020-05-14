@@ -2,4 +2,6 @@
 
 namespace taskForce\exceptions;
 
-class DataLoaderException extends \Exception {}
+class DataLoaderException extends \Exception {
+
+}
