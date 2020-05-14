@@ -3,7 +3,6 @@ CREATE DATABASE TASK_FORCE
     DEFAULT COLLATE utf8_general_ci;
 
 USE TASK_FORCE;
-
 CREATE TABLE `user` (
                         `id` int PRIMARY KEY AUTO_INCREMENT,
                         `email` varchar(255) UNIQUE NOT NULL,
@@ -27,9 +26,11 @@ CREATE TABLE `user_info` (
                              `skype` varchar(255) NOT NULL
 );
 
-CREATE TABLE `city` (
-                        `id` int PRIMARY KEY AUTO_INCREMENT,
-                        `name` varchar(255) NOT NULL
+CREATE TABLE `cities` (
+                          `id` int PRIMARY KEY AUTO_INCREMENT,
+                          `city` varchar(255) NOT NULL,
+                          `latitude` varchar(255),
+                          `longitude` varchar(255)
 );
 
 CREATE TABLE `task` (
@@ -138,11 +139,11 @@ CREATE TABLE `response` (
                             `status` varchar(255) NOT NULL
 );
 
-ALTER TABLE `user` ADD FOREIGN KEY (`city_id`) REFERENCES `city` (`id`);
+ALTER TABLE `user` ADD FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
 
 ALTER TABLE `user_info` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
-ALTER TABLE `user_info` ADD FOREIGN KEY (`city_id`) REFERENCES `city` (`id`);
+ALTER TABLE `user_info` ADD FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
 
 ALTER TABLE `task` ADD FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 
@@ -150,7 +151,7 @@ ALTER TABLE `task` ADD FOREIGN KEY (`author_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `task` ADD FOREIGN KEY (`executor_id`) REFERENCES `user` (`id`);
 
-ALTER TABLE `task` ADD FOREIGN KEY (`city_id`) REFERENCES `city` (`id`);
+ALTER TABLE `task` ADD FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
 
 ALTER TABLE `attachment` ADD FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
 
@@ -185,4 +186,3 @@ ALTER TABLE `site_settings` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ALTER TABLE `response` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `response` ADD FOREIGN KEY (`task_id`) REFERENCES `task` (`id`);
-

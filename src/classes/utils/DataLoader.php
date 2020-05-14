@@ -69,13 +69,16 @@ class DataLoader extends Data
         $openFileSql = new \SplFileObject($catName . ".sql", "w+");
 
         $file->setFlags(\SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE | \SplFileObject::READ_AHEAD | \SplFileObject::READ_CSV);
+        $dataLine = implode(',', $file->current());
+
 
         // получаем первую строку
-        $firstLine = "INSERT INTO TASK_FORCE." . $catName . "(" . implode(", ", $file->current()) . ")" . "\n\t" . "VALUES" . "\n";
+
 
         // записываем в файл первую строку с именами полей
-        $openFileSql->fwrite($firstLine);
-
+        $openFileSql->fwrite("INSERT INTO TASK_FORCE.");
+        $openFileSql->fwrite($catName);
+        $openFileSql->fwrite("({$dataLine}) VALUES");
         // записываем остальные строки с данными, перебирая построчно в цикле
         while (!$file->eof()) {
 
@@ -126,9 +129,11 @@ class DataLoader extends Data
 
         $new_file = $folder . "/" . $movedFile;
 
+
         // копируем
         copy($movedFile, $new_file);
 
+        chmod($new_file, 0777);
         // удаляем
         unlink($movedFile);
     }
