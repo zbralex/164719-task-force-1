@@ -15,11 +15,6 @@ class DataLoader extends Data
         if (empty($this->fileArray)) {
             throw new DataLoaderException("Указанная директория пуста");
         }
-
-        // иключение для пустого файла
-
-
-
     }
 
 
