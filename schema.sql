@@ -65,8 +65,7 @@ CREATE TABLE `categories` (
 CREATE TABLE `user_category` (
                                  `id` int PRIMARY KEY AUTO_INCREMENT,
                                  `user_id` int NOT NULL,
-                                 `category_id` int NOT NULL,
-                                 `name` varchar(255) NOT NULL
+                                 `category_id` int NOT NULL
 );
 
 CREATE TABLE `message` (
@@ -101,7 +100,7 @@ CREATE TABLE `notification` (
                                 `id` int PRIMARY KEY AUTO_INCREMENT,
                                 `user_id` int NOT NULL,
                                 `title` varchar(255) NOT NULL,
-                                `is_view` bit NOT NULL,
+                                `is_view` boolean NOT NULL,
                                 `url` varchar(255) NOT NULL,
                                 `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                 `type` varchar(255) NOT NULL,
