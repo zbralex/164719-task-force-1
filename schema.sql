@@ -38,7 +38,6 @@ CREATE TABLE `task` (
                         `name` varchar(255) NOT NULL,
                         `description` varchar(255) NOT NULL,
                         `status` varchar(255) NOT NULL,
-                        `action` varchar(255) NOT NULL,
                         `price` int NOT NULL,
                         `category_id` int NOT NULL,
                         `author_id` int NOT NULL,
