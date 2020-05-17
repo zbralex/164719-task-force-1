@@ -8,6 +8,13 @@ class DataLoader extends Data
 {
     private $fileArray = [];
     private $path = "";
+    private $directory = "";
+
+    public function __construct($path, $directory)
+    {
+        $this->path = $path;
+        $this->directory = $directory;
+    }
 
 
     public function import()
