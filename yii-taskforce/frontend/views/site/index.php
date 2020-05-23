@@ -1,0 +1,1 @@
+<strong>Empty layout</strong>
