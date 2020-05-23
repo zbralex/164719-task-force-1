@@ -7,8 +7,6 @@ use taskForce\exceptions\DataLoaderException;
 class DataLoader extends Data
 {
     private $fileArray = [];
-    private $path = "";
-
 
 
 
