@@ -20,7 +20,7 @@ class UsersController extends \yii\web\Controller
 	    $query = new Query();
 	    $query->select(['*'])->from('user u')
 		    ->join('INNER JOIN', 'user_info ui', 'u.id = ui.user_id')
-		    ->orderBy(['u.created_at' => SORT_ASC]);
+		    ->orderBy(['u.created_at' => SORT_DESC]);
 	    $users = $query-> all();
 
         return $this->render('index', [
