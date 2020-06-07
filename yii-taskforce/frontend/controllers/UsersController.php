@@ -2,18 +2,11 @@
 
 namespace frontend\controllers;
 
-use frontend\models\User;
-use frontend\models\UserInfo;
 
-use Yii;
-use yii\base\InvalidArgumentException;
 use yii\db\Query;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
-class UsersController extends \yii\web\Controller
+class UsersController extends Controller
 {
     public function actionIndex()
     {

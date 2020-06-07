@@ -1,6 +1,11 @@
 <?php
 /* @var $this yii\web\View */
 ?>
+<?php
+foreach ($tasks as $task) {
+var_dump($task);
+}
+?>
 <main class="page-main">
     <div class="main-container page-container">
         <section class="new-task">

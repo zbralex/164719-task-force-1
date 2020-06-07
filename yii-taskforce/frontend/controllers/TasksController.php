@@ -2,18 +2,23 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use yii\base\InvalidArgumentException;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+use yii\db\Query;
 
-class TasksController extends \yii\web\Controller
+class TasksController extends Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+	    $query = new Query();
+	    $query->select(['*'])->from('task t')
+		    ->join('INNER JOIN', 'categories c', 'c.id = t.category_id')
+		    ->orderBy(['t.created_at' => SORT_DESC]);
+	    $tasks = $query-> all();
+
+
+        return $this->render('index', [
+        	'tasks'=> $tasks
+        ]);
     }
 
 }
