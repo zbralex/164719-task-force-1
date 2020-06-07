@@ -10,7 +10,7 @@ class TasksController extends Controller
     public function actionIndex()
     {
 	    $query = new Query();
-	    $query->select(['*'])->from('task t')
+	    $query->select(['*', 't.name as task_name', 'c.name as cat_name'])->from('task t')
 		    ->join('INNER JOIN', 'categories c', 'c.id = t.category_id')
 		    ->orderBy(['t.created_at' => SORT_DESC]);
 	    $tasks = $query-> all();

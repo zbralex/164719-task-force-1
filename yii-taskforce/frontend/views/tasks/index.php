@@ -2,8 +2,9 @@
 /* @var $this yii\web\View */
 ?>
 <?php
+
 foreach ($tasks as $task) {
-var_dump($task);
+var_dump($task['cat_name']);
 }
 ?>
 <main class="page-main">
@@ -11,21 +12,23 @@ var_dump($task);
         <section class="new-task">
             <div class="new-task__wrapper">
                 <h1>Новые задания</h1>
+
+	            <?php foreach ($tasks as $task):?>
                 <div class="new-task__card">
                     <div class="new-task__title">
-                        <a href="#" class="link-regular"><h2>Перевести войну и мир на клингонский</h2></a>
-                        <a  class="new-task__type link-regular" href="#"><p>Переводы</p></a>
+                        <a href="#" class="link-regular"><h2><?= isset($task['task_name']) ? $task['task_name'] : "" ?></h2></a>
+                        <a  class="new-task__type link-regular" href="#"><p><?= isset($task['cat_name']) ? $task['cat_name'] : "" ?></p></a>
                     </div>
-                    <div class="new-task__icon new-task__icon--translation"></div>
+                    <div class="new-task__icon new-task__icon--<?= isset($task['icon']) ? $task['icon'] : "" ?>"></div>
                     <p class="new-task_description">
-                        Значимость этих проблем настолько очевидна, что начало
-                        повседневной работы по формированию позиции
-                        требуют определения и уточнения позиций…
+	                    <?= isset($task['description']) ? $task['description'] : "" ?>
                     </p>
-                    <b class="new-task__price new-task__price--translation">3400<b> ₽</b></b>
+                    <b class="new-task__price new-task__price--<?= isset($task['icon']) ? $task['icon'] : "" ?>"><?= isset($task['price']) ? $task['price'] : "" ?><b> ₽</b></b>
                     <p class="new-task__place">Санкт-Петербург, Центральный район</p>
                     <span class="new-task__time">4 часа назад</span>
                 </div>
+	            <?php endforeach; ?>
+
                 <div class="new-task__card">
                     <div class="new-task__title">
                         <a href="#" class="link-regular"><h2>Убраться в квартире после вписки</h2></a>
