@@ -19,6 +19,7 @@ class UsersController extends \yii\web\Controller
 	    $users = UserInfo::find()
 		    ->joinWith('user')
 		    ->where('id' == 'user_id')
+		    ->orderBy('user.created_at')
 		    ->all();
 
         return $this->render('index', [
