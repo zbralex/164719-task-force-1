@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\User;
 use frontend\models\UserInfo;
 
 use Yii;
@@ -15,7 +16,11 @@ class UsersController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-	    $users = UserInfo::findAll(['role_id'=> '1']);
+	    $users = UserInfo::find()
+		    ->joinWith('user')
+		    ->where('id' == 'user_id')
+		    ->all();
+
         return $this->render('index', [
         	'users' => $users
         ]);
