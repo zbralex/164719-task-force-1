@@ -4,12 +4,7 @@
  * @var Task[] $tasks
  */
 ?>
-<?php
 
-foreach ($tasks as $task) {
-var_dump($task['cat_name']);
-}
-?>
 <main class="page-main">
     <div class="main-container page-container">
         <section class="new-task">
