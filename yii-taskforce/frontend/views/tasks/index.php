@@ -1,5 +1,8 @@
 <?php
-/* @var $this yii\web\View */
+/**
+ * @var yii\web\View $this
+ * @var Task[] $tasks
+ */
 ?>
 <?php
 
