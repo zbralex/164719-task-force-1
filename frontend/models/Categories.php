@@ -2,8 +2,6 @@
 
 namespace frontend\models;
 
-use Yii;
-
 /**
  * This is the model class for table "categories".
  *
@@ -42,5 +40,10 @@ class Categories extends \yii\db\ActiveRecord
             'name' => 'Name',
             'icon' => 'Icon',
         ];
+    }
+
+    public function getTask()
+    {
+        return $this->hasMany(Task::className(), ['category_id' => 'id']);
     }
 }

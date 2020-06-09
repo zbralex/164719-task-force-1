@@ -2,6 +2,7 @@
 /**
  * @var yii\web\View $this
  * @var Task[] $tasks
+ * @var Categories[] $categories
  */
 ?>
 
