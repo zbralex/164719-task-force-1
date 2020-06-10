@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </ul>
             </div>
             <div class="content-view__feedback-card user__search-wrapper">
-	            <?php foreach ($users as $user): ?>
+	            <?php foreach ($users as $key => $user): ?>
                 <div class="feedback-card__top">
                     <div class="user__search-icon">
                         <a href="#"><img src="./img/man-glasses.jpg" width="65" height="65"></a>
@@ -45,6 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <span class="new-task__time">Был на сайте 25 минут назад</span>
                 </div>
+                    <div class="link-specialization user__search-link--bottom">
+                        <a href="#" class="link-regular">Ремонт</a>
+                        <a href="#" class="link-regular">Курьер</a>
+                        <a href="#" class="link-regular">Оператор ПК</a>
+                    </div>
 	            <?php endforeach; ?>
 
                 <div class="link-specialization user__search-link--bottom">
