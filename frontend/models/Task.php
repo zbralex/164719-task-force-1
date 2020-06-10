@@ -136,7 +136,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory()
+    public function getCategories()
     {
         return $this->hasOne(Categories::className(), ['id' => 'category_id']);
     }
@@ -146,7 +146,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAuthor()
+    public function getAuthors()
     {
         return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
@@ -156,7 +156,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getExecutor()
+    public function getExecutors()
     {
         return $this->hasOne(User::className(), ['id' => 'executor_id']);
     }
@@ -166,7 +166,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCity()
+    public function getCities()
     {
         return $this->hasOne(Cities::className(), ['id' => 'city_id']);
     }

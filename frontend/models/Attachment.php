@@ -53,7 +53,7 @@ class Attachment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTask()
+    public function getTasks()
     {
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }

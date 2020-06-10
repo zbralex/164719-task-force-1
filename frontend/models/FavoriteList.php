@@ -54,7 +54,7 @@ class FavoriteList extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserSelected()
+    public function getUsersSelected()
     {
         return $this->hasOne(User::className(), ['id' => 'user_selected_id']);
     }
@@ -64,7 +64,7 @@ class FavoriteList extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserWhoSelect()
+    public function getUsersWhoSelect()
     {
         return $this->hasOne(User::className(), ['id' => 'user_who_select_id']);
     }

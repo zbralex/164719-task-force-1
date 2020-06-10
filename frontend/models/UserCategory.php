@@ -54,7 +54,7 @@ class UserCategory extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUsers()
     {
         return $this->hasOne(UserInfo::className(), ['user_id' => 'user_id']);
     }
@@ -64,7 +64,7 @@ class UserCategory extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory()
+    public function getCategories()
     {
         return $this->hasOne(Categories::className(), ['id' => 'category_id']);
     }

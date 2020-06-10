@@ -54,7 +54,7 @@ class UserVisit extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserVisitor()
+    public function getUserVisitors()
     {
         return $this->hasOne(User::className(), ['id' => 'user_visitor_id']);
     }
@@ -64,7 +64,7 @@ class UserVisit extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserGuest()
+    public function getUserGuests()
     {
         return $this->hasOne(User::className(), ['id' => 'user_guest_id']);
     }
