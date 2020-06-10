@@ -5,7 +5,6 @@
  * @var Categories[] $categories
  */
 ?>
-
 <main class="page-main">
     <div class="main-container page-container">
         <section class="new-task">
@@ -15,10 +14,10 @@
 	            <?php foreach ($tasks as $task):?>
                 <div class="new-task__card">
                     <div class="new-task__title">
-                        <a href="#" class="link-regular"><h2><?= isset($task['task_name']) ? $task['task_name'] : "" ?></h2></a>
-                        <a  class="new-task__type link-regular" href="#"><p><?= isset($task['cat_name']) ? $task['cat_name'] : "" ?></p></a>
+                        <a href="#" class="link-regular"><h2><?= $task->name?></h2></a>
+                        <a  class="new-task__type link-regular" href="#"><p><?= $task->category_id ?></p></a>
                     </div>
-                    <div class="new-task__icon new-task__icon--<?= isset($task['icon']) ? $task['icon'] : "" ?>"></div>
+                    <div class="new-task__icon new-task__icon--<?= $task->name ?>"></div>
                     <p class="new-task_description">
 	                    <?= isset($task['description']) ? $task['description'] : "" ?>
                     </p>

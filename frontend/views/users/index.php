@@ -3,9 +3,6 @@
 
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
-
-
-
 ?>
 
 <main class="page-main">
@@ -35,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="feedback-card__top--name user__search-card">
                         <p class="link-name"><a href="#" class="link-regular">
-		                        <?= isset($user['name']) ? $user['name']: "";?>
-		                        <?= isset($user['surname']) ? $user['surname']: "";?>
+		                        <?= $user->name;?>
+		                        <?= $user->surname;?>
 	                        </a></p>
                         <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
                         <b>4.25</b>
