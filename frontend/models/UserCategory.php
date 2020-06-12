@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use  \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user_category".
@@ -14,7 +14,7 @@ use Yii;
  * @property UserInfo $user
  * @property Categories $category
  */
-class UserCategory extends \yii\db\ActiveRecord
+class UserCategory extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -54,7 +54,7 @@ class UserCategory extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getUser()
     {
         return $this->hasOne(UserInfo::className(), ['user_id' => 'user_id']);
     }
@@ -64,7 +64,7 @@ class UserCategory extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategories()
+    public function getCategory()
     {
         return $this->hasOne(Categories::className(), ['id' => 'category_id']);
     }

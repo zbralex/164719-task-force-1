@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use  \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "site_settings".
@@ -16,7 +16,7 @@ use Yii;
  *
  * @property User $user
  */
-class SiteSettings extends \yii\db\ActiveRecord
+class SiteSettings extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -58,7 +58,7 @@ class SiteSettings extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }

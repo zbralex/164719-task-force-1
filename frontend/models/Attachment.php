@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "attachment".
@@ -13,7 +13,7 @@ use Yii;
  *
  * @property Task $task
  */
-class Attachment extends \yii\db\ActiveRecord
+class Attachment extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -53,7 +53,7 @@ class Attachment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getTask()
     {
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }

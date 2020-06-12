@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use  \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user".
@@ -28,7 +28,7 @@ use Yii;
  * @property UserVisit[] $userVisits
  * @property UserVisit[] $userVisits0
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -172,7 +172,7 @@ class User extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCities()
+    public function getCity()
     {
         return $this->hasOne(Cities::className(), ['id' => 'city_id']);
     }
@@ -182,7 +182,7 @@ class User extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserInfos()
+    public function getUserInfo()
     {
         return $this->hasMany(UserInfo::className(), ['user_id' => 'id']);
     }

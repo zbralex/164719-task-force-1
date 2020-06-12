@@ -2,8 +2,8 @@
 
 namespace frontend\models;
 
-use Yii;
-use yii\base\Model;
+use  \yii\db\ActiveRecord;
+
 
 /**
  * This is the model class for table "user_info".
@@ -25,7 +25,7 @@ use yii\base\Model;
  * @property User $user
  * @property Cities $city
  */
-class UserInfo extends \yii\db\ActiveRecord
+class UserInfo extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -88,7 +88,7 @@ class UserInfo extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
@@ -98,7 +98,7 @@ class UserInfo extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCities()
+    public function getCity()
     {
         return $this->hasOne(Cities::className(), ['id' => 'city_id']);
     }

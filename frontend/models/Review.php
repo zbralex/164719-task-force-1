@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use  \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "review".
@@ -18,7 +18,7 @@ use Yii;
  * @property User $user
  * @property Task $task
  */
-class Review extends \yii\db\ActiveRecord
+class Review extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -64,7 +64,7 @@ class Review extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
@@ -74,7 +74,7 @@ class Review extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getTask()
     {
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }

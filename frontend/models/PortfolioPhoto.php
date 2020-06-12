@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use  \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "portfolio_photo".
@@ -17,7 +17,7 @@ use Yii;
  *
  * @property User $user
  */
-class PortfolioPhoto extends \yii\db\ActiveRecord
+class PortfolioPhoto extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -62,7 +62,7 @@ class PortfolioPhoto extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }

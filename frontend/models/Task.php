@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "task".
@@ -31,7 +31,7 @@ use Yii;
  * @property User $executor
  * @property Cities $city
  */
-class Task extends \yii\db\ActiveRecord
+class Task extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -136,7 +136,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategories()
+    public function getCategory()
     {
         return $this->hasOne(Categories::className(), ['id' => 'category_id']);
     }
@@ -146,7 +146,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAuthors()
+    public function getAuthor()
     {
         return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
@@ -156,7 +156,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getExecutors()
+    public function getExecutor()
     {
         return $this->hasOne(User::className(), ['id' => 'executor_id']);
     }
@@ -166,7 +166,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCities()
+    public function getCity()
     {
         return $this->hasOne(Cities::className(), ['id' => 'city_id']);
     }

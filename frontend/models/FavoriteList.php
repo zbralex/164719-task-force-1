@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use  \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "favorite_list".
@@ -14,7 +14,7 @@ use Yii;
  * @property User $userSelected
  * @property User $userWhoSelect
  */
-class FavoriteList extends \yii\db\ActiveRecord
+class FavoriteList extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -54,7 +54,7 @@ class FavoriteList extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsersSelected()
+    public function getUserSelected()
     {
         return $this->hasOne(User::className(), ['id' => 'user_selected_id']);
     }
@@ -64,7 +64,7 @@ class FavoriteList extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsersWhoSelect()
+    public function getUserWhoSelect()
     {
         return $this->hasOne(User::className(), ['id' => 'user_who_select_id']);
     }

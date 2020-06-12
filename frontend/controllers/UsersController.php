@@ -10,7 +10,7 @@ class UsersController extends Controller
     public function actionIndex()
     {
         $users = UserInfo::find()
-            ->with(['userCategories.categories'])
+            ->with(['userCategories.category'])
             ->all();
 
         return $this->render('index', [
