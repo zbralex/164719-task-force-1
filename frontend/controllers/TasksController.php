@@ -10,7 +10,7 @@ class TasksController extends Controller
 {
 	public function actionIndex()
 	{
-        $tasks = Task::find()->with('categories')->where(['status' => 'new'])->orderBy('created_at DESC')->all();
+        $tasks = Task::find()->with('category')->where(['status' => 'new'])->orderBy('created_at DESC')->all();
 
 		return $this->render('index', [
 			'tasks' => $tasks,
