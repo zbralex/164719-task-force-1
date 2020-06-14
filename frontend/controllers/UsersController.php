@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\UserCategory;
 use frontend\models\UserInfo;
 use yii\web\Controller;
 
@@ -12,6 +13,8 @@ class UsersController extends Controller
         $users = UserInfo::find()
             ->with(['userCategories.category'])
             ->all();
+
+
 
         return $this->render('index', [
         	'users' => $users

@@ -1,5 +1,7 @@
 <?php
-/* @var $this yii\web\View */
+/* @var $this yii\web\View
+ * @var $users = []
+ */
 
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
@@ -46,9 +48,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <span class="new-task__time">Был на сайте 25 минут назад</span>
                 </div>
                     <div class="link-specialization user__search-link--bottom">
-                        <a href="#" class="link-regular">Ремонт</a>
-                        <a href="#" class="link-regular">Курьер</a>
-                        <a href="#" class="link-regular">Оператор ПК</a>
+
+                        <?php
+                        foreach ($user->userCategories as $item) {
+                            print '<a href="#" class="link-regular">' . $item->category->name . '</a>';
+                        }
+                        ?>
                     </div>
 	            <?php endforeach; ?>
 
