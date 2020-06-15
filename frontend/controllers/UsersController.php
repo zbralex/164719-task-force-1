@@ -21,4 +21,12 @@ class UsersController extends Controller
         ]);
     }
 
+    public function actionDetail($id)
+    {
+        $detail = UserInfo::findOne($id);
+        return $this->render('detail', [
+            'detail' => $detail
+        ]);
+    }
+
 }

@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <span>6 отзывов</span>
                     </div>
                     <div class="feedback-card__top--name user__search-card">
-                        <p class="link-name"><a href="#" class="link-regular">
+                        <p class="link-name"><a href="./users/detail?id=<?= $user->id;?>" class="link-regular">
 		                        <?= $user->name;?>
 		                        <?= $user->surname;?>
 	                        </a></p>
