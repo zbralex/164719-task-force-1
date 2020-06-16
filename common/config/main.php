@@ -10,7 +10,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'users/detail/<id:\d+>' => 'users/detail'
+                'users/<id:\d+>' => 'users/detail'
             ],
         ],
         'cache' => [
