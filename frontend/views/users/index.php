@@ -1,8 +1,9 @@
 <?php
 /* @var $this yii\web\View
  * @var $users = []
+ * @var $url = []
  */
-
+use yii\helpers\Url;
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -33,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <span>6 отзывов</span>
                     </div>
                     <div class="feedback-card__top--name user__search-card">
-                        <p class="link-name"><a href="./users/<?= $user->id;?>" class="link-regular">
+                        <p class="link-name"><a href="<?=  Url::to(['users/detail', 'id' => $user->id]); ?>" class="link-regular">
 		                        <?= $user->name;?>
 		                        <?= $user->surname;?>
 	                        </a></p>

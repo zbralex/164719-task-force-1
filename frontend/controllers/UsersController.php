@@ -14,6 +14,8 @@ class UsersController extends Controller
             ->with(['userCategories.category'])
             ->all();
 
+
+
         return $this->render('index', [
         	'users' => $users
         ]);
