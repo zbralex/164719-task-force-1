@@ -18,10 +18,10 @@ AppAsset::register($this);
 <head>
     <meta charset="UTF-8">
     <title>TaskForce</title>
-    <link rel="stylesheet" href="/css/normalize.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <?php $this->head()?>
 </head>
 <body>
+<?php $this->beginBody()?>
 <div class="table-layout">
     <header class="page-header">
         <div class="main-container page-header__container">
