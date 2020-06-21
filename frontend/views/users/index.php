@@ -1,13 +1,17 @@
 <?php
 /* @var $this yii\web\View
  * @var $users = []
- * @var $url = []
+ * @var $filter = []
+ *
  */
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+use yii\widgets\ActiveField;
+use yii\helpers\Html;
+
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 <main class="page-main">
     <div class="main-container page-container">
         <section class="user__search">
@@ -117,9 +121,16 @@ $this->params['breadcrumbs'][] = $this->title;
         </section>
         <section  class="search-task">
             <div class="search-task__wrapper">
+                <?php $form = ActiveForm::begin() ?>
                 <form class="search-task__form" name="users" method="post" action="#">
                     <fieldset class="search-task__categories">
                         <legend>Категории</legend>
+                        <?= $form->field($filter, 'categories')
+                            ->input('checkbox',
+                            [
+                                'class'=>'visually-hidden checkbox__input'
+                            ])
+                            ->label('Курьерские услуги')?>
                         <input class="visually-hidden checkbox__input" id="101" type="checkbox" name="" value="" checked disabled>
                         <label for="101">Курьерские услуги </label>
                         <input class="visually-hidden checkbox__input" id="102" type="checkbox" name="" value="" checked>
@@ -133,6 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </fieldset>
                     <fieldset class="search-task__categories">
                         <legend>Дополнительно</legend>
+                        <?= $form->field($filter, 'additional')->checkbox()?>
                         <input class="visually-hidden checkbox__input" id="106" type="checkbox" name="" value="" disabled>
                         <label for="106">Сейчас свободен</label>
                         <input class="visually-hidden checkbox__input" id="107" type="checkbox" name="" value="" checked>
@@ -143,9 +155,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <label for="109">В избранном</label>
                     </fieldset>
                     <label class="search-task__name" for="110">Поиск по имени</label>
+                    <?= $form->field($filter, 'name')?>
                     <input class="input-middle input" id="110" type="search" name="q" placeholder="">
                     <button class="button" type="submit">Искать</button>
                 </form>
+                <?php ActiveForm::end(); ?>
             </div>
         </section>
     </div>
