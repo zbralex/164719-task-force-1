@@ -2,7 +2,8 @@
 
 namespace frontend\controllers;
 
-
+use frontend\models\Categories;
+use Yii;
 use frontend\models\forms\UserForm;
 use frontend\models\UserInfo;
 use yii\web\Controller;
@@ -15,11 +16,14 @@ class UsersController extends Controller
             ->with(['userCategories.category'])
             ->all();
 
+        $categories = Categories::find()->all();
+
         $filter = new UserForm();
 
         return $this->render('index', [
             'users' => $users,
-            'filter' => $filter
+            'filter' => $filter,
+            'categories' => $categories
         ]);
     }
 
@@ -29,10 +33,6 @@ class UsersController extends Controller
         return $this->render('detail', [
             'detail' => $detail
         ]);
-    }
-
-    public function actionFilter(array $ids) {
-        $model = new UserForm();
     }
 
 }
