@@ -31,4 +31,8 @@ class UsersController extends Controller
         ]);
     }
 
+    public function actionFilter(array $ids) {
+        $model = new UserForm();
+    }
+
 }
