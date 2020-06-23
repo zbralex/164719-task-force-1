@@ -6,6 +6,7 @@
  */
 
 use yii\helpers\Url;
+use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Users';
@@ -161,7 +162,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				</fieldset>
 				<label class="search-task__name" for="110">Поиск по имени</label>
 				<input class="input-middle input" id="110" type="search" name="q" placeholder="">
-				<button class="button" type="submit">Искать</button>
+				<?= Html::submitButton('Искать', [
+					'class' => 'button'
+				])?>
 				<?php ActiveForm::end(); ?>
 
 			</div>
