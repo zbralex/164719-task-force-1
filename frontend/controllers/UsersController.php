@@ -20,9 +20,10 @@ class UsersController extends Controller
 
         $filter = new UserForm();
 
-        if (Yii::$app->request->getIsPost()) {
-            $filter = new UserForm();
-            $filter->load(Yii::$app->request->post());
+        if ($filter->load(Yii::$app->request->post())) {
+            $request = Yii::$app->request;
+	        $formContent = $request->post('UserForm');
+	        var_dump($formContent);
         }
 
         return $this->render('index', [

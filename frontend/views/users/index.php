@@ -138,8 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'labelOptions' => [
 								'for' => $category->id,
 								'label' => $category->name
-							]])
-							->checkbox([
+							]])->checkbox([
 								'checked' => $category->id === 1 ? true : false,
 								'disabled' => $category->id === 1 ? true : false,
 								'class' => 'visually-hidden checkbox__input',
@@ -151,14 +150,31 @@ $this->params['breadcrumbs'][] = $this->title;
 				</fieldset>
 				<fieldset class="search-task__categories">
 					<legend>Дополнительно</legend>
-					<input class="visually-hidden checkbox__input" id="106" type="checkbox" name="" value="" disabled>
-					<label for="106">Сейчас свободен</label>
-					<input class="visually-hidden checkbox__input" id="107" type="checkbox" name="" value="" checked>
-					<label for="107">Сейчас онлайн</label>
-					<input class="visually-hidden checkbox__input" id="108" type="checkbox" name="" value="" checked>
-					<label for="108">Есть отзывы</label>
-					<input class="visually-hidden checkbox__input" id="109" type="checkbox" name="" value="" checked>
-					<label for="109">В избранном</label>
+
+					<?= $form->field($filter, 'online', [
+						'template' => '{input}{label}',
+					])->checkbox([
+							'class' => 'visually-hidden checkbox__input',
+						],
+							false); ?>
+					<?= $form->field($filter, 'isFree', [
+						'template' => '{input}{label}',
+					])->checkbox([
+							'class' => 'visually-hidden checkbox__input',
+						],
+							false); ?>
+					<?= $form->field($filter, 'review', [
+						'template' => '{input}{label}',
+					])->checkbox([
+							'class' => 'visually-hidden checkbox__input',
+						],
+							false); ?>
+					<?= $form->field($filter, 'favorite', [
+						'template' => '{input}{label}',
+					])->checkbox([
+							'class' => 'visually-hidden checkbox__input',
+						],
+							false); ?>
 				</fieldset>
 				<label class="search-task__name" for="110">Поиск по имени</label>
 				<input class="input-middle input" id="110" type="search" name="q" placeholder="">
