@@ -20,6 +20,11 @@ class UsersController extends Controller
 
         $filter = new UserForm();
 
+        if (Yii::$app->request->getIsPost()) {
+            $filter = new UserForm();
+            $filter->load(Yii::$app->request->post());
+        }
+
         return $this->render('index', [
             'users' => $users,
             'filter' => $filter,
@@ -30,9 +35,32 @@ class UsersController extends Controller
     public function actionDetail($id)
     {
         $detail = UserInfo::findOne($id);
+
+
+
         return $this->render('detail', [
             'detail' => $detail
         ]);
+    }
+
+    public function actionFilter($ids) {
+//        $users = UserInfo::find()
+//            ->with(['userCategories.category'])
+//            ->all();
+//
+//        $filter = new UserForm();
+//        $categories = Categories::find()->all();
+//
+//        if (Yii::$app->request->getIsPost()) {
+//            $filter->load(Yii::$app->request->post());
+//            var_dump($filter);
+//        }
+//
+//        return $this->render('index', [
+//            'users' => $users,
+//            'filter' => $filter,
+//            'categories' => $categories
+//        ]);
     }
 
 }

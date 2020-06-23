@@ -6,7 +6,8 @@ use yii\base\Model;
 class UserForm extends Model {
     public $categories;
     public $additional;
-    public $name;
+
+    public $index, $label, $name, $checked, $value;
 
     public function rules()
     {
