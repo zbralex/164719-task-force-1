@@ -143,7 +143,6 @@ $this->params['breadcrumbs'][] = $this->title;
 											class=\"visually-hidden checkbox__input\">
 										<label for='{$index}'>{$label}</label>";
 								}]) ?>
-
 				</fieldset>
 				<fieldset class="search-task__categories">
 					<legend>Дополнительно</legend>
@@ -172,8 +171,20 @@ $this->params['breadcrumbs'][] = $this->title;
 					],
 						false); ?>
 				</fieldset>
-				<label class="search-task__name" for="110">Поиск по имени</label>
-				<input class="input-middle input" id="110" type="search" name="q" placeholder="">
+
+				<?=
+				$form->field($filter, 'name', [
+					'template' => '{label}{input}',
+					'options'=>[
+						'class'=> 'custom'
+					],
+					'labelOptions' => [
+						'class' => 'search-task__name',
+					]
+				])->input('text', [
+					'class' => 'input-middle input'
+				]);
+				?>
 				<?= Html::submitButton('Искать', [
 					'class' => 'button'
 				]) ?>
