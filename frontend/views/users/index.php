@@ -5,8 +5,8 @@
  * @var $categories = []
  */
 
-use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Users';
@@ -132,55 +132,51 @@ $this->params['breadcrumbs'][] = $this->title;
 				]) ?>
 				<fieldset class="search-task__categories">
 					<legend>Категории</legend>
-					<?php foreach ($categories as $category) : ?>
-						<?= $form->field($filter, 'categories', [
-							'template' => '{input}{label}',
-							'labelOptions' => [
-								'for' => $category->id,
-								'label' => $category->name
-							]])->checkbox([
-								'checked' => $category->id === 1 ? true : false,
-								'disabled' => $category->id === 1 ? true : false,
-								'class' => 'visually-hidden checkbox__input',
-								'id' => $category->id,
-								'value' => $category->id
-							],
-								false); ?>
-					<?php endforeach; ?>
+					<?= $form->field($filter, 'categories')
+						->checkboxList($filter->attributeLabelsCategory(),
+							[
+								'item' => function ($index, $label, $name, $checked, $value) {
+									return "<input  type='checkbox'  
+											name='{$name}'
+											id='{$index}'
+											value='{$value}' 
+											class=\"visually-hidden checkbox__input\">
+										<label for='{$index}'>{$label}</label>";
+								}]) ?>
+
 				</fieldset>
 				<fieldset class="search-task__categories">
 					<legend>Дополнительно</legend>
-
 					<?= $form->field($filter, 'online', [
 						'template' => '{input}{label}',
 					])->checkbox([
-							'class' => 'visually-hidden checkbox__input',
-						],
-							false); ?>
+						'class' => 'visually-hidden checkbox__input',
+					],
+						false); ?>
 					<?= $form->field($filter, 'isFree', [
 						'template' => '{input}{label}',
 					])->checkbox([
-							'class' => 'visually-hidden checkbox__input',
-						],
-							false); ?>
+						'class' => 'visually-hidden checkbox__input',
+					],
+						false); ?>
 					<?= $form->field($filter, 'review', [
 						'template' => '{input}{label}',
 					])->checkbox([
-							'class' => 'visually-hidden checkbox__input',
-						],
-							false); ?>
+						'class' => 'visually-hidden checkbox__input',
+					],
+						false); ?>
 					<?= $form->field($filter, 'favorite', [
 						'template' => '{input}{label}',
 					])->checkbox([
-							'class' => 'visually-hidden checkbox__input',
-						],
-							false); ?>
+						'class' => 'visually-hidden checkbox__input',
+					],
+						false); ?>
 				</fieldset>
 				<label class="search-task__name" for="110">Поиск по имени</label>
 				<input class="input-middle input" id="110" type="search" name="q" placeholder="">
 				<?= Html::submitButton('Искать', [
 					'class' => 'button'
-				])?>
+				]) ?>
 				<?php ActiveForm::end(); ?>
 
 			</div>

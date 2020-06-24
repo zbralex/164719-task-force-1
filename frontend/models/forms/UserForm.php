@@ -24,7 +24,18 @@ class UserForm extends Model {
 			    'isFree' => 'Сейчас свободен',
 			    'review' => 'Есть отзывы',
 			    'favorite' => 'В избранном',
-			    'name' => 'Поиск по имени'
+			    'name' => 'Поиск по имени',
+		        'categories' => ''
 	    ];
     }
+	public function attributeLabelsCategory()
+	{
+		return [
+			'courier' => 'Курьерские услуги',
+			'cargo' => 'Грузоперевозки',
+			'translations' => 'Переводы',
+			'repair' => 'Строительство и ремонт',
+			'animals' => 'Выгул животных'
+		];
+	}
 }
