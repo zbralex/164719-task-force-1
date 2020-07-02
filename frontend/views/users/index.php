@@ -8,6 +8,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use frontend\models\Categories;
 
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
@@ -38,10 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
 							<span>6 отзывов</span>
 						</div>
 						<div class="feedback-card__top--name user__search-card">
-							<p class="link-name"><a href="<?= Url::to(['users/detail', 'id' => $user->id]); ?>"
+							<p class="link-name"><a href="<?= Url::to(['users/detail', 'id' => $user['id']]); ?>"
 									class="link-regular">
-									<?= $user->name; ?>
-									<?= $user->surname; ?>
+									<?= $user['name']; ?>
+									<?= $user['surname']; ?>
 								</a></p>
 							<span></span><span></span><span></span><span></span><span class="star-disabled"></span>
 							<b>4.25</b>
@@ -132,8 +133,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				]) ?>
 				<fieldset class="search-task__categories">
 					<legend>Категории</legend>
+
 					<?= $form->field($filter, 'categories')
-						->checkboxList($filter->attributeLabelsCategory(),
+						->checkboxList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
 							[
 								'item' => function ($index, $label, $name, $checked, $value) {
 									return "<input  type='checkbox'  
@@ -173,7 +175,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				</fieldset>
 
 				<?=
-				$form->field($filter, 'name', [
+				$form->field($filter, 'search', [
 					'template' => '{label}{input}',
 					'options'=>[
 						'class'=> 'custom'

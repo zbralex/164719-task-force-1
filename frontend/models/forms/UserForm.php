@@ -6,7 +6,7 @@ use yii\base\Model;
 class UserForm extends Model {
     public $categories;
 	public $additional;
-	public $name;
+	public $search;
 	public $online;
 	public $isFree;
 	public $review;
@@ -24,7 +24,7 @@ class UserForm extends Model {
 			    'isFree' => 'Сейчас свободен',
 			    'review' => 'Есть отзывы',
 			    'favorite' => 'В избранном',
-			    'name' => 'Поиск по имени',
+			    'search' => 'Поиск по имени',
 		        'categories' => ''
 	    ];
     }
