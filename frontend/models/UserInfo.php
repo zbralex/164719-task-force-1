@@ -109,7 +109,9 @@ class UserInfo extends ActiveRecord
 		foreach ($value as $key => $item) {
 			if ($item) {
 				if ($key === 'categories') {
-					$user->joinWith('userCategories')->where(['category_id' => $item])->all();
+					$user = UserInfo::find()
+					->joinWith('userCategories')->where(['category_id' => $item])
+					->all();
 				}
 			}
 		}
