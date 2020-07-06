@@ -15,25 +15,23 @@ class UsersController extends Controller
 			->joinWith('userCategories')
 			->all();
 
+
+
+
 		$filter = new UserForm();
 
 		if ($filter->load(Yii::$app->request->post())) {
 			$request = Yii::$app->request;
 			$formContent = $request->post('UserForm');
+			$user = (new UserInfo)->filterForm($formContent);
+			$users = $user;
 
 
-			if ($formContent['categories']) {
-				$users = UserInfo::find()
-					->joinWith('userCategories')->where(['category_id' => $formContent['categories']])
-					->all();
-			}
-			if($formContent['online']) {
-				$users = UserInfo::find()
-					->joinWith('userCategories')
-					->where(['category_id' => $formContent['categories']])
-					->andWhere(['>', 'online', date("Y-m-d H:i:s", strtotime("-1 hour"))])
-					->all();
-			}
+//			if ($formContent['categories']) {
+//				$users = UserInfo::find()
+//					->joinWith('userCategories')->where(['category_id' => $formContent['categories']])
+//					->all();
+//			}
 
 		}
 
