@@ -5,10 +5,10 @@
  * @var $categories = []
  */
 
+use frontend\models\Categories;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use frontend\models\Categories;
 
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
@@ -55,7 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
 						<span class="new-task__time">Был на сайте 25 минут назад</span>
 					</div>
 					<div class="link-specialization user__search-link--bottom">
-
 						<?php
 						foreach ($user->userCategories as $item) {
 							print '<a href="#" class="link-regular">' . $item->category->name . '</a>';
@@ -64,11 +63,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					</div>
 				<?php endforeach; ?>
 
-				<div class="link-specialization user__search-link--bottom">
-					<a href="#" class="link-regular">Ремонт</a>
-					<a href="#" class="link-regular">Курьер</a>
-					<a href="#" class="link-regular">Оператор ПК</a>
-				</div>
 			</div>
 			<div class="content-view__feedback-card user__search-wrapper">
 				<div class="feedback-card__top">
@@ -177,8 +171,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?=
 				$form->field($filter, 'search', [
 					'template' => '{label}{input}',
-					'options'=>[
-						'class'=> 'custom'
+					'options' => [
+						'class' => 'custom'
 					],
 					'labelOptions' => [
 						'class' => 'search-task__name',
