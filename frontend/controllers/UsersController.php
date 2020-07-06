@@ -26,13 +26,6 @@ class UsersController extends Controller
 			$user = (new UserInfo)->filterForm($formContent);
 			$users = $user;
 
-
-//			if ($formContent['categories']) {
-//				$users = UserInfo::find()
-//					->joinWith('userCategories')->where(['category_id' => $formContent['categories']])
-//					->all();
-//			}
-
 		}
 
 		return $this->render('index', [
