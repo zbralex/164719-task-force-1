@@ -113,8 +113,7 @@ class UserInfo extends ActiveRecord
 					$query->joinWith('userCategories')->where(['category_id' => $item]);
 				}
 				if ($key === 'online') {
-					var_dump(date("Y-m-d H:i:s", strtotime("- 1 hour")));
-					$query->andWhere(['>', 'online', date("Y-m-d H:i:s", strtotime("- 1 hour"))]);
+					$query->andWhere(['<', 'online', date("Y-m-d H:i:s")]);
 				}
 			}
 
