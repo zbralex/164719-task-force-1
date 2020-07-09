@@ -105,16 +105,20 @@ class UserInfo extends ActiveRecord
 
 	public function filterForm($value)
 	{
-		$user = UserInfo::find();
+		$query = UserInfo::find();
+
 		foreach ($value as $key => $item) {
 			if ($item) {
 				if ($key === 'categories') {
-					$user = UserInfo::find()
-					->joinWith('userCategories')->where(['category_id' => $item])
-					->all();
+					$query->joinWith('userCategories')->where(['category_id' => $item]);
+				}
+				if ($key === 'online') {
+					var_dump(date("Y-m-d H:i:s", strtotime("- 1 hour")));
+					$query->andWhere(['>', 'online', date("Y-m-d H:i:s", strtotime("- 1 hour"))]);
 				}
 			}
+
 		}
-		return $user;
+		return $query->all();
 	}
 }
