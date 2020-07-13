@@ -17,4 +17,13 @@ class TasksController extends Controller
 		]);
 	}
 
+	public function actionDetail($id) {
+		$detail = Task::findOne($id);
+		return $this->render('detail', [
+			'detail' => $detail
+		]);
+
+
+	}
+
 }

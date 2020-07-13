@@ -4,6 +4,9 @@
  * @var Task[] $tasks
  * @var Categories[] $categories
  */
+
+use yii\helpers\Url;
+
 ?>
 <main class="page-main">
     <div class="main-container page-container">
@@ -14,7 +17,7 @@
 	            <?php foreach ($tasks as $task):?>
                 <div class="new-task__card">
                     <div class="new-task__title">
-                        <a href="#" class="link-regular"><h2><?= $task->name?></h2></a>
+                        <a href="<?= Url::to(['tasks/detail', 'id' => $task->id]); ?>" class="link-regular"><h2><?= $task->name?></h2></a>
                         <a  class="new-task__type link-regular" href="#"><p><?= $task->category->name ?></p></a>
                     </div>
                     <div class="new-task__icon new-task__icon--<?= $task->category->icon ?>"></div>

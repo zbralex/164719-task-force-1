@@ -13,7 +13,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'users/<id:\d+>' => 'users/detail',
-                'users/filter/<categoryId:\d+>' => 'users/filter'
+                'users/filter/<categoryId:\d+>' => 'users/filter',
+	            'tasks/<id:\d+>' => 'tasks/detail'
             ],
         ],
         'cache' => [

@@ -152,7 +152,6 @@ class UserInfo extends ActiveRecord
 						break;
 				}
 			}
-
 		}
 		return $query->all();
 	}
