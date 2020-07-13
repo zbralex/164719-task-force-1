@@ -136,7 +136,7 @@ class UserInfo extends ActiveRecord
 				// role_id = 2 - заказчик
 				// role_id = 3 - исполнитель
 				if ($key === 'isFree') {
-					$query->andFilterWhere(['role_id' => 1]);
+					$query->andWhere(['t.executor_id' => null]);
 				}
 
 				//«Есть отзывы» — добавляет к условию фильтрации показ исполнителей с отзывами

@@ -3,19 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Class m200709_154427_drop_pk_executor_id_table_task
+ * Class m200713_091801_change_executor_id_default_null
  */
-class m200709_154427_drop_pk_executor_id_table_task extends Migration
+class m200713_091801_change_executor_id_default_null extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-	    $this->dropForeignKey(
-		    'task_ibfk_3',
-		    'task'
-	    );
+	    $this->alterColumn('task', 'executor_id', $this->integer()->null());
     }
 
     /**
@@ -23,7 +20,7 @@ class m200709_154427_drop_pk_executor_id_table_task extends Migration
      */
     public function safeDown()
     {
-
+	    $this->alterColumn('task', 'executor_id', $this->integer()->notNull());
     }
 
     /*
@@ -35,7 +32,7 @@ class m200709_154427_drop_pk_executor_id_table_task extends Migration
 
     public function down()
     {
-        echo "m200709_154427_drop_pk_executor_id_table_task cannot be reverted.\n";
+        echo "m200713_091801_change_executor_id_default_null cannot be reverted.\n";
 
         return false;
     }
