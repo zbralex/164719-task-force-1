@@ -41,7 +41,7 @@ CREATE TABLE `task` (
                         `price` int NOT NULL,
                         `category_id` int NOT NULL,
                         `author_id` int NOT NULL,
-                        `executor_id` int NOT NULL,
+                        `executor_id` int DEFAULT 0,
                         `city_id` int NOT NULL,
                         `latitude` float DEFAULT 0,
                         `longitude` float DEFAULT 0,
@@ -146,8 +146,6 @@ ALTER TABLE `user_info` ADD FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
 ALTER TABLE `task` ADD FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 
 ALTER TABLE `task` ADD FOREIGN KEY (`author_id`) REFERENCES `user` (`id`);
-
-ALTER TABLE `task` ADD FOREIGN KEY (`executor_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `task` ADD FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
 

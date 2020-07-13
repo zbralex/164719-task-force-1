@@ -170,4 +170,8 @@ class Task extends ActiveRecord
     {
         return $this->hasOne(Cities::className(), ['id' => 'city_id']);
     }
+
+    public function getUserInfo() {
+    	return $this->hasOne(UserInfo::className(), ['user_id' => 'executor_id']);
+    }
 }

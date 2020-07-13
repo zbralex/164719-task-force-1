@@ -39,10 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
 							<span>6 отзывов</span>
 						</div>
 						<div class="feedback-card__top--name user__search-card">
-							<p class="link-name"><a href="<?= Url::to(['users/detail', 'id' => $user['id']]); ?>"
+							<p class="link-name"><a href="<?= Url::to(['users/detail', 'id' => $user->id]); ?>"
 									class="link-regular">
-									<?= $user['name']; ?>
-									<?= $user['surname']; ?>
+									<?= $user->name ?>
+									<?= $user->surname ?>
 								</a></p>
 							<span></span><span></span><span></span><span></span><span class="star-disabled"></span>
 							<b>4.25</b>
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								в разрезе маркетинговых и финансовых предпосылок.
 							</p>
 						</div>
-						<span class="new-task__time">Был на сайте 25 минут назад</span>
+						<span class="new-task__time">Был на сайте  <?=Yii::$app->formatter->asRelativeTime($user->online) ?></span>
 					</div>
 					<div class="link-specialization user__search-link--bottom">
 						<?php
@@ -64,56 +64,56 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?php endforeach; ?>
 
 			</div>
-			<div class="content-view__feedback-card user__search-wrapper">
-				<div class="feedback-card__top">
-					<div class="user__search-icon">
-						<a href="#"><img src="./img/user-man2.jpg" width="65" height="65"></a>
-						<span>6 заданий</span>
-						<span>3 отзывов</span>
-					</div>
-					<div class="feedback-card__top--name user__search-card">
-						<p class="link-name"><a href="#" class="link-regular">Миронов Алексей</a></p>
-						<span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-						<b>4.25</b>
-						<p class="user__search-content">
-							Как принято считать, акционеры крупнейших компаний формируют глобальную
-							экономическую сеть и при этом - рассмотрены исключительно в разрезе
-							маркетинговых и финансовых предпосылок
-						</p>
-					</div>
-					<span class="new-task__time">Был на сайте час назад</span>
-				</div>
-				<div class="link-specialization user__search-link--bottom">
-					<a href="#" class="link-regular">Ремонт</a>
-					<a href="#" class="link-regular">Курьер</a>
-					<a href="#" class="link-regular">Оператор ПК</a>
-				</div>
-			</div>
-			<div class="content-view__feedback-card user__search-wrapper">
-				<div class="feedback-card__top">
-					<div class="user__search-icon">
-						<a href="#"><img src="./img/user-man.jpg" width="65" height="65"></a>
-						<span>2 заданий</span>
-						<span>1 отзывов</span>
-					</div>
-					<div class="feedback-card__top--name user__search-card">
-						<p class="link-name"><a href="#" class="link-regular">Крючков Василий</a></p>
-						<span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-						<b>4.25</b>
-						<p class="user__search-content">
-							Разнообразный и богатый опыт говорит нам, что существующая теория способствует
-							подготовке и реализации форм воздействия. Безусловно, укрепление и развитие
-							внутренней структуры представляет собой интересный эксперимент
-						</p>
-					</div>
-					<span class="new-task__time">Был на сайте минуту назад</span>
-				</div>
-				<div class="link-specialization user__search-link--bottom">
-					<a href="#" class="link-regular">Ремонт</a>
-					<a href="#" class="link-regular">Курьер</a>
-					<a href="#" class="link-regular">Оператор ПК</a>
-				</div>
-			</div>
+<!--			<div class="content-view__feedback-card user__search-wrapper">-->
+<!--				<div class="feedback-card__top">-->
+<!--					<div class="user__search-icon">-->
+<!--						<a href="#"><img src="./img/user-man2.jpg" width="65" height="65"></a>-->
+<!--						<span>6 заданий</span>-->
+<!--						<span>3 отзывов</span>-->
+<!--					</div>-->
+<!--					<div class="feedback-card__top--name user__search-card">-->
+<!--						<p class="link-name"><a href="#" class="link-regular">Миронов Алексей</a></p>-->
+<!--						<span></span><span></span><span></span><span></span><span class="star-disabled"></span>-->
+<!--						<b>4.25</b>-->
+<!--						<p class="user__search-content">-->
+<!--							Как принято считать, акционеры крупнейших компаний формируют глобальную-->
+<!--							экономическую сеть и при этом - рассмотрены исключительно в разрезе-->
+<!--							маркетинговых и финансовых предпосылок-->
+<!--						</p>-->
+<!--					</div>-->
+<!--					<span class="new-task__time">Был на сайте час назад</span>-->
+<!--				</div>-->
+<!--				<div class="link-specialization user__search-link--bottom">-->
+<!--					<a href="#" class="link-regular">Ремонт</a>-->
+<!--					<a href="#" class="link-regular">Курьер</a>-->
+<!--					<a href="#" class="link-regular">Оператор ПК</a>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="content-view__feedback-card user__search-wrapper">-->
+<!--				<div class="feedback-card__top">-->
+<!--					<div class="user__search-icon">-->
+<!--						<a href="#"><img src="./img/user-man.jpg" width="65" height="65"></a>-->
+<!--						<span>2 заданий</span>-->
+<!--						<span>1 отзывов</span>-->
+<!--					</div>-->
+<!--					<div class="feedback-card__top--name user__search-card">-->
+<!--						<p class="link-name"><a href="#" class="link-regular">Крючков Василий</a></p>-->
+<!--						<span></span><span></span><span></span><span></span><span class="star-disabled"></span>-->
+<!--						<b>4.25</b>-->
+<!--						<p class="user__search-content">-->
+<!--							Разнообразный и богатый опыт говорит нам, что существующая теория способствует-->
+<!--							подготовке и реализации форм воздействия. Безусловно, укрепление и развитие-->
+<!--							внутренней структуры представляет собой интересный эксперимент-->
+<!--						</p>-->
+<!--					</div>-->
+<!--					<span class="new-task__time">Был на сайте минуту назад</span>-->
+<!--				</div>-->
+<!--				<div class="link-specialization user__search-link--bottom">-->
+<!--					<a href="#" class="link-regular">Ремонт</a>-->
+<!--					<a href="#" class="link-regular">Курьер</a>-->
+<!--					<a href="#" class="link-regular">Оператор ПК</a>-->
+<!--				</div>-->
+<!--			</div>-->
 		</section>
 
 		<section class="search-task">

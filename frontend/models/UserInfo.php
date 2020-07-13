@@ -93,6 +93,13 @@ class UserInfo extends ActiveRecord
 		return $this->hasOne(User::className(), ['id' => 'user_id']);
 	}
 
+	public function getTasks()
+	{
+		return $this->hasMany(Task::className(), ['executor_id' => 'user_id']);
+	}
+
+
+
 	/**
 	 * Gets query for [[City]].
 	 *
@@ -105,14 +112,46 @@ class UserInfo extends ActiveRecord
 
 	public function filterForm($value)
 	{
-		$query = UserInfo::find();
-
+		$query = UserInfo::find()
+			->joinWith('user u')
+			->joinWith('tasks t')
+			->limit(5)->orderBy('u.created_at ASC');
+		//На странице показывается максимум пять исполнителей.
+		// При большем числе записей следует показывать их через пагинацию.
 		foreach ($value as $key => $item) {
 			if ($item) {
 				if ($key === 'categories') {
-					$query->joinWith('userCategories')->where(['category_id' => $item]);
+					$query->joinWith('userCategories uc')->where(['uc.category_id' => $item]);
 				}
+				//«Сейчас онлайн» — добавляет к условию фильтрации показ исполнителей,
+				// время последней активности которых было не больше получаса назад
 				if ($key === 'online') {
+					$query->andWhere(['<=', 'online', date("Y-m-d H:i:s", strtotime("+3 hour"))]);
+					$query->andWhere(['>=', 'online', date("Y-m-d H:i:s", strtotime("+150 minutes"))]);
+				}
+
+				//«Сейчас свободен» — добавляет к условию фильтрации показ исполнителей,
+				// для которых сейчас нет назначенных активных заданий
+				// role_id = 1 - зарегистрирован
+				// role_id = 2 - заказчик
+				// role_id = 3 - исполнитель
+				if ($key === 'isFree') {
+					$query->andFilterWhere(['role_id' => 1]);
+				}
+
+				//«Есть отзывы» — добавляет к условию фильтрации показ исполнителей с отзывами
+				if ($key === 'review') {
+					$query->andWhere(['<', 'online', date("Y-m-d H:i:s")]);
+				}
+
+				//«В избранном» — добавляет к условию фильтрации показ пользователей, которые были добавлены в избранное
+				if ($key === 'favorite') {
+					$query->andWhere(['<', 'online', date("Y-m-d H:i:s")]);
+				}
+
+				//Поле «Поиск по имени» сбрасывает все выбранные фильтры и
+				// ищет пользователя с нестрогим совпадением по его имени.
+				if ($key === 'search') {
 					$query->andWhere(['<', 'online', date("Y-m-d H:i:s")]);
 				}
 			}

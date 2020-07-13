@@ -343,7 +343,6 @@ CREATE TABLE `task` (
   KEY `city_id` (`city_id`),
   CONSTRAINT `task_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   CONSTRAINT `task_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `task_ibfk_3` FOREIGN KEY (`executor_id`) REFERENCES `user` (`id`),
   CONSTRAINT `task_ibfk_4` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
