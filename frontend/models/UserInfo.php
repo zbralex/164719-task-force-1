@@ -103,7 +103,10 @@ class UserInfo extends ActiveRecord
 		return $this->hasMany(Review::className(), ['user_id' => 'user_id']);
 	}
 
-
+	public function getFavorites()
+	{
+		return $this->hasMany(FavoriteList::className(), ['user_who_select_id' => 'user_id']);
+	}
 
 	/**
 	 * Gets query for [[City]].
@@ -119,7 +122,6 @@ class UserInfo extends ActiveRecord
 	{
 		$query = UserInfo::find()
 			->joinWith('user u')
-
 			->limit(5)->orderBy('u.created_at ASC');
 		//На странице показывается максимум пять исполнителей.
 		// При большем числе записей следует показывать их через пагинацию.
@@ -148,15 +150,17 @@ class UserInfo extends ActiveRecord
 					$query->andWhere(['not', ['r.user_id' => null]]);
 				}
 
-				//«В избранном» — добавляет к условию фильтрации показ пользователей, которые были добавлены в избранное
+				//«В избранном» — добавляет к условию фильтрации показ пользователей,
+				// которые были добавлены в избранное
 				if ($key === 'favorite') {
-					$query->andWhere(['<', 'online', date("Y-m-d H:i:s")]);
+					$query->joinWith('favorites f');
+					$query->andWhere(['f.user_selected_id'=>null]);
 				}
 
 				//Поле «Поиск по имени» сбрасывает все выбранные фильтры и
 				// ищет пользователя с нестрогим совпадением по его имени.
 				if ($key === 'search') {
-					$query->andWhere(['<', 'online', date("Y-m-d H:i:s")]);
+					$query->andWhere(['LIKE', 'name', $item]);
 				}
 			}
 
