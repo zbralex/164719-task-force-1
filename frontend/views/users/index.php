@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									<?= $user->surname ?>
 								</a></p>
 							<span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-							<b>4.25</b>
+							<b><?= $user->rating?></b>
 							<p class="user__search-content">
 								Сложно сказать, почему элементы политического процесса лишь
 								добавляют фракционных разногласий и рассмотрены исключительно

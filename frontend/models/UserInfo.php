@@ -98,6 +98,11 @@ class UserInfo extends ActiveRecord
 		return $this->hasMany(Task::className(), ['executor_id' => 'user_id']);
 	}
 
+	public function getReview()
+	{
+		return $this->hasMany(Review::className(), ['user_id' => 'user_id']);
+	}
+
 
 
 	/**
@@ -114,7 +119,7 @@ class UserInfo extends ActiveRecord
 	{
 		$query = UserInfo::find()
 			->joinWith('user u')
-			->joinWith('tasks t')
+
 			->limit(5)->orderBy('u.created_at ASC');
 		//На странице показывается максимум пять исполнителей.
 		// При большем числе записей следует показывать их через пагинацию.
@@ -132,16 +137,15 @@ class UserInfo extends ActiveRecord
 
 				//«Сейчас свободен» — добавляет к условию фильтрации показ исполнителей,
 				// для которых сейчас нет назначенных активных заданий
-				// role_id = 1 - зарегистрирован
-				// role_id = 2 - заказчик
-				// role_id = 3 - исполнитель
 				if ($key === 'isFree') {
+					$query->joinWith('tasks t');
 					$query->andWhere(['t.executor_id' => null]);
 				}
 
 				//«Есть отзывы» — добавляет к условию фильтрации показ исполнителей с отзывами
 				if ($key === 'review') {
-					$query->andWhere(['<', 'online', date("Y-m-d H:i:s")]);
+					$query->joinWith('review r');
+					$query->andWhere(['not', ['r.user_id' => null]]);
 				}
 
 				//«В избранном» — добавляет к условию фильтрации показ пользователей, которые были добавлены в избранное
