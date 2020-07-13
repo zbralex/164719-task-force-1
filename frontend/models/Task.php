@@ -174,4 +174,41 @@ class Task extends ActiveRecord
     public function getUserInfo() {
     	return $this->hasOne(UserInfo::className(), ['user_id' => 'executor_id']);
     }
+	public function filterForm($value)
+	{
+		$query = Task::find()
+			//->joinWith('user u')
+			->limit(5)->orderBy('created_at ASC');
+		//На странице показывается максимум пять исполнителей.
+		// При большем числе записей следует показывать их через пагинацию.
+		foreach ($value as $key => $item) {
+			if ($item) {
+				switch ($key) {
+					case 'categories':
+						$query->joinWith('category c')->where(['c.id' => $item]);
+						break;
+//					case 'online':
+//						$query->andWhere(['<=', 'online', date("Y-m-d H:i:s", strtotime("+3 hour"))]);
+//						$query->andWhere(['>=', 'online', date("Y-m-d H:i:s", strtotime("+150 minutes"))]);
+//						break;
+//					case 'isFree':
+//						$query->joinWith('tasks t');
+//						$query->andWhere(['t.executor_id' => null]);
+//						break;
+//					case 'review':
+//						$query->joinWith('review r');
+//						$query->andWhere(['not', ['r.user_id' => null]]);
+//						break;
+//					case 'favorite':
+//						$query->joinWith('favorites f');
+//						$query->andWhere(['f.user_selected_id'=>null]);
+//						break;
+//					case 'search':
+//						$query->andWhere(['LIKE', 'name', $item]);
+//						break;
+				}
+			}
+		}
+		return $query->all();
+	}
 }

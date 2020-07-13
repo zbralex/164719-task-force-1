@@ -28,14 +28,4 @@ class UserForm extends Model {
 		        'categories' => ''
 	    ];
     }
-	public function attributeLabelsCategory()
-	{
-		return [
-			'courier' => 'Курьерские услуги',
-			'cargo' => 'Грузоперевозки',
-			'translations' => 'Переводы',
-			'repair' => 'Строительство и ремонт',
-			'animals' => 'Выгул животных'
-		];
-	}
 }
