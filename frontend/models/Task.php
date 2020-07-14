@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use \yii\db\ActiveRecord;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "task".
@@ -171,40 +171,60 @@ class Task extends ActiveRecord
         return $this->hasOne(Cities::className(), ['id' => 'city_id']);
     }
 
+	public function getResponse()
+	{
+		return $this->hasMany(Response::className(), ['task_id' => 'id']);
+	}
+
     public function getUserInfo() {
     	return $this->hasOne(UserInfo::className(), ['user_id' => 'executor_id']);
     }
+
 	public function filterForm($value)
 	{
 		$query = Task::find()
-			//->joinWith('user u')
-			->limit(5)->orderBy('created_at ASC');
-		//На странице показывается максимум пять исполнителей.
-		// При большем числе записей следует показывать их через пагинацию.
+			->limit(3)->orderBy('created_at ASC');
+
+
 		foreach ($value as $key => $item) {
+
 			if ($item) {
 				switch ($key) {
+						//Группа чекбоксов «Категории» выводит все категории, существующие на сайте.
 					case 'categories':
 						$query->joinWith('category c')->where(['c.id' => $item]);
 						break;
+
+						//Выпадающий список «Период» добавляет к условию фильтрации диапазон времени, когда было создано задание.
+						//Доступные значения: за день, за неделю, за месяц, за всё время.
 					case 'period':
-						$query->andWhere(['<=', 'online', date("Y-m-d H:i:s", strtotime("+3 hour"))]);
-						$query->andWhere(['>=', 'online', date("Y-m-d H:i:s", strtotime("+150 minutes"))]);
+						switch ($item) {
+							case 'day':
+								$query->andWhere(['>=', 'created_at', date("Y-m-d H:i:s", strtotime("-1 day +3 hour"))]);
+								break;
+							case 'week':
+								$query->andWhere(['>=', 'created_at', date("Y-m-d H:i:s", strtotime("-1 week +3 hour"))]);
+								break;
+
+							case 'month':
+								$query->andWhere(['>=', 'created_at', date("Y-m-d H:i:s", strtotime("-1 month +3 hour"))]);
+								break;
+						}
 						break;
-//					case 'noResponse':
-//						$query->joinWith('response r');
-//						$query->andWhere(['r.user_id' => null]);
-//						break;
-//					case 'review':
+
+						//«Без откликов» — добавляет к условию фильтрации показ заданий только без откликов исполнителей;
+					case 'noResponse':
+						$query->joinWith('response r');
+						$query->andWhere(['r.task_id' => null]);
+						break;
+
+					//«Удалённая работа» — добавляет к условию фильтрации показ заданий без географической привязки.
+//					case 'remote':
 //						$query->joinWith('review r');
 //						$query->andWhere(['not', ['r.user_id' => null]]);
 //						break;
-//					case 'favorite':
-//						$query->joinWith('favorites f');
-//						$query->andWhere(['f.user_selected_id'=>null]);
-//						break;
 					case 'search':
-						$query->andWhere(['LIKE', 'name', $item]);
+						$query->andWhere(['LIKE', 'task.name', $item]);
 						break;
 				}
 			}

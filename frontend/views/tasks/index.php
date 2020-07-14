@@ -101,7 +101,7 @@ use yii\widgets\ActiveForm;
 					'labelOptions' => ['class' => 'search-task__name']
 				])
 					->dropDownList($filter->attributeLabelsPeriod(),
-						['class' => 'multiple-select input', 'style' => 'display: block']); ?>
+						['class' => 'multiple-select input']); ?>
 
 				<?= $form->field($filter, 'search', [
 					'template' => '{label}{input}',
