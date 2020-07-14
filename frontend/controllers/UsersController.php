@@ -15,9 +15,6 @@ class UsersController extends Controller
 			->joinWith('userCategories')
 			->all();
 
-
-
-
 		$filter = new UserForm();
 
 		if ($filter->load(Yii::$app->request->post())) {

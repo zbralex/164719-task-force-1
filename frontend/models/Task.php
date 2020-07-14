@@ -187,13 +187,13 @@ class Task extends ActiveRecord
 					case 'categories':
 						$query->joinWith('category c')->where(['c.id' => $item]);
 						break;
-//					case 'online':
-//						$query->andWhere(['<=', 'online', date("Y-m-d H:i:s", strtotime("+3 hour"))]);
-//						$query->andWhere(['>=', 'online', date("Y-m-d H:i:s", strtotime("+150 minutes"))]);
-//						break;
-//					case 'isFree':
-//						$query->joinWith('tasks t');
-//						$query->andWhere(['t.executor_id' => null]);
+					case 'period':
+						$query->andWhere(['<=', 'online', date("Y-m-d H:i:s", strtotime("+3 hour"))]);
+						$query->andWhere(['>=', 'online', date("Y-m-d H:i:s", strtotime("+150 minutes"))]);
+						break;
+//					case 'noResponse':
+//						$query->joinWith('response r');
+//						$query->andWhere(['r.user_id' => null]);
 //						break;
 //					case 'review':
 //						$query->joinWith('review r');
@@ -203,9 +203,9 @@ class Task extends ActiveRecord
 //						$query->joinWith('favorites f');
 //						$query->andWhere(['f.user_selected_id'=>null]);
 //						break;
-//					case 'search':
-//						$query->andWhere(['LIKE', 'name', $item]);
-//						break;
+					case 'search':
+						$query->andWhere(['LIKE', 'name', $item]);
+						break;
 				}
 			}
 		}
