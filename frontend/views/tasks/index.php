@@ -7,6 +7,7 @@
  */
 
 use frontend\models\Categories;
+//use frontend\models\Cities;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -31,8 +32,8 @@ use yii\widgets\ActiveForm;
 						</p>
 						<b class="new-task__price new-task__price--<?= $task->category->icon ?>"><?= $task->price ?><b>
 								₽</b></b>
-						<p class="new-task__place">Санкт-Петербург, Центральный район</p>
-						<span class="new-task__time">4 часа назад</span>
+						<p class="new-task__place"><?= $task->cities->city ?> </p>
+						<span class="new-task__time"><?=Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($task->created_at))) ?></span>
 					</div>
 				<?php endforeach; ?>
 

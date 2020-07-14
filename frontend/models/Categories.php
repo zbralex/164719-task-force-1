@@ -52,4 +52,6 @@ class Categories extends ActiveRecord
 	{
 		return $this->hasMany(UserCategory::className(), ['category_id' => 'id']);
 	}
+
+
 }

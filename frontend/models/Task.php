@@ -166,7 +166,7 @@ class Task extends ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCity()
+    public function getCities()
     {
         return $this->hasOne(Cities::className(), ['id' => 'city_id']);
     }
