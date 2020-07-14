@@ -219,10 +219,10 @@ class Task extends ActiveRecord
 						break;
 
 					//«Удалённая работа» — добавляет к условию фильтрации показ заданий без географической привязки.
-//					case 'remote':
-//						$query->joinWith('review r');
-//						$query->andWhere(['not', ['r.user_id' => null]]);
-//						break;
+					case 'remote':
+						//$query->joinWith('review r');
+						$query->andWhere(['task.city_id' => null]);
+						break;
 					case 'search':
 						$query->andWhere(['LIKE', 'task.name', $item]);
 						break;
