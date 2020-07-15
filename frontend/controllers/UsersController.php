@@ -17,12 +17,18 @@ class UsersController extends Controller
 
 		$filter = new UserForm();
 
-		if ($filter->load(Yii::$app->request->post())) {
+		if (Yii::$app->request->getIsPost()) {
+			$filter->load(Yii::$app->request->post());
+			if (!$filter->validate()) {
+				$errors = $filter->getErrors();
+				var_dump($errors);
+				die;
+			}
+
 			$request = Yii::$app->request;
 			$formContent = $request->post('UserForm');
 			$user = (new UserInfo)->filterForm($formContent);
 			$users = $user;
-
 		}
 
 		return $this->render('index', [

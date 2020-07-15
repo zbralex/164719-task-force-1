@@ -12,6 +12,14 @@ class TaskForm extends Model
 	public $period;
 	public $search;
 
+
+	public function rules()
+	{
+		return [
+			[['categories', 'noResponse', 'remote', 'period', 'search'], 'safe'],
+			[['day', 'week', 'month', 'all'], 'safe'],
+		];
+	}
 	public function attributeLabels()
 	{
 		return [
