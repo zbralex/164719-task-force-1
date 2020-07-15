@@ -22,19 +22,4 @@ class m200713_091801_change_executor_id_default_null extends Migration
     {
 	    $this->alterColumn('task', 'executor_id', $this->integer()->notNull());
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m200713_091801_change_executor_id_default_null cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
