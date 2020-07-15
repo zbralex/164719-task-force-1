@@ -118,11 +118,11 @@ class UserInfo extends ActiveRecord
 		return $this->hasOne(Cities::className(), ['id' => 'city_id']);
 	}
 
-	public function filterForm($value)
+	public function filterForm(array $value): array
 	{
 		$query = UserInfo::find()
 			->joinWith('user u')
-			->limit(5)->orderBy('u.created_at ASC');
+			->orderBy('u.created_at ASC');
 		//На странице показывается максимум пять исполнителей.
 		// При большем числе записей следует показывать их через пагинацию.
 		foreach ($value as $key => $item) {

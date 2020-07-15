@@ -180,10 +180,10 @@ class Task extends ActiveRecord
     	return $this->hasOne(UserInfo::className(), ['user_id' => 'executor_id']);
     }
 
-	public function filterForm($value)
+	public function filterForm(array $value): array
 	{
 		$query = Task::find()
-			->limit(3)->orderBy('created_at ASC');
+			->orderBy('created_at ASC');
 
 
 		foreach ($value as $key => $item) {
