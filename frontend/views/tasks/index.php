@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
 						</p>
 						<b class="new-task__price new-task__price--<?= $task->category->icon ?>"><?= $task->price ?><b>
 								₽</b></b>
-						<p class="new-task__place"><?= !isset($task->cities->city) ? 'Городе не установлен' : $task->cities->city ?> </p>
+						<p class="new-task__place"><?= !isset($task->cities->city) ? 'Город не установлен' : $task->cities->city ?> </p>
 						<span
 							class="new-task__time"><?= Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($task->created_at))) ?></span>
 					</div>
