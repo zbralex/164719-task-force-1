@@ -27,9 +27,7 @@ class TasksController extends Controller
 			}
 			$request = Yii::$app->request;
 			$formContent = $request->post('TaskForm');
-			$task = (new Task)->filterForm($formContent);
-			$tasks = $task;
-
+			$tasks = (new Task)->filterForm($formContent);
 		}
 		return $this->render('index', [
 			'tasks' => $tasks,

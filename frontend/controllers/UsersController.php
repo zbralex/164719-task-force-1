@@ -15,6 +15,8 @@ class UsersController extends Controller
 			->joinWith('userCategories')
 			->all();
 
+
+
 		$filter = new UserForm();
 
 		if (Yii::$app->request->getIsPost()) {
@@ -27,8 +29,7 @@ class UsersController extends Controller
 
 			$request = Yii::$app->request;
 			$formContent = $request->post('UserForm');
-			$user = (new UserInfo)->filterForm($formContent);
-			$users = $user;
+			$users = (new UserInfo)->filterForm($formContent);
 		}
 
 		return $this->render('index', [

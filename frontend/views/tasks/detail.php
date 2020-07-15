@@ -14,7 +14,7 @@
 							<h1><?= $detail->name?></h1>
 							<span>Размещено в категории
                                     <a href="#" class="link-regular"><?= $detail->category->name?></a>
-                                    25 минут назад</span>
+                                   <?= Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($detail->created_at))) ?></span>
 						</div>
 						<b class="new-task__price new-task__price--clean content-view-price"><?= $detail->price;?><b> ₽</b></b>
 						<div class="new-task__icon new-task__icon--clean content-view-icon"></div>

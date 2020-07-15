@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<div class="user__search-icon">
 							<a href="#"><img src="./img/man-glasses.jpg" width="65" height="65"></a>
 							<span>17 заданий</span>
-							<span>6 отзывов</span>
+							<span>6 отзывов </span>
 						</div>
 						<div class="feedback-card__top--name user__search-card">
 							<p class="link-name"><a href="<?= Url::to(['users/detail', 'id' => $user->id]); ?>"
