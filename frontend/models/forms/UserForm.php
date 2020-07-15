@@ -2,6 +2,7 @@
 
 namespace frontend\models\forms;
 
+use frontend\models\Categories;
 use yii\base\Model;
 
 class UserForm extends Model

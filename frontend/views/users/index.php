@@ -84,14 +84,11 @@ $this->params['breadcrumbs'][] = $this->title;
 					<?= $form->field($filter, 'categories')
 						->checkboxList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
 							[
-								'item' => function ($index, $label, $name, $checked, $value) {
-									return "<input  type='checkbox'  
-											name='{$name}'
-											id='{$index}'
-											value='{$value}' 
-											class=\"visually-hidden checkbox__input\">
+								'item' => function ($index, $label, $name, $checked, $value)  {
+									$checked = $checked ? 'checked':'';
+									return "<input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
 										<label for='{$index}'>{$label}</label>";
-								}]) ?>
+								}])->label(false) ?>
 				</fieldset>
 				<fieldset class="search-task__categories">
 					<legend>Дополнительно</legend>
