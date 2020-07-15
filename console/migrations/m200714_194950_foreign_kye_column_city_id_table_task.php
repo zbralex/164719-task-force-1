@@ -32,19 +32,4 @@ class m200714_194950_foreign_kye_column_city_id_table_task extends Migration
 		    'task'
 	    );
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m200714_194950_foreign_kye_column_city_id_table_task cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
