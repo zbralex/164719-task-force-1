@@ -7,10 +7,11 @@
  */
 
 use frontend\models\Categories;
-//use frontend\models\Cities;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+
+//use frontend\models\Cities;
 
 ?>
 <main class="page-main">
@@ -33,7 +34,8 @@ use yii\widgets\ActiveForm;
 						<b class="new-task__price new-task__price--<?= $task->category->icon ?>"><?= $task->price ?><b>
 								₽</b></b>
 						<p class="new-task__place"><?= $task->cities->city ?> </p>
-						<span class="new-task__time"><?=Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($task->created_at))) ?></span>
+						<span
+							class="new-task__time"><?= Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($task->created_at))) ?></span>
 					</div>
 				<?php endforeach; ?>
 
@@ -102,7 +104,14 @@ use yii\widgets\ActiveForm;
 					'labelOptions' => ['class' => 'search-task__name']
 				])
 					->dropDownList($filter->attributeLabelsPeriod(),
-						['class' => 'multiple-select input']); ?>
+						[
+							'class' => 'multiple-select input',
+							'options' => [
+								'week' => [
+									'Selected' => true
+								]
+							]
+						]); ?>
 
 				<?= $form->field($filter, 'search', [
 					'template' => '{label}{input}',

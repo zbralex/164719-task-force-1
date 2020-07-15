@@ -209,6 +209,9 @@ class Task extends ActiveRecord
 							case 'month':
 								$query->andWhere(['>=', 'created_at', date("Y-m-d H:i:s", strtotime("-1 month +3 hour"))]);
 								break;
+							case 'all':
+								$query->andWhere(['>=', 'created_at', date("Y-m-d H:i:s", strtotime("last year +3 hour"))]);
+								break;
 						}
 						break;
 

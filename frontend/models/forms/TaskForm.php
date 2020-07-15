@@ -22,12 +22,14 @@ class TaskForm extends Model
 			'search' => 'Поиск по названию'
 		];
 	}
+
 	public function attributeLabelsPeriod()
 	{
 		return [
 			'day' => 'За день',
 			'week' => 'За неделю',
-			'month' => 'За месяц'
+			'month' => 'За месяц',
+			'all' => 'За всё время',
 		];
 	}
 }
