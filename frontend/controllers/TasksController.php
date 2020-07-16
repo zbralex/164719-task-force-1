@@ -35,10 +35,10 @@ class TasksController extends Controller
 		]);
 	}
 
-	public function actionDetail($id)
+	public function actionView($id = null)
 	{
 		$detail = Task::findOne($id);
-		return $this->render('detail', [
+		return $this->render('view', [
 			'detail' => $detail
 		]);
 	}

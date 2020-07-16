@@ -12,10 +12,8 @@ class UsersController extends Controller
 	public function actionIndex()
 	{
 		$users = UserInfo::find()
-			->joinWith('userCategories')
+			->with('userCategories.category')
 			->all();
-
-
 
 		$filter = new UserForm();
 
@@ -38,10 +36,10 @@ class UsersController extends Controller
 		]);
 	}
 
-	public function actionDetail($id)
+	public function actionView($id)
 	{
 		$detail = UserInfo::findOne($id);
-		return $this->render('detail', [
+		return $this->render('view', [
 			'detail' => $detail
 		]);
 	}

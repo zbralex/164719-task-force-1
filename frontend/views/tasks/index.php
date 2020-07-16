@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 				<?php foreach ($tasks as $task): ?>
 					<div class="new-task__card">
 						<div class="new-task__title">
-							<a href="<?= Url::to(['tasks/detail', 'id' => $task->id]); ?>" class="link-regular">
+							<a href="<?= Url::to(['task/view/' . $task->id]); ?>" class="link-regular">
 								<h2><?= $task->name ?></h2></a>
 							<a class="new-task__type link-regular" href="#"><p><?= $task->category->name ?></p></a>
 						</div>

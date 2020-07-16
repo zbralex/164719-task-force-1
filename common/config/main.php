@@ -12,9 +12,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'users/<id:\d+>' => 'users/detail',
-                'users/filter/<categoryId:\d+>' => 'users/filter',
-	            'tasks/<id:\d+>' => 'tasks/detail'
+                'user/view/<id:\d+>' => 'users/view',
+	            'task/view/<id:\d+>' => 'tasks/view'
             ],
         ],
         'cache' => [
