@@ -3,6 +3,7 @@
  * @var yii\web\View $this
  * @var $detail = []
  */
+use yii\helpers\Url;
 ?>
 <main class="page-main">
 	<div class="main-container page-container">
@@ -27,8 +28,11 @@
 					</div>
 					<div class="content-view__attach">
 						<h3 class="content-view__h3">Вложения</h3>
-						<a href="#">my_picture.jpeg</a>
-						<a href="#">agreement.docx</a>
+						<?php foreach ($detail->attachments as $item):?>
+
+						<a href="<?= Url::to($item->url); ?>" class="link-regular"><?= $item->name;?></a>
+
+						<?php endforeach; ?>
 					</div>
 					<div class="content-view__location">
 						<h3 class="content-view__h3">Расположение</h3>
