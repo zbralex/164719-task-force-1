@@ -70,7 +70,7 @@ use yii\widgets\ActiveForm;
 				<fieldset class="search-task__categories">
 					<legend>Категории</legend>
 
-					<?= $form->field($filter, 'categories')
+					<?= $form->field($model, 'categories')
 						->checkboxList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
 							[
 								'item' => function ($index, $label, $name, $checked, $value)  {
@@ -82,13 +82,13 @@ use yii\widgets\ActiveForm;
 				</fieldset>
 				<fieldset class="search-task__categories">
 					<legend>Дополнительно</legend>
-					<?= $form->field($filter, 'noResponse', [
+					<?= $form->field($model, 'noResponse', [
 						'template' => '{input}{label}',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
 						false); ?>
-					<?= $form->field($filter, 'remote', [
+					<?= $form->field($model, 'remote', [
 						'template' => '{input}{label}',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
@@ -96,12 +96,12 @@ use yii\widgets\ActiveForm;
 						false); ?>
 				</fieldset>
 
-				<?= $form->field($filter, 'period', [
+				<?= $form->field($model, 'period', [
 					'template' => '{label}{input}',
 					'options' => ['class' => 'custom'],
 					'labelOptions' => ['class' => 'search-task__name']
 				])
-					->dropDownList($filter->attributeLabelsPeriod(),
+					->dropDownList($model->attributeLabelsPeriod(),
 						[
 							'class' => 'multiple-select input',
 							'options' => [
@@ -111,7 +111,7 @@ use yii\widgets\ActiveForm;
 							]
 						]); ?>
 
-				<?= $form->field($filter, 'search', [
+				<?= $form->field($model, 'search', [
 					'template' => '{label}{input}',
 					'options' => [
 						'class' => 'custom',

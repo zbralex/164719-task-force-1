@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<fieldset class="search-task__categories">
 					<legend>Категории</legend>
 
-					<?= $form->field($filter, 'categories')
+					<?= $form->field($model, 'categories')
 						->checkboxList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
 							[
 								'item' => function ($index, $label, $name, $checked, $value)  {
@@ -92,25 +92,25 @@ $this->params['breadcrumbs'][] = $this->title;
 				</fieldset>
 				<fieldset class="search-task__categories">
 					<legend>Дополнительно</legend>
-					<?= $form->field($filter, 'online', [
+					<?= $form->field($model, 'online', [
 						'template' => '{input}{label}',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
 						false); ?>
-					<?= $form->field($filter, 'isFree', [
+					<?= $form->field($model, 'isFree', [
 						'template' => '{input}{label}',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
 						false); ?>
-					<?= $form->field($filter, 'review', [
+					<?= $form->field($model, 'review', [
 						'template' => '{input}{label}',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
 						false); ?>
-					<?= $form->field($filter, 'favorite', [
+					<?= $form->field($model, 'favorite', [
 						'template' => '{input}{label}',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
@@ -119,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				</fieldset>
 
 				<?=
-				$form->field($filter, 'search', [
+				$form->field($model, 'search', [
 					'template' => '{label}{input}',
 					'options' => [
 						'class' => 'custom'

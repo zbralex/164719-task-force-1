@@ -148,7 +148,7 @@ class UserInfo extends ActiveRecord
 						$query->andWhere(['f.user_selected_id'=>null]);
 						break;
 					case 'search':
-						$query->andWhere(['LIKE', 'name', $item]);
+						$query->andWhere(['LIKE', 'user_info.name', $item]);
 						break;
 				}
 			}

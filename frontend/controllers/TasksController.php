@@ -13,16 +13,16 @@ class TasksController extends Controller
 {
 	public function actionIndex()
 	{
-		$filter = new TaskForm();
+		$model = new TaskForm();
 		$tasks = Task::find()
 			->where(['status' => 'new'])
 			->orderBy('created_at DESC')->all();
 
 		if (Yii::$app->request->getIsPost()) {
 
-			$filter->load(Yii::$app->request->post());
-			if (!$filter->validate()) {
-				$errors = $filter->getErrors();
+			$model->load(Yii::$app->request->post());
+			if (!$model->validate()) {
+				$errors = $model->getErrors();
 			}
 			$request = Yii::$app->request;
 			$formContent = $request->post('TaskForm');
@@ -30,7 +30,7 @@ class TasksController extends Controller
 		}
 		return $this->render('index', [
 			'tasks' => $tasks,
-			'filter' => $filter
+			'model' => $model
 		]);
 	}
 

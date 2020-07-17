@@ -16,12 +16,12 @@ class UsersController extends Controller
 			->with('userCategories.category')
 			->all();
 
-		$filter = new UserForm();
+		$model = new UserForm();
 
 		if (Yii::$app->request->getIsPost()) {
-			$filter->load(Yii::$app->request->post());
-			if (!$filter->validate()) {
-				$errors = $filter->getErrors();
+			$model->load(Yii::$app->request->post());
+			if (!$model->validate()) {
+				$errors = $model->getErrors();
 			}
 
 			$request = Yii::$app->request;
@@ -31,7 +31,7 @@ class UsersController extends Controller
 
 		return $this->render('index', [
 			'users' => $users,
-			'filter' => $filter
+			'model' => $model
 		]);
 	}
 
