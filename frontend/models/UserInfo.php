@@ -117,42 +117,4 @@ class UserInfo extends ActiveRecord
 	{
 		return $this->hasOne(Cities::className(), ['id' => 'city_id']);
 	}
-
-	public function filterForm(array $value): array
-	{
-		$query = UserInfo::find()
-			->joinWith('user u')
-			->orderBy('u.created_at ASC');
-		//На странице показывается максимум пять исполнителей.
-		// При большем числе записей следует показывать их через пагинацию.
-		foreach ($value as $key => $item) {
-			if ($item) {
-				switch ($key) {
-					case 'categories':
-						$query->joinWith('userCategories uc')->where(['uc.category_id' => $item]);
-						break;
-					case 'online':
-						$query->andWhere(['<=', 'online', date("Y-m-d H:i:s", strtotime("+3 hour"))]);
-						$query->andWhere(['>=', 'online', date("Y-m-d H:i:s", strtotime("+150 minutes"))]);
-						break;
-					case 'isFree':
-						$query->joinWith('tasks t');
-						$query->andWhere(['t.executor_id' => null]);
-						break;
-					case 'review':
-						$query->joinWith('review r');
-						$query->andWhere(['not', ['r.user_id' => null]]);
-						break;
-					case 'favorite':
-						$query->joinWith('favorites f');
-						$query->andWhere(['f.user_selected_id'=>null]);
-						break;
-					case 'search':
-						$query->andWhere(['LIKE', 'user_info.name', $item]);
-						break;
-				}
-			}
-		}
-		return $query->all();
-	}
 }
