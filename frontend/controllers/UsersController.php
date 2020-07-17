@@ -6,6 +6,7 @@ use frontend\models\forms\UserForm;
 use frontend\models\UserInfo;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class UsersController extends Controller
 {
@@ -37,6 +38,9 @@ class UsersController extends Controller
 	public function actionView($id)
 	{
 		$detail = UserInfo::findOne($id);
+		if (empty($detail)) {
+			throw new NotFoundHttpException("Пользователь под номером $id не найден");
+		}
 		return $this->render('view', [
 			'detail' => $detail
 		]);

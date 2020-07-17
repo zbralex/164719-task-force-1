@@ -6,6 +6,7 @@ use frontend\models\forms\TaskForm;
 use frontend\models\Task;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 
 class TasksController extends Controller
@@ -37,7 +38,9 @@ class TasksController extends Controller
 	{
 		$detail = Task::findOne($id);
 
-		// TODO показать 404
+		if (empty($detail)) {
+			throw new NotFoundHttpException("Задание с № $id не найдено");
+		}
 
 		return $this->render('view', [
 			'detail' => $detail,
