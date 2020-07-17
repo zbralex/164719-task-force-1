@@ -15,6 +15,7 @@ class TasksController extends Controller
 	{
 		$model = new TaskForm();
 		$tasks = Task::find()
+			->with('category', 'cities')
 			->where(['status' => 'new'])
 			->orderBy('created_at DESC')->all();
 
