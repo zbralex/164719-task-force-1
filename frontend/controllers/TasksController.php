@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 
+
 class TasksController extends Controller
 {
 	public function actionIndex()
@@ -16,7 +17,7 @@ class TasksController extends Controller
 		$model = new TaskForm();
 		$tasks = Task::find()
 			->with('category', 'cities')
-			->where(['status' => 'new'])
+			->where(['status' => \taskForce\classes\Task::STATUS_NEW])
 			->orderBy('created_at DESC')->all();
 
 		if (Yii::$app->request->getIsPost()) {
@@ -88,13 +89,18 @@ class TasksController extends Controller
 	public function actionView($id = null)
 	{
 		$detail = Task::findOne($id);
+		$count_tasks = Task::find()
+			->where(['author_id'=> $detail->author_id])
+			->count('author_id');
 
 		if (empty($detail)) {
 			throw new NotFoundHttpException("Задание с № $id не найдено");
 		}
 
+
 		return $this->render('view', [
 			'detail' => $detail,
+			'count_tasks' =>$count_tasks
 		]);
 	}
 

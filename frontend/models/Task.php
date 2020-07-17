@@ -148,7 +148,7 @@ class Task extends ActiveRecord
      */
     public function getAuthor()
     {
-        return $this->hasOne(User::className(), ['id' => 'author_id']);
+        return $this->hasOne(UserInfo::className(), ['user_id' => 'author_id']);
     }
 
     /**
@@ -179,9 +179,4 @@ class Task extends ActiveRecord
     public function getUserInfo() {
     	return $this->hasOne(UserInfo::className(), ['user_id' => 'executor_id']);
     }
-
-	public function filterForm(array $value): array
-	{
-
-	}
 }

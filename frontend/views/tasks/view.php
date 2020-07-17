@@ -117,14 +117,15 @@ use yii\helpers\Url;
 					<div class="profile-mini__top">
 						<img src="./img/man-brune.jpg" width="62" height="62" alt="Аватар заказчика">
 						<div class="profile-mini__name five-stars__rate">
-							<p>Николай Демченко</p>
+							<p><?= $detail->author->name?> <?= $detail->author->surname?></p>
 						</div>
 					</div>
-					<p class="info-customer"><span>12 заданий</span><span class="last-">2 года на сайте</span></p>
+					<p class="info-customer"><span><?= $count_tasks?> заданий</span><span class="last-">2 года на сайте</span></p>
 					<a href="#" class="link-regular">Смотреть профиль</a>
 				</div>
 			</div>
 			<div id="chat-container">
+
 				<!--                    добавьте сюда атрибут task с указанием в нем id текущего задания-->
 				<chat class="connect-desk__chat"></chat>
 			</div>
