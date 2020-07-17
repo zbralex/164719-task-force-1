@@ -22,8 +22,6 @@ class TasksController extends Controller
 			$filter->load(Yii::$app->request->post());
 			if (!$filter->validate()) {
 				$errors = $filter->getErrors();
-				var_dump($errors);
-				die;
 			}
 			$request = Yii::$app->request;
 			$formContent = $request->post('TaskForm');
@@ -38,6 +36,8 @@ class TasksController extends Controller
 	public function actionView($id = null)
 	{
 		$detail = Task::findOne($id);
+
+		// TODO показать 404
 
 		return $this->render('view', [
 			'detail' => $detail,

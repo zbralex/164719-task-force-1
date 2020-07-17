@@ -21,8 +21,6 @@ class UsersController extends Controller
 			$filter->load(Yii::$app->request->post());
 			if (!$filter->validate()) {
 				$errors = $filter->getErrors();
-				var_dump($errors);
-				die;
 			}
 
 			$request = Yii::$app->request;
