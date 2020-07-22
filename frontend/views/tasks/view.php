@@ -2,6 +2,8 @@
 /**
  * @var yii\web\View $this
  * @var $detail = []
+ * @var $count_tasks = ''
+ * @var $user = ''
  */
 use yii\helpers\Url;
 ?>
@@ -33,6 +35,7 @@ use yii\helpers\Url;
 						<a href="<?= Url::to($item->url); ?>" class="link-regular"><?= $item->name;?></a>
 
 						<?php endforeach; ?>
+
 					</div>
 					<div class="content-view__location">
 						<h3 class="content-view__h3">Расположение</h3>
@@ -62,43 +65,26 @@ use yii\helpers\Url;
 				<h2>Отклики <span>(2)</span></h2>
 				<div class="content-view__feedback-wrapper">
 					<div class="content-view__feedback-card">
-						<div class="feedback-card__top">
-							<a href="#"><img src="./img/man-glasses.jpg" width="55" height="55"></a>
-							<div class="feedback-card__top--name">
-								<p><a href="#" class="link-regular">Астахов Павел</a></p>
-								<span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-								<b>4.25</b>
-							</div>
-							<span class="new-task__time">25 минут назад</span>
-						</div>
-						<div class="feedback-card__content">
-							<p>
-								Могу сделать всё в лучшем виде. У меня есть необходимый опыт и инструменты.
-							</p>
-							<span>1500 ₽</span>
-						</div>
-						<div class="feedback-card__actions">
-							<a class="button__small-color request-button button"
-								type="button">Подтвердить</a>
-							<a class="button__small-color refusal-button button"
-								type="button">Отказать</a>
-						</div>
-					</div>
-					<div class="content-view__feedback-card">
+                        <?php foreach ($detail->response as $item):?>
 						<div class="feedback-card__top">
 							<a href="#"><img src="./img/man-blond.jpg" width="55" height="55"></a>
 							<div class="feedback-card__top--name">
-								<p class="link-name"><a href="#" class="link-regular">Богатырев Дмитрий</a></p>
+								<p class="link-name"><a href="#" class="link-regular">
+                                        <?= $item->userInfo->name;?>
+                                        <?= $item->userInfo->surname;?>
+                                    </a></p>
 								<span></span><span></span><span></span><span></span><span class="star-disabled"></span>
 								<b>4.25</b>
 							</div>
-							<span class="new-task__time">25 минут назад</span>
+							<span class="new-task__time">
+                                 <?= Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($item->responsed_at))) ?>
+                            </span>
 						</div>
 						<div class="feedback-card__content">
 							<p>
-								Примусь за выполнение задания в течение часа, сделаю быстро и качественно.
+                                <?= $item->comment;?>
 							</p>
-							<span>1500 ₽</span>
+							<span><?= $item->price;?> ₽</span>
 						</div>
 						<div class="feedback-card__actions">
 							<a class="button__small-color request-button button"
@@ -106,6 +92,7 @@ use yii\helpers\Url;
 							<a class="button__small-color refusal-button button"
 								type="button">Отказать</a>
 						</div>
+                        <?php endforeach; ?>
 					</div>
 				</div>
 			</div>
@@ -120,8 +107,9 @@ use yii\helpers\Url;
 							<p><?= $detail->author->name?> <?= $detail->author->surname?></p>
 						</div>
 					</div>
-					<p class="info-customer"><span><?= $count_tasks?> заданий</span><span class="last-">2 года на сайте</span></p>
-					<a href="#" class="link-regular">Смотреть профиль</a>
+					<p class="info-customer"><span><?= $count_tasks; ?> заданий</span>
+						<span class="last-">2 года на сайте</span></p>
+					<a href="<?= Url::to(['user/view/'.$detail->author->id]); ?>" class="link-regular">Смотреть профиль</a>
 				</div>
 			</div>
 			<div id="chat-container">

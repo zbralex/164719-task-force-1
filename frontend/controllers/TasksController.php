@@ -3,11 +3,13 @@
 namespace frontend\controllers;
 
 use frontend\models\forms\TaskForm;
+use frontend\models\Response;
 use frontend\models\Task;
+use frontend\models\User;
+use frontend\models\UserInfo;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
 
 
 class TasksController extends Controller
@@ -89,9 +91,17 @@ class TasksController extends Controller
 	public function actionView($id = null)
 	{
 		$detail = Task::findOne($id);
+
 		$count_tasks = Task::find()
+            ->with('userInfo.user')
 			->where(['author_id'=> $detail->author_id])
 			->count('author_id');
+
+
+		$user_created_at = User::findOne($detail->author_id);
+
+
+
 
 		if (empty($detail)) {
 			throw new NotFoundHttpException("Задание с № $id не найдено");
@@ -100,7 +110,8 @@ class TasksController extends Controller
 
 		return $this->render('view', [
 			'detail' => $detail,
-			'count_tasks' =>$count_tasks
+			'count_tasks' =>$count_tasks,
+			'user' => $user_created_at
 		]);
 	}
 
