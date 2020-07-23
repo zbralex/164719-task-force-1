@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							</p>
 						</div>
 						<span class="new-task__time">Был на сайте
-							<?=Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($user->online))) ?>
+							<?=Yii::$app->formatter->asRelativeTime(strtotime($user->online)) ?>
 						</span>
 					</div>
 					<div class="link-specialization user__search-link--bottom">
