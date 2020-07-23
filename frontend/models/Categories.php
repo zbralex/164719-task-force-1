@@ -47,4 +47,11 @@ class Categories extends ActiveRecord
     {
         return $this->hasMany(Task::className(), ['category_id' => 'id']);
     }
+
+	public function getUserCategories()
+	{
+		return $this->hasMany(UserCategory::className(), ['category_id' => 'id']);
+	}
+
+
 }

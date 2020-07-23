@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use \yii\db\ActiveRecord;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "task".
@@ -148,7 +148,7 @@ class Task extends ActiveRecord
      */
     public function getAuthor()
     {
-        return $this->hasOne(User::className(), ['id' => 'author_id']);
+        return $this->hasOne(UserInfo::className(), ['user_id' => 'author_id']);
     }
 
     /**
@@ -166,8 +166,17 @@ class Task extends ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCity()
+    public function getCities()
     {
         return $this->hasOne(Cities::className(), ['id' => 'city_id']);
+    }
+
+	public function getResponse()
+	{
+		return $this->hasMany(Response::className(), ['task_id' => 'id']);
+	}
+
+    public function getUserInfo() {
+    	return $this->hasOne(UserInfo::className(), ['user_id' => 'executor_id']);
     }
 }

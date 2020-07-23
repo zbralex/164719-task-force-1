@@ -18,10 +18,10 @@ AppAsset::register($this);
 <head>
     <meta charset="UTF-8">
     <title>TaskForce</title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
+    <?php $this->head()?>
 </head>
 <body>
+<?php $this->beginBody()?>
 <div class="table-layout">
     <header class="page-header">
         <div class="main-container page-header__container">
@@ -56,10 +56,10 @@ AppAsset::register($this);
             <div class="header__nav">
                 <ul class="header-nav__list site-list">
                     <li class="site-list__item site-list__item--active">
-                        <a href="#">Задания</a>
+                        <a href="/tasks">Задания</a>
                     </li>
                     <li class="site-list__item">
-                        <a href="#">Исполнители</a>
+                        <a href="/users">Исполнители</a>
                     </li>
                     <li class="site-list__item">
                         <a href="#">Создать задание</a>
@@ -96,7 +96,7 @@ AppAsset::register($this);
             </div>
             <div class="header__account">
                 <a class="header__account-photo">
-                    <img src="./img/user-photo.png"
+                    <img src="/img/user-photo.png"
                          width="43" height="44"
                          alt="Аватар пользователя">
                 </a>
@@ -158,7 +158,7 @@ AppAsset::register($this);
             <div class="page-footer__copyright">
                 <a>
                     <img class="copyright-logo"
-                         src="./img/academy-logo.png"
+                         src="/img/academy-logo.png"
                          width="185" height="63"
                          alt="Логотип HTML Academy">
                 </a>
