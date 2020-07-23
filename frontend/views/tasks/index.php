@@ -11,8 +11,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
-//use frontend\models\Cities;
-
 ?>
 <main class="page-main">
 	<div class="main-container page-container">
