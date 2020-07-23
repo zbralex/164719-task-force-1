@@ -62,7 +62,7 @@ use yii\helpers\Url;
 				</div>
 			</div>
 			<div class="content-view__feedback">
-				<h2>Отклики <span>(2)</span></h2>
+				<h2>Отклики <span>(<?= count($detail->response)?>)</span></h2>
 				<div class="content-view__feedback-wrapper">
 					<div class="content-view__feedback-card">
                         <?php foreach ($detail->response as $item):?>

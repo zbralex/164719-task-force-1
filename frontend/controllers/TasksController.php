@@ -93,7 +93,6 @@ class TasksController extends Controller
 		$detail = Task::findOne($id);
 
 		$count_tasks = Task::find()
-            ->with('userInfo.user')
 			->where(['author_id'=> $detail->author_id])
 			->count('author_id');
 
