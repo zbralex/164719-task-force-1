@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-class RegisterController extends \yii\web\Controller
+class SignupController extends \yii\web\Controller
 {
     public function actionIndex()
     {

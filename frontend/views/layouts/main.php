@@ -54,7 +54,7 @@ AppAsset::register($this);
                     </svg>
                 </a>
             </div>
-            <?php if (Yii::$app->controller->id !== 'register'):?>
+            <?php if (Yii::$app->controller->id !== 'signup'):?>
             <div class="header__nav">
                 <ul class="header-nav__list site-list">
                     <li class="site-list__item site-list__item--active">
