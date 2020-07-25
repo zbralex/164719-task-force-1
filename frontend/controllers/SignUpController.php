@@ -2,11 +2,16 @@
 
 namespace frontend\controllers;
 
+use frontend\models\forms\SignupForm;
+
 class SignupController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new SignupForm();
+        return $this->render('index', [
+            'model' => $model
+        ]);
     }
 
 }
