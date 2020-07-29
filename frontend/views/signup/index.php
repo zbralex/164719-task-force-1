@@ -1,44 +1,55 @@
 <?php
-/* @var $this yii\web\View */
+/* @var $this yii\web\View
+ * @property $cities = []
+ */
 
+
+use frontend\models\Cities;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use frontend\models\Cities;
 
 ?>
+
 <main class="page-main">
     <div class="main-container page-container">
         <section class="registration__user">
             <h1>Регистрация аккаунта</h1>
             <div class="registration-wrapper">
-                <?php $form = ActiveForm::begin([
+
+                <?php
+                $formSignUp = ActiveForm::begin([
+                    'id' => 'signup',
+//                    'enableAjaxValidation'=>true,
+//                    'validateOnSubmit' => true,
+//                    'validateOnChange' => true,
+//                    'validateOnType' => true,
                     'fieldConfig' => [
                         'options' => [
                             'tag' => false,
+                            'template' => "{label}\n{input}\n{hint}\n{error}",
+                        ],
+                        'labelOptions' => [
+                            //'class' => $model->getErrors() ?? 'input-danger'
                         ]
                     ],
                     'options' => [
-                        'name' => 'registration',
                         'class' => 'registration__user-form form-create'
-                    ],
+                    ]
 
-                ]) ?>
-                <?= $form->field($model, 'email', [
-                    'template' => '{label}{input}{hint}',
-                    'options' => [
-                        'class' => 'custom',
-                    ],
-                    'labelOptions' => []
+                ]); ?>
+
+
+                <?= $formSignUp->field($model, 'email', [
+
                 ])->textInput([
                     'class' => 'input textarea',
                     'placeholder' => 'kumarm@mail.ru'
                 ])->hint('Введите валидный адрес электронной почты', [
                     'tag' => 'span'
-                ]);
+                ])
                 ?>
 
-                <?= $form->field($model, 'nameSurname', [
-                    'template' => '{label}{input}{hint}',
+                <?= $formSignUp->field($model, 'name', [
                     'options' => [
                         'class' => 'custom',
                     ],
@@ -50,10 +61,8 @@ use frontend\models\Cities;
                     'tag' => 'span'
                 ]);
                 ?>
-                <?= $form->field($model, 'city', [
-                    'template' => '{label}{input}{hint}',
-                    'options' => ['class' => 'custom'],
-                    'labelOptions' => []
+                <?= $formSignUp->field($model, 'city_id', [
+                    'options' => ['class' => 'custom']
                 ])
                     ->dropDownList(Cities::find()->select(['city', 'id'])->indexBy('id')->column(),
                         [
@@ -65,9 +74,9 @@ use frontend\models\Cities;
                             ]
                         ])->hint('Укажите город, чтобы находить подходящие задачи', [
                         'tag' => 'span'
-                    ]); ?>
-                <?= $form->field($model, 'password', [
-                    'template' => '{label}{input}{hint}',
+                    ])->label('Город проживания'); ?>
+
+                <?= $formSignUp->field($model, 'password', [
                     'options' => [
                         'class' => 'custom',
                     ],
@@ -76,7 +85,7 @@ use frontend\models\Cities;
                     ]
                 ])->passwordInput([
                     'class' => 'input textarea'
-                ])->hint('Укажите город, чтобы находить подходящие задачи', [
+                ])->hint('Длина пароля от 8 символов', [
                     'tag' => 'span'
                 ]);
                 ?>
@@ -84,10 +93,11 @@ use frontend\models\Cities;
                 <?= Html::submitButton('Cоздать аккаунт', [
                     'class' => 'button button__registration'
                 ]) ?>
-
                 <?php ActiveForm::end(); ?>
             </div>
         </section>
 
     </div>
 </main>
+
+

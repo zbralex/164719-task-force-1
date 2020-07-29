@@ -3,7 +3,6 @@
  * @var yii\web\View $this
  * @var Task[] $tasks
  * @var Categories[] $categories
- * @var $filter
  */
 
 use frontend\models\Categories;

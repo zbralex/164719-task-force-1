@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use Yii;
 use  \yii\db\ActiveRecord;
 
 /**
@@ -27,6 +28,7 @@ use  \yii\db\ActiveRecord;
  * @property UserInfo[] $userInfos
  * @property UserVisit[] $userVisits
  * @property UserVisit[] $userVisits0
+ *
  */
 class User extends ActiveRecord
 {
@@ -60,9 +62,10 @@ class User extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'email' => 'Email',
-            'password' => 'Password',
-            'city_id' => 'City ID',
+            'email' => 'Электронная почта',
+	        'name' => 'Ваше имя',
+            'password' => 'Пароль',
+            'city_id' => 'Город проживания',
             'created_at' => 'Created At',
         ];
     }
@@ -206,4 +209,12 @@ class User extends ActiveRecord
     {
         return $this->hasMany(UserVisit::className(), ['user_guest_id' => 'id']);
     }
+
+    public function setPassword($password)
+    {
+        $this->password = Yii::$app->security->generatePasswordHash($this->password);
+    }
+
+
+
 }

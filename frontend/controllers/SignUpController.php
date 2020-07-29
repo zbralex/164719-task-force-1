@@ -2,16 +2,39 @@
 
 namespace frontend\controllers;
 
-use frontend\models\forms\SignupForm;
 
-class SignupController extends \yii\web\Controller
+use frontend\models\Cities;
+use frontend\models\User;
+use Yii;
+use yii\web\Controller;
+use yii\widgets\ActiveForm;
+
+class SignupController extends Controller
 {
-    public function actionIndex()
-    {
-        $model = new SignupForm();
-        return $this->render('index', [
-            'model' => $model
-        ]);
-    }
 
+	public function actionIndex()
+	{
+        $model = new User();
+        $model->load(\Yii::$app->request->post());
+
+        if (Yii::$app->request->isAjax) {
+            return ActiveForm::validate($model);
+        }
+
+		if (Yii::$app->request->getIsPost()) {
+
+			if (!$model->validate()) {
+                $errors = $model->getErrors();
+			}
+
+            if ($model->validate()) {
+                $model->setPassword($model->password);
+                return $model->save() && $this->goHome();
+            }
+		}
+
+		return $this->render('index', [
+			'model' => $model
+		]);
+	}
 }
