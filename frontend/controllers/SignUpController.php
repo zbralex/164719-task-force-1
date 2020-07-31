@@ -23,10 +23,6 @@ class SignupController extends Controller
 
 		if (Yii::$app->request->getIsPost()) {
 
-			if (!$model->validate()) {
-                $errors = $model->getErrors();
-			}
-
             if ($model->validate()) {
                 $model->setPassword($model->password);
                 return $model->save() && $this->goHome();
