@@ -6,7 +6,7 @@ return [
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
 	'language' => 'ru-RU',
-	//'timeZone' => 'Europe/Moscow',
+	'timeZone' => 'Europe/Moscow',
     'components' => [
         'urlManager' => [
             'enablePrettyUrl' => true,

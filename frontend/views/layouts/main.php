@@ -22,6 +22,7 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody()?>
+
 <div class="table-layout">
     <header class="page-header">
         <div class="main-container page-header__container">
@@ -53,6 +54,7 @@ AppAsset::register($this);
                     </svg>
                 </a>
             </div>
+            <?php if (Yii::$app->controller->id !== 'signup'):?>
             <div class="header__nav">
                 <ul class="header-nav__list site-list">
                     <li class="site-list__item site-list__item--active">
@@ -117,6 +119,7 @@ AppAsset::register($this);
                     </li>
                 </ul>
             </div>
+            <?php endif; ?>
         </div>
     </header>
         <?= $content ?>

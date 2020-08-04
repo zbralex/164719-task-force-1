@@ -17,7 +17,7 @@ use yii\helpers\Url;
 							<h1><?= $detail->name?></h1>
 							<span>Размещено в категории
                                     <a href="#" class="link-regular"><?= $detail->category->name?></a>
-                                   <?= Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($detail->created_at))) ?></span>
+                                   <?= Yii::$app->formatter->asRelativeTime(strtotime($detail->created_at)) ?></span>
 						</div>
 						<b class="new-task__price new-task__price--clean content-view-price"><?= $detail->price;?><b> ₽</b></b>
 						<div class="new-task__icon new-task__icon--clean content-view-icon"></div>
@@ -77,7 +77,7 @@ use yii\helpers\Url;
 								<b>4.25</b>
 							</div>
 							<span class="new-task__time">
-                                 <?= Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($item->responsed_at))) ?>
+                                 <?= Yii::$app->formatter->asRelativeTime(strtotime($item->responsed_at)) ?>
                             </span>
 						</div>
 						<div class="feedback-card__content">

@@ -90,8 +90,11 @@ class TasksController extends Controller
 
 	public function actionView($id = null)
 	{
-		$detail = Task::findOne($id);
 
+		$detail = Task::findOne($id);
+        if (empty($detail)) {
+            throw new NotFoundHttpException("Задание с № $id не найдено");
+        }
 		$count_tasks = Task::find()
 			->where(['author_id'=> $detail->author_id])
 			->count('author_id');
@@ -100,11 +103,6 @@ class TasksController extends Controller
 		$user_created_at = User::findOne($detail->author_id);
 
 
-
-
-		if (empty($detail)) {
-			throw new NotFoundHttpException("Задание с № $id не найдено");
-		}
 
 
 		return $this->render('view', [

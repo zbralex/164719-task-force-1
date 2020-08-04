@@ -3,7 +3,6 @@
  * @var yii\web\View $this
  * @var Task[] $tasks
  * @var Categories[] $categories
- * @var $filter
  */
 
 use frontend\models\Categories;
@@ -33,7 +32,7 @@ use yii\widgets\ActiveForm;
 								₽</b></b>
 						<p class="new-task__place"><?= !isset($task->cities->city) ? 'Город не установлен' : $task->cities->city ?> </p>
 						<span
-							class="new-task__time"><?= Yii::$app->formatter->asRelativeTime(strtotime('-3 hour', strtotime($task->created_at))) ?></span>
+							class="new-task__time"><?= Yii::$app->formatter->asRelativeTime(strtotime($task->created_at)) ?></span>
 					</div>
 				<?php endforeach; ?>
 
