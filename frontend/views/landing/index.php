@@ -276,7 +276,7 @@ AppAsset::register($this);
 		]); ?>
 
 		<?= $form->field($model, 'email', [
-			'template' => '{label}{input}',
+			'template' => '{label}{input}{error}',
 			'options' => [
 				'class' => 'custom',
 			],
@@ -288,14 +288,14 @@ AppAsset::register($this);
 		]);
 		?>
 		<?= $form->field($model, 'password', [
-			'template' => '{label}{input}',
+			'template' => '{label}{input}{error}',
 			'options' => [
 				'class' => 'custom',
 			],
 			'labelOptions' => [
 				'class' => 'form-modal-description',
 			]
-		])->input('text', [
+		])->input('password', [
 			'class' => 'enter-form-email input input-middle'
 		]);
 		?>

@@ -15,8 +15,7 @@ class SecuredController extends Controller
 				'rules' => [
 					[
 						'allow' => true,
-						'actions' => ['login', 'signup'],
-						'roles' => ['?'],
+						'roles' => ['@'],
 					]
 				],
 			],

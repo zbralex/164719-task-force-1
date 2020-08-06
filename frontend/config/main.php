@@ -11,31 +11,27 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'components' => [
-        'request' => [
-            'csrfParam' => '_csrf-frontend',
-        ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-        ],
-        'session' => [
-            // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
-        ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
-    ],
+	'language' => 'ru-RU',
+	'timeZone' => 'Europe/Moscow',
+	'components' => [
+		'user' => [
+			'identityClass' => 'frontend\models\User',
+			'enableAutoLogin' => true,
+			'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+			'loginUrl' => ['/landing/'],
+		],
+		'urlManager' => [
+			'enablePrettyUrl' => true,
+			'showScriptName' => false,
+			'rules' => [
+				'/' => '/tasks',
+				'user/view/<id:\d+>' => 'users/view',
+				'task/view/<id:\d+>' => 'tasks/view'
+			],
+		],
+		'cache' => [
+			'class' => 'yii\caching\FileCache',
+		],
+	],
     'params' => $params,
 ];
