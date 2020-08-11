@@ -3,6 +3,7 @@
 /* @var $content string */
 
 use frontend\assets\AppAsset;
+use yii\helpers\Html;
 
 AppAsset::register($this);
 ?>
@@ -12,6 +13,7 @@ AppAsset::register($this);
 <head>
 	<meta charset="UTF-8">
 	<title>TaskForce</title>
+	<?= Html::csrfMetaTags() ?>
 	<?php $this->head()?>
 </head>
 <body class="landing">
