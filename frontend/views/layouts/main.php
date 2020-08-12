@@ -125,7 +125,7 @@ AppAsset::register($this);
 							alt="Аватар пользователя">
 					</a>
 					<span class="header__account-name">
-                 Василий
+                  <?= Yii::$app->user->getIdentity()->name ?>
              </span>
 				</div>
 				<div class="account__pop-up">

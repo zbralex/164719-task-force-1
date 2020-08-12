@@ -47,7 +47,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['email', 'password', 'city_id'], 'required'],
+            [['email', 'password', 'city_id', 'name'], 'required'],
             [['city_id'], 'integer'],
             [['created_at'], 'safe'],
             [['email', 'password'], 'string', 'max' => 255],
