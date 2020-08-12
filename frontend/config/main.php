@@ -18,7 +18,7 @@ return [
 			'identityClass' => 'frontend\models\User',
 			'enableAutoLogin' => true,
 			'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-			'loginUrl' => ['/landing'],
+			'loginUrl' => ['/landing']
 		],
 		'urlManager' => [
 			'enablePrettyUrl' => true,

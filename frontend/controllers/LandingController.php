@@ -26,7 +26,6 @@ class LandingController extends Controller {
 			}
 		}
 		return $this->render('index', [
-
 			'model' => $model
 		]);
 	}

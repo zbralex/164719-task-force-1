@@ -10,6 +10,7 @@ use frontend\assets\AppAsset;
 use yii\widgets\ActiveForm;
 use common\widgets\Alert;
 use frontend\models;
+use yii\widgets\Pjax;
 
 AppAsset::register($this);
 ?>
@@ -49,7 +50,7 @@ AppAsset::register($this);
 				<a href="#" class="header__account-enter open-modal" data-for="enter-form">
 					<span>Вход</span></a>
 				или
-				<a href="signup.html" class="header__account-registration">
+				<a href="/signup" class="header__account-registration">
 					Регистрация
 				</a>
 			</div>
@@ -262,6 +263,8 @@ AppAsset::register($this);
 	</footer>
 	<section class="modal enter-form form-modal" id="enter-form">
 		<h2>Вход на сайт</h2>
+		<?php Pjax::begin([
+]);?>
 		<?php $form = ActiveForm::begin([
 			'fieldConfig' => [
 				'options' => [
@@ -269,6 +272,7 @@ AppAsset::register($this);
 				]
 			],
 			'options' => [
+				'data' => ['pjax' => true],
 				'name' => 'tasks',
 				'class' => 'search-task__form'
 			],
@@ -301,7 +305,7 @@ AppAsset::register($this);
 		?>
 		<?= Html::submitButton('Войти', ['class' => 'button']) ?>
 		<?php ActiveForm::end();?>
-
+<?php Pjax::end();?>
 
 		<?= Html::button('Закрыть', ['class' => 'form-modal-close']) ?>
 
