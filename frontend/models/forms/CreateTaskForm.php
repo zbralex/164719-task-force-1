@@ -15,12 +15,16 @@ class CreateTaskForm extends Model {
 	public function rules()
 	{
 		return [
-			[['name', 'description', 'category'], 'required'],
-			[['name','description'], 'trim'],
-			[['name'], 'string', 'min' => 10],
-			[['description'], 'string', 'min' => 30],
+			[['name','description'], 'filter','filter'=>'trim'],
+			[['name'], 'string', 'min' => 10, 'message' => 'минимальная длина 10 символов'],
+			[['description'], 'string', 'min' => 30, 'message' => 'минимальная длина 30 символов'],
 			[['execution_date'], 'date'],
-			[['attachment'], 'file', 'maxFiles' => 10]
+			[['attachment'], 'file', 'maxFiles' => 10],
+			[['price'], 'number', 'message' => 'Введите число или оставьте поле пустым'],
+			[['price'], 'default', 'value' => null],
+			[['name'], 'required', 'message' => 'Поле «Название» обязательно для заполнения'],
+			[['description'], 'required', 'message' => 'Поле «Описание» обязательно для заполнения'],
+			[['category'], 'required', 'message' => "Это поле должно быть выбрано. Задание должно принадлежать одной из категорий"],
 		];
 	}
 	public function attributeLabels()

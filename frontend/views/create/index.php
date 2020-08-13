@@ -1,19 +1,20 @@
 <?php
 
 use frontend\models\Categories;
+use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
-
+use yii\bootstrap\DatePicker;
 ?>
 <main class="page-main">
 	<div class="main-container page-container">
 		<section class="create__task">
 			<h1>Публикация нового задания</h1>
 			<div class="create__task-main">
-				<?php Pjax::begin([
-				]); ?>
+
 				<?php $form = ActiveForm::begin([
 					'id' => 'task-form',
+					'enableAjaxValidation' => true,
 					'fieldConfig' => [
 						'options' => [
 							'tag' => false,
@@ -27,7 +28,8 @@ use yii\widgets\Pjax;
 				]) ?>
 
 				<?= $form->field($model, 'name', [
-					'template' => "{label}{input}<span>{hint}</span>{error}",
+//					'enableAjaxValidation' => true,
+					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 				])->textarea([
 					'class' => 'input textarea',
 					'rows' => 1,
@@ -37,7 +39,7 @@ use yii\widgets\Pjax;
 
 
 				<?= $form->field($model, 'description', [
-					'template' => "{label}{input}<span>{hint}</span>{error}",
+					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 				])->textarea([
 					'class' => 'input textarea',
 					'rows' => 7,
@@ -46,15 +48,13 @@ use yii\widgets\Pjax;
 				?>
 
 				<?= $form->field($model, 'category', [
-					'template' => "{label}{input}<span>{hint}</span>",
+					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 					'options' => ['class' => 'custom']
 				])
 					->dropDownList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
 						[
 							'class' => 'multiple-select input multiple-select-big',
 						])->hint('Выберите категорию'); ?>
-
-
 
 
 					<?= $form->field($model, 'attachment', [
@@ -67,7 +67,7 @@ use yii\widgets\Pjax;
 						->fileInput([
 							'multiple' => 'multiple',
 							'class' => 'dropzone',
-							'name'=>"files",
+							'name'=>'files[]',
 							'style' => 'display: none'
 						])
 						->hint('Добавить новый файл'); ?>
@@ -79,19 +79,28 @@ use yii\widgets\Pjax;
 				<span>Укажите адрес исполнения, если задание требует присутствия</span>
 				<div class="create__price-time">
 					<div class="create__price-time--wrapper">
-						<label for="14">Бюджет</label>
-						<textarea class="input textarea input-money" rows="1" id="14" name=""
-							placeholder="1000"></textarea>
-						<span>Не заполняйте для оценки исполнителем</span>
+
+						<?= $form->field($model, 'price', [
+							'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
+						])->textarea([
+							'class' => 'input textarea input-money',
+							'rows' => 1,
+							'placeholder' => '1000'
+						])->hint('Не заполняйте для оценки исполнителем');
+						?>
 					</div>
 					<div class="create__price-time--wrapper">
-						<label for="15">Срок исполнения</label>
-						<input id="15" class="input-middle input input-date" type="date" placeholder="10.11, 15:00">
-						<span>Укажите крайний срок исполнения</span>
+
+						<?= $form->field($model, 'execution_date', [
+							'template' => "{label}{input}<span>{hint}</span>{error}",
+						])->input('date', [
+							'class' => 'input-middle input input-date'
+						])->hint('Укажите крайний срок исполнения');
+						?>
+
 					</div>
 				</div>
 				<?php ActiveForm::end(); ?>
-				<?php Pjax::end(); ?>
 				<div class="create__warnings">
 					<div class="warning-item warning-item--advice">
 						<h2>Правила хорошего описания</h2>
@@ -105,15 +114,21 @@ use yii\widgets\Pjax;
 							что всё в фокусе, а фото показывает объект со всех
 							ракурсов.</p>
 					</div>
+					<?php if ($model->errors): ?>
 					<div class="warning-item warning-item--error">
 						<h2>Ошибки заполнения формы</h2>
+						<?= $form->errorSummary($model); ?>
+<!--						--><?php //foreach ($errors as $key => $item): ?>
+<!--							<h3>--><?//= $item?><!--</h3>-->
+<!--						--><?php //endforeach;?>
 						<h3>Категория</h3>
 						<p>Это поле должно быть выбрано.<br>
 							Задание должно принадлежать одной из категорий</p>
 					</div>
+					<?php endif;?>
 				</div>
 			</div>
-			<button form="task-form" class="button" type="submit">Опубликовать</button>
+			<?= Html::button('Опубликовать', ['class' => 'button']) ?>
 		</section>
 	</div>
 </main>
