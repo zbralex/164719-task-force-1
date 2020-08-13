@@ -214,6 +214,11 @@ AppAsset::register($this);
 
 
 <?php $this->endBody() ?>
+<?php if (Yii::$app->controller->id == 'create'): ?>
+	<script>
+		var dropzone = new Dropzone("div.create__file", {url: "/", paramName: "Attach"});
+	</script>
+<?php endif; ?>
 </body>
 </html>
 <?php $this->endPage() ?>
