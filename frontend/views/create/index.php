@@ -3,8 +3,6 @@
 use frontend\models\Categories;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\widgets\Pjax;
-use yii\bootstrap\DatePicker;
 ?>
 <main class="page-main">
 	<div class="main-container page-container">
@@ -118,9 +116,6 @@ use yii\bootstrap\DatePicker;
 					<div class="warning-item warning-item--error">
 						<h2>Ошибки заполнения формы</h2>
 						<?= $form->errorSummary($model); ?>
-<!--						--><?php //foreach ($errors as $key => $item): ?>
-<!--							<h3>--><?//= $item?><!--</h3>-->
-<!--						--><?php //endforeach;?>
 						<h3>Категория</h3>
 						<p>Это поле должно быть выбрано.<br>
 							Задание должно принадлежать одной из категорий</p>
