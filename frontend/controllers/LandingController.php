@@ -22,7 +22,7 @@ class LandingController extends Controller {
 
 				Yii::$app->user->login($user);
 
-				return $this->goHome();
+				return $this->goBack('/tasks');
 			}
 		}
 		return $this->render('index', [

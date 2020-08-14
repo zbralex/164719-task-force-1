@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\forms\CreateTaskForm;
 use frontend\models\forms\TaskForm;
 use frontend\models\Response;
 use frontend\models\Task;
@@ -102,13 +103,27 @@ class TasksController extends SecuredController
 
 		$user_created_at = User::findOne($detail->author_id);
 
-
-
-
 		return $this->render('view', [
 			'detail' => $detail,
 			'count_tasks' =>$count_tasks,
 			'user' => $user_created_at
+		]);
+	}
+
+	public function actionCreate() {
+		$model = new CreateTaskForm();
+		$model->load(\Yii::$app->request->post());
+
+		if (!$model->validate()) {
+			$errors = $model->getErrors();
+			var_dump($errors);
+		}
+		$request = Yii::$app->request;
+		$formContent = $request->post('CreateTaskForm');
+		var_dump($formContent);
+
+		return $this->render('create', [
+			'model' => $model
 		]);
 	}
 

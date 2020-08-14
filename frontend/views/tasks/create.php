@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 			<div class="create__task-main">
 
 				<?php $form = ActiveForm::begin([
-					'id' => 'task-form',
+					'id' => 'create-task-form',
 					'enableAjaxValidation' => true,
 					'fieldConfig' => [
 						'options' => [
@@ -26,7 +26,6 @@ use yii\widgets\ActiveForm;
 				]) ?>
 
 				<?= $form->field($model, 'name', [
-//					'enableAjaxValidation' => true,
 					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 				])->textarea([
 					'class' => 'input textarea',
@@ -55,21 +54,20 @@ use yii\widgets\ActiveForm;
 						])->hint('Выберите категорию'); ?>
 
 
-					<?= $form->field($model, 'attachment', [
-						'template' => " {label}
+				<?= $form->field($model, 'attachment[]', [
+					'template' => " {label}
                                         <span>Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу</span>
                                         <div class=\"create__file\">
 										{input}
-										<span>{hint}</span></div>"
+										<span>{hint}</span><span>{error}</span></div>"
+				])
+					->fileInput([
+						'multiple' => 'multiple',
+						'class' => 'dropzone',
+						'style' => 'display: none'
 					])
-						->fileInput([
-							'multiple' => 'multiple',
-							'class' => 'dropzone',
-							'name'=>'files[]',
-							'style' => 'display: none'
-						])
-						->hint('Добавить новый файл'); ?>
-					<!--                          <input type="file" name="files[]" class="dropzone">-->
+					->hint('Добавить новый файл'); ?>
+				<!--                          <input type="file" name="files[]" class="dropzone">-->
 
 				<label for="13">Локация</label>
 				<input class="input-navigation input-middle input" id="13" type="search" name="q"
@@ -98,6 +96,8 @@ use yii\widgets\ActiveForm;
 
 					</div>
 				</div>
+
+				<?= Html::button('Опубликовать', ['class' => 'button']) ?>
 				<?php ActiveForm::end(); ?>
 				<div class="create__warnings">
 					<div class="warning-item warning-item--advice">
@@ -113,17 +113,16 @@ use yii\widgets\ActiveForm;
 							ракурсов.</p>
 					</div>
 					<?php if ($model->errors): ?>
-					<div class="warning-item warning-item--error">
-						<h2>Ошибки заполнения формы</h2>
-						<?= $form->errorSummary($model); ?>
-						<h3>Категория</h3>
-						<p>Это поле должно быть выбрано.<br>
-							Задание должно принадлежать одной из категорий</p>
-					</div>
+						<div class="warning-item warning-item--error">
+							<h2>Ошибки заполнения формы</h2>
+							<?= $form->errorSummary($model); ?>
+							<h3>Категория</h3>
+							<p>Это поле должно быть выбрано.<br>
+								Задание должно принадлежать одной из категорий</p>
+						</div>
 					<?php endif;?>
 				</div>
 			</div>
-			<?= Html::button('Опубликовать', ['class' => 'button']) ?>
 		</section>
 	</div>
 </main>
