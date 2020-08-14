@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 				<?php $form = ActiveForm::begin([
 					'id' => 'create-task-form',
-					'enableAjaxValidation' => true,
+					'enableClientValidation' => true,
 					'fieldConfig' => [
 						'options' => [
 							'tag' => false,
@@ -27,9 +27,8 @@ use yii\widgets\ActiveForm;
 
 				<?= $form->field($model, 'name', [
 					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-				])->textarea([
+				])->input('text', [
 					'class' => 'input textarea',
-					'rows' => 1,
 					'placeholder' => 'Повесить полку'
 				])->hint('Кратко опишите суть работы');
 				?>
@@ -67,12 +66,11 @@ use yii\widgets\ActiveForm;
 						'style' => 'display: none'
 					])
 					->hint('Добавить новый файл'); ?>
-				<!--                          <input type="file" name="files[]" class="dropzone">-->
 
-				<label for="13">Локация</label>
-				<input class="input-navigation input-middle input" id="13" type="search" name="q"
-					placeholder="Санкт-Петербург, Калининский район">
-				<span>Укажите адрес исполнения, если задание требует присутствия</span>
+<!--				<label for="13">Локация</label>-->
+<!--				<input class="input-navigation input-middle input" id="13" type="search" name="q"-->
+<!--					placeholder="Санкт-Петербург, Калининский район">-->
+<!--				<span>Укажите адрес исполнения, если задание требует присутствия</span>-->
 				<div class="create__price-time">
 					<div class="create__price-time--wrapper">
 
@@ -97,8 +95,11 @@ use yii\widgets\ActiveForm;
 					</div>
 				</div>
 
-				<?= Html::button('Опубликовать', ['class' => 'button']) ?>
+
+				<?= Html::submitButton('Опубликовать', ['class' => 'button']) ?>
+
 				<?php ActiveForm::end(); ?>
+
 				<div class="create__warnings">
 					<div class="warning-item warning-item--advice">
 						<h2>Правила хорошего описания</h2>
@@ -122,7 +123,10 @@ use yii\widgets\ActiveForm;
 						</div>
 					<?php endif;?>
 				</div>
+
+
 			</div>
+
 		</section>
 	</div>
 </main>

@@ -112,15 +112,18 @@ class TasksController extends SecuredController
 
 	public function actionCreate() {
 		$model = new CreateTaskForm();
-		$model->load(\Yii::$app->request->post());
 
-		if (!$model->validate()) {
-			$errors = $model->getErrors();
-			var_dump($errors);
+
+		if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+			// данные в $model удачно проверены
+
+			print "делаем что-то полезное с model ...";
+
+
 		}
-		$request = Yii::$app->request;
-		$formContent = $request->post('CreateTaskForm');
-		var_dump($formContent);
+		if(!$model->validate()) {
+			$model->getErrors();
+		}
 
 		return $this->render('create', [
 			'model' => $model
