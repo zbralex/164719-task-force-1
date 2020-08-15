@@ -10,7 +10,22 @@ use Yii;
 
 class LandingController extends Controller {
 
-	public function actionIndex() {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ]
+                ],
+            ],
+        ];
+    }
+
+    public function actionIndex() {
 		$model = new LoginForm();
 		$this->layout = 'landing';
 
