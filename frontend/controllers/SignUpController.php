@@ -12,9 +12,23 @@ use yii\widgets\ActiveForm;
 
 class SignupController extends Controller
 {
-
+    public function beforeAction($action)
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goBack('/tasks');
+        }
+        else {
+            $model = new User();
+            return $this->render('index', [
+                'model' => $model
+            ]);
+        }
+    }
 	public function behaviors()
 	{
+
+	    $this->beforeAction('index');
+
 		return [
 			'access' => [
 				'class' => AccessControl::class,
@@ -30,10 +44,16 @@ class SignupController extends Controller
 		];
 	}
 
-	public function actionIndex()
+
+
+    public function actionIndex()
 	{
+
+
         $model = new User();
         $model->load(\Yii::$app->request->post());
+
+
 
         if (Yii::$app->request->isAjax) {
             return ActiveForm::validate($model);
