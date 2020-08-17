@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use  \yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -30,7 +31,7 @@ use  \yii\db\ActiveRecord;
  * @property UserVisit[] $userVisits0
  *
  */
-class User extends ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -46,7 +47,7 @@ class User extends ActiveRecord
     public function rules()
     {
         return [
-            [['email', 'password', 'city_id'], 'required'],
+            [['email', 'password', 'city_id', 'name'], 'required'],
             [['city_id'], 'integer'],
             [['created_at'], 'safe'],
             [['email', 'password'], 'string', 'max' => 255],
@@ -215,6 +216,36 @@ class User extends ActiveRecord
         $this->password = Yii::$app->security->generatePasswordHash($this->password);
     }
 
+
+	public static function findIdentity($id)
+	{
+		return static::findOne($id);
+	}
+
+	public static function findIdentityByAccessToken($token, $type = null)
+	{
+		return static::findOne(['access_token' => $token]);
+	}
+
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	public function getAuthKey()
+	{
+		return $this->authKey;
+	}
+
+	public function validateAuthKey($authKey)
+	{
+		return $this->authKey === $authKey;
+	}
+
+	public function validatePassword($password)
+	{
+		return \Yii::$app->security->validatePassword($password, $this->password);
+	}
 
 
 }

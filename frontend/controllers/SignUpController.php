@@ -6,16 +6,21 @@ namespace frontend\controllers;
 use frontend\models\Cities;
 use frontend\models\User;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\widgets\ActiveForm;
 
 class SignupController extends Controller
 {
 
-	public function actionIndex()
+    public function actionIndex()
 	{
+	    if(!Yii::$app->user->isGuest) {
+            return $this->redirect('/tasks');
+        }
         $model = new User();
         $model->load(\Yii::$app->request->post());
+
 
         if (Yii::$app->request->isAjax) {
             return ActiveForm::validate($model);
