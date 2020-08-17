@@ -10,22 +10,12 @@ use Yii;
 
 class LandingController extends Controller {
 
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ]
-                ],
-            ],
-        ];
-    }
-
     public function actionIndex() {
+
+        if(!Yii::$app->user->isGuest) {
+            return $this->redirect('/tasks');
+        }
+
 		$model = new LoginForm();
 		$this->layout = 'landing';
 

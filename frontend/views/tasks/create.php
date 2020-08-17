@@ -53,21 +53,13 @@ use yii\widgets\ActiveForm;
 						])->hint('Выберите категорию'); ?>
 
 
-				<?= $form->field($model, 'attachment[]', [
-					'template' => " {label}
-                                        <span>Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу</span>
-                                        <div class=\"create__file\">
-										{input}
-										<span>{hint}</span><span>{error}</span></div>"
-				])
-					->fileInput([
+				<?= $form->field($model, 'files[]', [
+					'template' => "{label}{input}<span class='create__file'>{hint}</span><span style='color: red'>{error}</span>"])->fileInput([
 						'multiple' => 'multiple',
 						'class' => 'dropzone',
-						'style' => 'display: none'
-					])
-					->hint('Добавить новый файл'); ?>
+					])->hint('Добавить новый файл') ?>
 
-<!--				<label for="13">Локация</label>-->
+
 <!--				<input class="input-navigation input-middle input" id="13" type="search" name="q"-->
 <!--					placeholder="Санкт-Петербург, Калининский район">-->
 <!--				<span>Укажите адрес исполнения, если задание требует присутствия</span>-->

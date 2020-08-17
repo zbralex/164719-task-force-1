@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Attachment;
 use frontend\models\forms\CreateTaskForm;
 use frontend\models\forms\TaskForm;
 use frontend\models\Response;
@@ -11,6 +12,7 @@ use frontend\models\UserInfo;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 
 class TasksController extends SecuredController
@@ -112,22 +114,52 @@ class TasksController extends SecuredController
 
 	public function actionCreate() {
 		$model = new CreateTaskForm();
+		$attachment = new Attachment();
+		$task = new Task();
+
+        $attachment->load(Yii::$app->request->post());
+        $task->load(Yii::$app->request->post());
 
 
-		if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 			// данные в $model удачно проверены
 
-			print "делаем что-то полезное с model ...";
+            $model->files = UploadedFile::getInstances($model, 'files');
+            $attachment->save(false);
+            $task->save(false);
+            if ($model->upload()) {
+                // file is uploaded successfully
+                //return $this->redirect(['/tasks']);
+            }
 
 
 		}
 		if(!$model->validate()) {
-			$model->getErrors();
+			var_dump($model->getErrors());
 		}
 
 		return $this->render('create', [
 			'model' => $model
 		]);
 	}
+
+    public function upload()
+    {
+        $dir = Yii::getAlias('@app') . '/upload/' . date("Y-m-d") .'_'. date("H-m-s") . '/';
+
+        if(!is_dir($dir)) {
+            mkdir($dir, 0777);
+        }
+
+
+        if ($this->validate()) {
+            foreach ($this->files as $file) {
+                $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

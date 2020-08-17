@@ -12,47 +12,14 @@ use yii\widgets\ActiveForm;
 
 class SignupController extends Controller
 {
-    public function beforeAction($action)
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goBack('/tasks');
-        }
-        else {
-            $model = new User();
-            return $this->render('index', [
-                'model' => $model
-            ]);
-        }
-    }
-	public function behaviors()
-	{
-
-	    $this->beforeAction('index');
-
-		return [
-			'access' => [
-				'class' => AccessControl::class,
-				'only' => ['index'],
-				'rules' => [
-					[
-						'allow' => true,
-						'actions' => ['index'],
-						'roles' => ['?']
-					]
-				]
-			]
-		];
-	}
-
-
 
     public function actionIndex()
 	{
-
-
+	    if(!Yii::$app->user->isGuest) {
+            return $this->redirect('/tasks');
+        }
         $model = new User();
         $model->load(\Yii::$app->request->post());
-
 
 
         if (Yii::$app->request->isAjax) {
