@@ -33,6 +33,8 @@ class Attachment extends ActiveRecord
             [['task_id'], 'integer'],
             [['url'], 'string', 'max' => 255],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
+            [['name'], 'string', 'max' => 255],
+            [['name'], 'string', 'default' => null],
         ];
     }
 
@@ -45,6 +47,7 @@ class Attachment extends ActiveRecord
             'id' => 'ID',
             'task_id' => 'Task ID',
             'url' => 'Url',
+            'name' => 'Name'
         ];
     }
 

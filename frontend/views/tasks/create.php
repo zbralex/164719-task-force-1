@@ -1,6 +1,11 @@
 <?php
 
-use frontend\models\Categories;
+/**
+ * $categories = []
+ ** @var $categories
+ * */
+
+//use frontend\models\Categories;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
@@ -43,14 +48,17 @@ use yii\widgets\ActiveForm;
 				])->hint('Укажите все пожелания и детали, чтобы исполнителям было проще соориентироваться');
 				?>
 
-				<?= $form->field($model, 'category', [
+				<?=
+
+                $form->field($model, 'category', [
 					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 					'options' => ['class' => 'custom']
 				])
-					->dropDownList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
+					->dropDownList($categories,
 						[
 							'class' => 'multiple-select input multiple-select-big',
 						])->hint('Выберите категорию'); ?>
+
 
 
 				<?= $form->field($model, 'files[]', [

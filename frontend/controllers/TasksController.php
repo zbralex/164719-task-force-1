@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\Attachment;
+use frontend\models\Categories;
 use frontend\models\forms\CreateTaskForm;
 use frontend\models\forms\TaskForm;
 use frontend\models\Response;
@@ -114,22 +115,37 @@ class TasksController extends SecuredController
 
 	public function actionCreate() {
 		$model = new CreateTaskForm();
-		$attachment = new Attachment();
 		$task = new Task();
 
-        $attachment->load(Yii::$app->request->post());
-        $task->load(Yii::$app->request->post());
+        $categories = Categories::find()->select(['name', 'id'])->indexBy('id')->column();
+
 
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 			// данные в $model удачно проверены
 
             $model->files = UploadedFile::getInstances($model, 'files');
-            $attachment->save(false);
-            $task->save(false);
-            if ($model->upload()) {
-                // file is uploaded successfully
-                //return $this->redirect(['/tasks']);
+
+
+            $task->name = $model->name;
+            $task->description = $model->description;
+            $task->status = 'new';
+            $task->price = $model->price;
+            $task->category_id = $model->category;
+            $task->author_id = Yii::$app->user->getIdentity()->id;
+            $task->execution_date = $model->execution_date;
+
+
+
+
+            if(count($model->files)) {
+                $attachment = new Attachment();
+                foreach ($model->upload() as $item) {
+                    $attachment->url = $item;
+                }
+                return $task->save(false) && $attachment->link('task', $task);
+            } else {
+                return $task->save(false);
             }
 
 
@@ -139,27 +155,9 @@ class TasksController extends SecuredController
 		}
 
 		return $this->render('create', [
-			'model' => $model
+			'model' => $model,
+            'categories' => $categories
 		]);
 	}
-
-    public function upload()
-    {
-        $dir = Yii::getAlias('@app') . '/upload/' . date("Y-m-d") .'_'. date("H-m-s") . '/';
-
-        if(!is_dir($dir)) {
-            mkdir($dir, 0777);
-        }
-
-
-        if ($this->validate()) {
-            foreach ($this->files as $file) {
-                $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 }
