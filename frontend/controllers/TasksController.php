@@ -143,6 +143,10 @@ class TasksController extends SecuredController
                 foreach ($model->upload() as $item) {
                     $attachment->url = $item;
                 }
+
+                foreach ($model->files as $item) {
+                    $attachment->name = $item->name;
+                }
                 return $task->save(false) && $attachment->link('task', $task);
             } else {
                 return $task->save(false);
