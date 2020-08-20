@@ -55,7 +55,7 @@ class CreateTaskForm extends Model
         if ($this->validate()) {
             foreach ($this->files as $file) {
                 $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
-                $paths [] = $dir . $file->baseName . '.' . $file->extension;
+                $paths [] = '/upload/' . $file->baseName . '.' . $file->extension;
             }
             return $paths;
         } else {

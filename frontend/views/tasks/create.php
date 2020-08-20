@@ -63,7 +63,7 @@ use yii\widgets\ActiveForm;
 
 				<?= $form->field($model, 'files[]', [
 					'template' => "{label}{input}<span class='create__file'>{hint}</span><span style='color: red'>{error}</span>"])->fileInput([
-						'multiple' => 'multiple',
+						'multiple' => true,
 						'class' => 'dropzone',
 					])->hint('Добавить новый файл') ?>
 

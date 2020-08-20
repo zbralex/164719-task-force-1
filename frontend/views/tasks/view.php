@@ -30,10 +30,18 @@ use yii\helpers\Url;
 					</div>
 					<div class="content-view__attach">
 						<h3 class="content-view__h3">Вложения</h3>
-						<?php foreach ($detail->attachments as $item):?>
 
-						<a href="<?= Url::to($item->url); ?>" class="link-regular"><?= $item->name;?></a>
+						<?php
+                        $path = [];
+                        $name = [];
+                        foreach ($detail->attachments as $item) {
+                            $path = explode(',', $item->url);
+                            $name = explode(',', $item->name);
+                        }
 
+                        foreach ($path as $key =>$item):?>
+						<a href="<?= Url::to($item); ?>" class="link-regular"><?= $name[$key]?></a>
+                        <br>
 						<?php endforeach; ?>
 
 					</div>

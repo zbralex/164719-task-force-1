@@ -10,7 +10,7 @@ use \yii\db\ActiveRecord;
  * @property int $id
  * @property int $task_id
  * @property string $url
- *
+ * @property string $name
  * @property Task $task
  */
 class Attachment extends ActiveRecord

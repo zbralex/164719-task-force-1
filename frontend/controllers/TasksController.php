@@ -116,6 +116,7 @@ class TasksController extends SecuredController
 	public function actionCreate() {
 		$model = new CreateTaskForm();
 		$task = new Task();
+        $attachment = new Attachment();
 
         $categories = Categories::find()->select(['name', 'id'])->indexBy('id')->column();
 
@@ -123,6 +124,8 @@ class TasksController extends SecuredController
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 			// данные в $model удачно проверены
+
+//            $model->files = UploadedFile::getInstances($model, 'files');
 
             $model->files = UploadedFile::getInstances($model, 'files');
 
@@ -135,28 +138,32 @@ class TasksController extends SecuredController
             $task->author_id = Yii::$app->user->getIdentity()->id;
             $task->execution_date = $model->execution_date;
 
+            $task->save(false);
 
-
+            $paths = [];
+            $names = [];
 
             if(count($model->files)) {
-                $attachment = new Attachment();
                 foreach ($model->upload() as $item) {
-                    $attachment->url = $item;
+                    $paths [] = $item;
                 }
-
                 foreach ($model->files as $item) {
-                    $attachment->name = $item->name;
+                    $names [] = $item->name;
                 }
-                return $task->save(false) && $attachment->link('task', $task);
-            } else {
-                return $task->save(false);
+
+                // сохраненная строка будет выводить файлы методом explode
+                $attachment->url = implode(",", $paths);
+                $attachment->name = implode(",", $names);
+
+                $attachment->link('task', $task);
             }
-
-
+            return $this->redirect('/tasks');
 		}
 		if(!$model->validate()) {
 			var_dump($model->getErrors());
 		}
+
+
 
 		return $this->render('create', [
 			'model' => $model,
