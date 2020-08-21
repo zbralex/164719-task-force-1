@@ -21,8 +21,8 @@ class CreateTaskForm extends Model
         return [
             ['category', 'safe'],
             [['description', 'name'], 'required'],
-            ['name', 'string', 'min' => 3],
-            ['description', 'string', 'min' => 3, 'message' => 'минимальная длина 30 символов'],
+            ['name', 'string', 'min' => 10],
+            ['description', 'string', 'min' => 30, 'message' => 'минимальная длина 30 символов'],
             ['execution_date', 'date', 'format' => 'php:Y-m-d', 'min' => date('Y-m-d')],
             [['files'], 'file', 'maxFiles' => 10],
             ['price', 'number', 'message' => 'Введите число или оставьте поле пустым'],

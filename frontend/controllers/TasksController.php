@@ -6,12 +6,9 @@ use frontend\models\Attachment;
 use frontend\models\Categories;
 use frontend\models\forms\CreateTaskForm;
 use frontend\models\forms\TaskForm;
-use frontend\models\Response;
 use frontend\models\Task;
 use frontend\models\User;
-use frontend\models\UserInfo;
 use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
@@ -116,16 +113,15 @@ class TasksController extends SecuredController
 	public function actionCreate() {
 		$model = new CreateTaskForm();
 		$task = new Task();
-        $attachment = new Attachment();
+
+
 
         $categories = Categories::find()->select(['name', 'id'])->indexBy('id')->column();
 
 
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-			// данные в $model удачно проверены
 
-//            $model->files = UploadedFile::getInstances($model, 'files');
 
             $model->files = UploadedFile::getInstances($model, 'files');
 
@@ -143,19 +139,20 @@ class TasksController extends SecuredController
             $paths = [];
             $names = [];
 
+            foreach ($model->files as $item) {
+                $names [] = $item->name;
+            }
+
             if(count($model->files)) {
-                foreach ($model->upload() as $item) {
+                foreach ($model->upload() as $key => $item) {
+                    $attachment = new Attachment();
                     $paths [] = $item;
-                }
-                foreach ($model->files as $item) {
-                    $names [] = $item->name;
+                    $attachment->task_id = $task->id;
+                    $attachment->name = $names[$key];
+                    $attachment->url = $item;
+                    $attachment->save(false);
                 }
 
-                // сохраненная строка будет выводить файлы методом explode
-                $attachment->url = implode(",", $paths);
-                $attachment->name = implode(",", $names);
-
-                $attachment->link('task', $task);
             }
             return $this->redirect('/tasks');
 		}
