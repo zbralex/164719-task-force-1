@@ -215,9 +215,6 @@ AppAsset::register($this);
 
 <?php $this->endBody() ?>
 
-	<script>
-		var dropzone = new Dropzone("div.create__file", {url: "/", paramName: "Attach"});
-	</script>
 </body>
 </html>
 <?php $this->endPage() ?>

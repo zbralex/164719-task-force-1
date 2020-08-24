@@ -9,6 +9,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
+<script src="/js/dropzone.js"></script>
+
 <main class="page-main">
 	<div class="main-container page-container">
 		<section class="create__task">
@@ -61,11 +63,23 @@ use yii\widgets\ActiveForm;
 
 
 
-				<?= $form->field($model, 'files[]', [
-					'template' => "{label}{input}<span class='create__file'>{hint}</span><span style='color: red'>{error}</span>"])->fileInput([
-						'multiple' => true,
-						'class' => 'dropzone',
-					])->hint('Добавить новый файл') ?>
+
+
+                <?= $form->field($model, 'files[]', [
+                    'template' => " {label}
+                                        <span>Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу</span>
+                                        <div class='create__file'>
+										{input}
+										<span>{hint}</span><span>{error}</span></div>"
+                ])
+                    ->fileInput([
+                        'multiple' => 'multiple',
+                        'class' => 'dropzone',
+                        //'style' => 'display: none'
+                    ])
+                    ->hint('Добавить новый файл'); ?>
+
+
 
 
 <!--				<input class="input-navigation input-middle input" id="13" type="search" name="q"-->
@@ -124,11 +138,24 @@ use yii\widgets\ActiveForm;
 					<?php endif;?>
 				</div>
 
-
+                <script>
+                    var dropzone = new Dropzone("div.create__file",
+                        {   url: window.location.href,
+                            maxFiles: 10,
+                            uploadMultiple: true,
+                            acceptedFiles: '*',
+                            previewTemplate: '<a href="#"><img data-dz-thumbnail alt="Фото работы"></a>',
+                            paramName: 'CreateTaskForm[files]',
+                            autoProcessQueue: true
+                        });
+                    Dropzone.autoDiscover = false;
+                </script>
 			</div>
 
 		</section>
 	</div>
 </main>
+
+
 
 

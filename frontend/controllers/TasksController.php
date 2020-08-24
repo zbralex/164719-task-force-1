@@ -8,7 +8,10 @@ use frontend\models\forms\CreateTaskForm;
 use frontend\models\forms\TaskForm;
 use frontend\models\Task;
 use frontend\models\User;
+use frontend\models\UserCategory;
+use frontend\models\UserInfo;
 use Yii;
+use yii\base\Model;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
@@ -105,26 +108,30 @@ class TasksController extends SecuredController
 
 		return $this->render('view', [
 			'detail' => $detail,
-			'count_tasks' =>$count_tasks,
+			'count_tasks' => $count_tasks,
 			'user' => $user_created_at
 		]);
 	}
 
 	public function actionCreate() {
+        // По умолчанию, после регистрации пользователю присваивается роль «Заказчик». Чтобы стать исполнителем необходимо
+        // отметить хотя бы одну специализацию у себя в профиле.
+        // Соответственно, при отмене всех галочек пользователь вновь становится исполнителем.
+	    $speciality = UserCategory::find()->where(['user_id' => Yii::$app->user->id])->column();
+        //проверяем, является ли пользователь заказчиком
+
+        if(count($speciality) > 0) {
+            return $this->redirect('/tasks');
+        }
+
+
 		$model = new CreateTaskForm();
 		$task = new Task();
-
-
-
         $categories = Categories::find()->select(['name', 'id'])->indexBy('id')->column();
-
-
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-
             $model->files = UploadedFile::getInstances($model, 'files');
-
 
             $task->name = $model->name;
             $task->description = $model->description;
@@ -157,7 +164,7 @@ class TasksController extends SecuredController
             return $this->redirect('/tasks');
 		}
 		if(!$model->validate()) {
-			var_dump($model->getErrors());
+			$model->getErrors();
 		}
 
 
