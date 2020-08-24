@@ -121,7 +121,10 @@ class TasksController extends SecuredController
         //проверяем, является ли пользователь заказчиком
 
         if(count($speciality) > 0) {
-            return $this->redirect('/tasks');
+            return $this->render(Yii::getAlias('@web') . '/site/error', [
+                'name' => 'Доступ к созданию задачи запрещен',
+                'message' => 'Вы являетесь исполнителем. Пожалуйста, уберите специализацию в настройках профиля'
+            ]);
         }
 
 
