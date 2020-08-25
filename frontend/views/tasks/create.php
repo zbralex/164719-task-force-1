@@ -93,7 +93,7 @@ use yii\widgets\ActiveForm;
 					<div class="create__price-time--wrapper">
 
 						<?= $form->field($model, 'execution_date', [
-							'template' => "{label}{input}<span>{hint}</span>{error}",
+							'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 						])->input('date', [
 							'class' => 'input-middle input input-date',
                             'style' => 'width: 100%;box-sizing: border-box',

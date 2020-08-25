@@ -25,8 +25,8 @@ class CreateTaskForm extends Model
             ['description', 'string', 'min' => 30, 'max' => 256],
             ['execution_date', 'date', 'format' => 'php:Y-m-d', 'min' => date('Y-m-d')],
             [['files'], 'file', 'maxFiles' => 10],
-            ['price', 'number', 'min' => 0],
-            ['price', 'default', 'value' => !null]
+            ['price', 'number', 'integerOnly' => true, 'min' => '1'],
+            ['price', 'default', 'value' => null]
         ];
     }
 
