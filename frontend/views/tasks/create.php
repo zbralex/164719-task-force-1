@@ -20,11 +20,6 @@ use yii\widgets\ActiveForm;
 				<?php $form = ActiveForm::begin([
 					'id' => 'create-task-form',
 					'enableClientValidation' => true,
-					'fieldConfig' => [
-						'options' => [
-							'tag' => false,
-						]
-					],
 					'options' => [
 						'class' => 'create__task-form form-create',
 						['enctype' => 'multipart/form-data']
@@ -36,6 +31,7 @@ use yii\widgets\ActiveForm;
 					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 				])->input('text', [
 					'class' => 'input textarea',
+					'style' => 'width: 100%; box-sizing: border-box',
 					'placeholder' => 'Повесить полку'
 				])->hint('Кратко опишите суть работы');
 				?>
@@ -45,6 +41,7 @@ use yii\widgets\ActiveForm;
 					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 				])->textarea([
 					'class' => 'input textarea',
+					'style' => 'width: 100%; box-sizing: border-box',
 					'rows' => 7,
 					'placeholder' => 'Place your text'
 				])->hint('Укажите все пожелания и детали, чтобы исполнителям было проще соориентироваться');
@@ -54,16 +51,13 @@ use yii\widgets\ActiveForm;
 
                 $form->field($model, 'category', [
 					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-					'options' => ['class' => 'custom']
+					'options' => ['style' => 'width: 100%;box-sizing: border-box']
 				])
 					->dropDownList($categories,
 						[
 							'class' => 'multiple-select input multiple-select-big',
+                            'style' => 'width: 100%'
 						])->hint('Выберите категорию'); ?>
-
-
-
-
 
                 <?= $form->field($model, 'files[]', [
                     'template' => " {label}
@@ -75,12 +69,10 @@ use yii\widgets\ActiveForm;
                     ->fileInput([
                         'multiple' => 'multiple',
                         'class' => 'dropzone',
+                        'style' => 'width: 100%;box-sizing: border-box',
                         //'style' => 'display: none'
                     ])
                     ->hint('Добавить новый файл'); ?>
-
-
-
 
 <!--				<input class="input-navigation input-middle input" id="13" type="search" name="q"-->
 <!--					placeholder="Санкт-Петербург, Калининский район">-->
@@ -92,6 +84,7 @@ use yii\widgets\ActiveForm;
 							'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 						])->textarea([
 							'class' => 'input textarea input-money',
+                            'style' => 'width: 100%;box-sizing: border-box',
 							'rows' => 1,
 							'placeholder' => '1000'
 						])->hint('Не заполняйте для оценки исполнителем');
@@ -102,7 +95,8 @@ use yii\widgets\ActiveForm;
 						<?= $form->field($model, 'execution_date', [
 							'template' => "{label}{input}<span>{hint}</span>{error}",
 						])->input('date', [
-							'class' => 'input-middle input input-date'
+							'class' => 'input-middle input input-date',
+                            'style' => 'width: 100%;box-sizing: border-box',
 						])->hint('Укажите крайний срок исполнения');
 						?>
 
