@@ -144,7 +144,7 @@ use yii\widgets\ActiveForm;
 
                             <?php foreach ($errors as $key => $error):?>
 
-                            <h1><?= $model->attributeLabels()[$key]?></h1>
+                            <h3><?= $model->attributeLabels()[$key]?></h3>
 
                             <p>
                                 <?php foreach ($error as $description): ?>
@@ -163,7 +163,7 @@ use yii\widgets\ActiveForm;
                             uploadMultiple: true,
                             acceptedFiles: '*',
                             previewTemplate: '<a href="#"><img data-dz-thumbnail alt="Фото работы"></a>',
-                            paramName: 'CreateTaskForm[files]',
+                            paramName: 'CreateTaskForm[name][files]',
                             autoProcessQueue: true
                         });
                     Dropzone.autoDiscover = false;

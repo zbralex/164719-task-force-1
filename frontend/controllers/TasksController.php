@@ -168,7 +168,7 @@ class TasksController extends SecuredController
             return $this->redirect('/tasks');
 		}
 		if(!$model->validate()) {
-			$errors  = $model->getErrors();
+			$errors = $model->getErrors();
 		}
 
 
