@@ -22,36 +22,46 @@ use yii\widgets\ActiveForm;
 					'enableClientValidation' => true,
 					'options' => [
 						'class' => 'create__task-form form-create',
-						['enctype' => 'multipart/form-data']
+						'enctype' => 'multipart/form-data',
 					],
+                    'fieldConfig' => [
+                        'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
+
+                    ]
 
 				]) ?>
 
 				<?= $form->field($model, 'name', [
-					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-				])->input('text', [
-					'class' => 'input textarea',
-					'style' => 'width: 100%; box-sizing: border-box',
-					'placeholder' => 'Повесить полку'
+                    'labelOptions' => [
+                        'style' => 'display: block;'
+                    ]
+                ])->input('text', [
+                    'class' => 'input textarea',
+                    'style' => 'width: 100%; box-sizing: border-box',
+                    'placeholder' => 'Повесить полку',
 				])->hint('Кратко опишите суть работы');
 				?>
 
 
-				<?= $form->field($model, 'description', [
-					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-				])->textarea([
+				<?= $form->field($model, 'description',[
+                    'labelOptions' => [
+                        'style' => 'display: block;'
+                    ]
+                ])->textarea([
 					'class' => 'input textarea',
 					'style' => 'width: 100%; box-sizing: border-box',
 					'rows' => 7,
-					'placeholder' => 'Place your text'
+					'placeholder' => 'Place your text',
 				])->hint('Укажите все пожелания и детали, чтобы исполнителям было проще соориентироваться');
 				?>
 
 				<?=
 
                 $form->field($model, 'category', [
-					'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-					'options' => ['style' => 'width: 100%;box-sizing: border-box']
+					'options' => ['style' => 'width: 100%;box-sizing: border-box'],
+                    'labelOptions' => [
+                        'style' => 'display: block;'
+                    ]
 				])
 					->dropDownList($categories,
 						[
@@ -64,12 +74,14 @@ use yii\widgets\ActiveForm;
                                         <span>Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу</span>
                                         <div class='create__file'>
 										{input}
-										<span>{hint}</span><span>{error}</span></div>"
+										<span>{hint}</span><span>{error}</span></div>",
+                    'labelOptions' => [
+                        'style' => 'display: block;'
+                    ]
                 ])
                     ->fileInput([
                         'multiple' => 'multiple',
                         'class' => 'dropzone',
-                        'style' => 'width: 100%;box-sizing: border-box',
                         //'style' => 'display: none'
                     ])
                     ->hint('Добавить новый файл'); ?>
@@ -81,8 +93,10 @@ use yii\widgets\ActiveForm;
 					<div class="create__price-time--wrapper">
 
 						<?= $form->field($model, 'price', [
-							'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-						])->textarea([
+                            'labelOptions' => [
+                                'style' => 'display: block;'
+                            ]
+                        ])->textarea([
 							'class' => 'input textarea input-money',
                             'style' => 'width: 100%;box-sizing: border-box',
 							'rows' => 1,
@@ -93,8 +107,10 @@ use yii\widgets\ActiveForm;
 					<div class="create__price-time--wrapper">
 
 						<?= $form->field($model, 'execution_date', [
-							'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-						])->input('date', [
+                            'labelOptions' => [
+                                'style' => 'display: block;'
+                            ]
+                        ])->input('date', [
 							'class' => 'input-middle input input-date',
                             'style' => 'width: 100%;box-sizing: border-box',
 						])->hint('Укажите крайний срок исполнения');
@@ -125,7 +141,13 @@ use yii\widgets\ActiveForm;
 						<div class="warning-item warning-item--error">
 							<h2>Ошибки заполнения формы</h2>
 							<?= $form->errorSummary($model); ?>
-							<h3>Категория</h3>
+							<h3>
+                                <?php
+                                foreach ($model->errors as $key => $value) {
+                                    print_r($key.': '.$value[0]);
+                                }
+                                ?>
+                            </h3>
 							<p>Это поле должно быть выбрано.<br>
 								Задание должно принадлежать одной из категорий</p>
 						</div>
