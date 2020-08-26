@@ -6,7 +6,7 @@
  ** @var $categories
  * */
 
-//use frontend\models\Categories;
+
 use frontend\assets\CreateTaskDropZone;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
