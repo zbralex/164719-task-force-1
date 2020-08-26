@@ -2,6 +2,7 @@
 
 /**
  * $categories = []
+ * $errors = []
  ** @var $categories
  * */
 
@@ -140,16 +141,17 @@ use yii\widgets\ActiveForm;
 					<?php if ($model->errors): ?>
 						<div class="warning-item warning-item--error">
 							<h2>Ошибки заполнения формы</h2>
-							<?= $form->errorSummary($model); ?>
-							<h3>
-                                <?php
-                                foreach ($model->errors as $key => $value) {
-                                    print_r($key.': '.$value[0]);
-                                }
-                                ?>
-                            </h3>
-							<p>Это поле должно быть выбрано.<br>
-								Задание должно принадлежать одной из категорий</p>
+
+                            <?php foreach ($errors as $key => $error):?>
+
+                            <h1><?= $model->attributeLabels()[$key]?></h1>
+
+                            <p>
+                                <?php foreach ($error as $description): ?>
+                                    <?= $description ?>
+                                <?php endforeach; ?>
+                            </p>
+                            <?php endforeach; ?>
 						</div>
 					<?php endif;?>
 				</div>

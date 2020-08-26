@@ -131,6 +131,7 @@ class TasksController extends SecuredController
 		$model = new CreateTaskForm();
 		$task = new Task();
         $categories = Categories::find()->select(['name', 'id'])->indexBy('id')->column();
+        $errors = [];
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
@@ -167,14 +168,15 @@ class TasksController extends SecuredController
             return $this->redirect('/tasks');
 		}
 		if(!$model->validate()) {
-			$model->getErrors();
+			$errors  = $model->getErrors();
 		}
 
 
 
 		return $this->render('create', [
 			'model' => $model,
-            'categories' => $categories
+            'categories' => $categories,
+            'errors' => $errors
 		]);
 	}
 

@@ -21,6 +21,7 @@ class CreateTaskForm extends Model
         return [
             ['category', 'safe'],
             [['description', 'name'], 'required'],
+            [['description', 'name'], 'trim'],
             ['name', 'string', 'min' => 10, 'max' => 256],
             ['description', 'string', 'min' => 30, 'max' => 256],
             ['execution_date', 'date', 'format' => 'php:Y-m-d', 'min' => date('Y-m-d')],
