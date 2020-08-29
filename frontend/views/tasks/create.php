@@ -29,7 +29,6 @@ CreateTaskDropZone::register($this);
                     ],
                     'fieldConfig' => [
                         'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-
                     ]
 
                 ]) ?>
