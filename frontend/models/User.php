@@ -51,7 +51,9 @@ class User extends ActiveRecord implements IdentityInterface
             [['city_id'], 'integer'],
             [['created_at'], 'safe'],
             [['email', 'password'], 'string', 'max' => 255],
-            [['email'], 'unique'],
+            ['email', 'unique'],
+            ['email', 'email'],
+            [['name', 'email'], 'trim'],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::className(), 'targetAttribute' => ['city_id' => 'id']],
         ];
     }
