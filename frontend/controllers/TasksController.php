@@ -10,6 +10,7 @@ use frontend\models\Task;
 use frontend\models\User;
 use frontend\models\UserCategory;
 use frontend\models\UserInfo;
+use taskForce\classes\utils\CreateTaskService;
 use Yii;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
@@ -134,37 +135,7 @@ class TasksController extends SecuredController
         $errors = [];
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-            $model->files = UploadedFile::getInstances($model, 'files');
-
-            $task->name = $model->name;
-            $task->description = $model->description;
-            $task->status = 'new';
-            $task->price = $model->price;
-            $task->category_id = $model->category;
-            $task->author_id = Yii::$app->user->getIdentity()->id;
-            $task->execution_date = $model->execution_date;
-
-            $task->save(false);
-
-            $paths = [];
-            $names = [];
-
-            foreach ($model->files as $item) {
-                $names [] = $item->name;
-            }
-
-            if(count($model->files)) {
-                foreach ($model->upload() as $key => $item) {
-                    $attachment = new Attachment();
-                    $paths [] = $item;
-                    $attachment->task_id = $task->id;
-                    $attachment->name = $names[$key];
-                    $attachment->url = $item;
-                    $attachment->save(false);
-                }
-
-            }
+            CreateTaskService::taskHandler($task, $model);
             return $this->redirect('/tasks');
 		}
 		if(!$model->validate()) {
