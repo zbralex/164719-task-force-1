@@ -87,11 +87,11 @@ class Task
 
 
         switch ($this->status) {
-            case self::STATUS_NEW and $role === 'executor':
+            case self::STATUS_NEW and $role == 1:
                 $actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
                 break;
 
-            case self::STATUS_PROGRESS and $role === 'client':
+            case self::STATUS_PROGRESS and $role == 2:
                 $actions = [$this->actionRefuse, $this->actionCancel];
                 break;
             // если ни одно из действий не найдено, вернуть исключение

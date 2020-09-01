@@ -74,9 +74,10 @@ TaskActionsAsset::register($this);
                     <!--                            type="button" data-for="complete-form">Завершить-->
                     <!--                    </button>-->
                     <?php
-                    $task = new Task('new');
-                    foreach ($task->getAvailableActions('executor') as $item) {
-                        echo Html::submitButton($item->actionName, [
+                    $task = new Task($detail->status);
+                    //var_dump($detail->role_id);
+                    foreach ($task->getAvailableActions(1) as $item) {
+                        echo Html::button($item->actionName, [
                             'class' => 'button button__big-color ' . $item->innerName . '-button open-modal',
                             'data-for' => $item->class . '-form'
                         ]);
