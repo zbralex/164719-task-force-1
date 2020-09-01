@@ -9,6 +9,7 @@ class ActionResponse extends Action
     {
         $this->actionName = 'Откликнуться';
         $this->innerName = 'response';
+        $this->class = 'response';
 
     }
 

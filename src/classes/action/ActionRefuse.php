@@ -9,6 +9,7 @@ class ActionRefuse extends Action
     {
         $this->actionName = 'Отказаться';
         $this->innerName = 'refuse';
+        $this->class = 'refuse';
 
     }
 

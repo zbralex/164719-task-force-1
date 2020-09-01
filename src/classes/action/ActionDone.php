@@ -10,6 +10,7 @@ class ActionDone extends Action
     {
         $this->actionName = 'Завершить';
         $this->innerName = 'done';
+        $this->class = 'complete';
     }
 
     public function checkAccess(int $executorId, int $clientId, int $currentUserId): bool
