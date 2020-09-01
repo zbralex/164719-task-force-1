@@ -8,6 +8,7 @@
 
 use frontend\models\User;
 use frontend\models\UserCategory;
+use taskForce\classes\Task;
 use yii\helpers\Url;
 //use yii\web\User;
 $user_data =  User::findOne(Yii::$app->user->id);
@@ -69,6 +70,16 @@ $user_data =  User::findOne(Yii::$app->user->id);
                     <button class="button button__big-color request-button open-modal"
                             type="button" data-for="complete-form">Завершить
                     </button>
+                    <?php
+                    $task = new Task('new');
+
+                    foreach ($task->getAvailableActions('executor') as $item) {
+
+                        print "<button class=\"\button button__big-color request-button open-modal\"
+                            type = \"button\" data-for=\"complete-form\">" . $item->actionName ."
+                    </button>";
+                    }
+                    ?>
                 </div>
             </div>
             <div class="content-view__feedback">

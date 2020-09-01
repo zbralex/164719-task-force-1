@@ -2,13 +2,14 @@
 
 namespace taskForce\classes\action;
 
-class ActionCancel extends Action
+
+class ActionDone extends Action
 {
+
     public function __construct()
     {
-        $this->actionName = 'Отказаться';
-        $this->innerName = 'action_cancel';
-
+        $this->actionName = 'Завершить';
+        $this->innerName = 'done';
     }
 
     public function checkAccess(int $executorId, int $clientId, int $currentUserId): bool

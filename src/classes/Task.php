@@ -6,6 +6,7 @@ namespace taskForce\classes;
 
 use taskForce\classes\action\ActionCancel;
 use taskForce\classes\action\ActionComplete;
+use taskForce\classes\action\ActionDone;
 use taskForce\classes\action\ActionNew;
 use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
@@ -29,13 +30,15 @@ class Task
     const ACTION_RESPONSE = 'response'; // отменить - заказчик
     const ACTION_COMPLETE = 'complete'; // откликнуться - исполнитель
     const ACTION_REFUSE = 'refuse'; // завершить - заказчик
+    const ACTION_DONE = 'refuse'; // завершить - заказчик
 
-    public static $mapAction = [
-        self::ACTION_CANCEL => 'Отменить',
-        self::ACTION_RESPONSE => 'Откликнуться',
-        self::ACTION_COMPLETE => 'Выполнено',
-        self::ACTION_REFUSE => 'Отказаться'
-    ];
+//    public static $mapAction = [
+//        self::ACTION_CANCEL => 'Отменить',
+//        self::ACTION_RESPONSE => 'Откликнуться',
+//        self::ACTION_COMPLETE => 'Выполнено',
+//        self::ACTION_REFUSE => 'Отказаться',
+//        self::ACTION_DONE => 'Завершить'
+//    ];
 
     public $actionNew, $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
 
@@ -67,6 +70,7 @@ class Task
         $this->actionComplete = new ActionComplete();
         $this->actionRefuse = new ActionRefuse();
         $this->actionResponse = new ActionResponse();
+        $this->actionDone = new ActionDone();
 
     }
 
@@ -84,7 +88,7 @@ class Task
 
         switch ($this->status) {
             case self::STATUS_NEW and $role === 'executor':
-                $actions = [$this->actionResponse, $this->actionCancel];
+                $actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
                 break;
 
             case self::STATUS_PROGRESS and $role === 'client':
