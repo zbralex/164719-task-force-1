@@ -50,7 +50,7 @@ TaskActionsAsset::register($this);
                         <h3 class="content-view__h3">Расположение</h3>
                         <div class="content-view__location-wrapper">
                             <div class="content-view__map">
-                                <a href="#"><img src="./img/map.jpg" width="361" height="292"
+                                <a href="#"><img src="/img/map.jpg" width="361" height="292"
                                                  alt="Москва, Новый арбат, 23 к. 1"></a>
                             </div>
                             <div class="content-view__address">
@@ -81,12 +81,12 @@ TaskActionsAsset::register($this);
                     <div class="content-view__feedback-card">
                         <?php foreach ($detail->response as $item): ?>
                             <div class="feedback-card__top">
-                                <a href="#"><img src="./img/man-blond.jpg" width="55" height="55"></a>
+                                <a href="#"><img src="/img/man-blond.jpg" width="55" height="55"></a>
                                 <div class="feedback-card__top--name">
                                     <p class="link-name"><a href="#" class="link-regular">
                                             <?php
                                             if ($item->userInfo) {
-                                                echo $detail->author->name . ' ' . $detail->author->surname;
+                                                echo $item->userInfo->name . ' ' . $item->userInfo->surname;
                                             } else {
                                                 echo Yii::$app->user->identity->name;
                                             }
@@ -123,7 +123,7 @@ TaskActionsAsset::register($this);
                 <div class="profile-mini__wrapper">
                     <h3>Заказчик</h3>
                     <div class="profile-mini__top">
-                        <img src="./img/man-brune.jpg" width="62" height="62" alt="Аватар заказчика">
+                        <img src="/img/man-brune.jpg" width="62" height="62" alt="Аватар заказчика">
                         <div class="profile-mini__name five-stars__rate">
                             <p><?php if ($detail->author) {
                                     echo $detail->author->name . ' ' . $detail->author->surname;

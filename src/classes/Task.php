@@ -32,7 +32,7 @@ class Task
     const ACTION_DONE = 'done'; //
 
 
-    public $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
+    public $actionCancel, $actionComplete, $actionRefuse, $actionResponse, $actionDone;
 
     public $mapStatus = [ // вернуть статус на русском языке
         self::STATUS_NEW => 'Новое',
@@ -46,6 +46,8 @@ class Task
     public $clientId;// заказчик
     public $currentUserId; // текущий пользователь
     public $status = ''; // статус
+
+
 
     public function __construct(string $status) // конструктор
     {
