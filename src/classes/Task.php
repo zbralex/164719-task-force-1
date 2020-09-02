@@ -48,7 +48,6 @@ class Task
     public $status = ''; // статус
 
 
-
     public function __construct(string $status) // конструктор
     {
         if (!isset($this->mapStatus[$status])) {
