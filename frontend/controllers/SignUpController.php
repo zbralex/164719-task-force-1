@@ -36,17 +36,11 @@ class SignupController extends Controller
                 return $model->save() && $this->goHome();
             }
 
-            if(!$model->validate()) {
-                $errors = $model->getErrors();
-                var_dump($errors);
-            }
-
 		}
 
 
 		return $this->render('index', [
-			'model' => $model,
-            'errors' => $errors
+			'model' => $model
 		]);
 	}
 }
