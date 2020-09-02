@@ -24,11 +24,12 @@ class Task
 
 
     // actions
-    const ACTION_CANCEL = 'cancel';  // Завершить - заказчик
-    const ACTION_RESPONSE = 'response'; // Откликнуться - исполнитель
-    const ACTION_COMPLETE = 'complete';
-    const ACTION_REFUSE = 'refuse';
-    const ACTION_DONE = 'refuse';
+    const ACTION_RESPONSE = 'response'; // Откликнуться - действие исполнителя
+    const ACTION_REFUSE = 'refuse'; // Отказаться - действие исполнителя
+    const ACTION_CANCEL = 'cancel';  // Завершить - действие заказчика
+
+    const ACTION_CONFIRM = 'confirm'; // Подтвердить - действие заказчика
+    const ACTION_DONE = 'done'; //
 
 
     public $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
@@ -74,14 +75,15 @@ class Task
             throw new RoleException('Не передано имя роли в параметрах');
         }
 
-
+        //$role == 1 - Заказчик
+        //$role == 2 - Исполнитель
         switch ($this->status) {
             case self::STATUS_NEW and $role == 1:
                 $actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
                 break;
 
             case self::STATUS_PROGRESS and $role == 2:
-                $actions = [$this->actionRefuse, $this->actionCancel];
+                $actions = [$this->actionResponse, $this->actionCancel];
                 break;
             // если ни одно из действий не найдено, вернуть исключение
             default:
