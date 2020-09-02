@@ -11,7 +11,7 @@ use frontend\assets\CreateTaskDropZone;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-CreateTaskDropZone::register($this);
+// CreateTaskDropZone::register($this);
 ?>
 
 
@@ -161,7 +161,6 @@ CreateTaskDropZone::register($this);
         </section>
     </div>
 </main>
-
 
 
 
