@@ -10,7 +10,6 @@ class ActionResponse extends Action
         $this->actionName = 'Откликнуться';
         $this->innerName = 'response';
         $this->class = 'response';
-
     }
 
     public function checkAccess(int $executorId, int $clientId, int $currentUserId): bool

@@ -7,40 +7,31 @@ namespace taskForce\classes;
 use taskForce\classes\action\ActionCancel;
 use taskForce\classes\action\ActionComplete;
 use taskForce\classes\action\ActionDone;
-use taskForce\classes\action\ActionNew;
 use taskForce\classes\action\ActionRefuse;
 use taskForce\classes\action\ActionResponse;
-use taskForce\exceptions\TaskException;
 use taskForce\exceptions\RoleException;
+use taskForce\exceptions\TaskException;
 
 class Task
 {
 
-    const STATUS_NEW = 'new';
-    // statuses
-    const STATUS_PROGRESS = 'progress'; // Новое	Задание опубликовано, исполнитель ещё не найден
-    const STATUS_CANCEL = 'cancelled'; // В работе	Заказчик выбрал исполнителя для задания
-    const STATUS_COMPLETE = 'completed'; // Отменено	Заказчик отменил задание
-    const STATUS_FAIL = 'failed'; // Выполнено	Заказчик отметил задание как выполненное
-    const ACTION_NEW = 'new task'; // Провалено	Исполнитель отказался от выполнения задания
+    const STATUS_NEW = 'new'; // Новое	Задание опубликовано, исполнитель ещё не найден
+    const STATUS_PROGRESS = 'progress'; // В работе	Заказчик выбрал исполнителя для задания
+
+    const STATUS_CANCEL = 'cancelled';  // Отменено	Заказчик отменил задание
+    const STATUS_COMPLETE = 'completed'; // Выполнено	Заказчик отметил задание как выполненное
+    const STATUS_FAIL = 'failed'; // Провалено	Исполнитель отказался от выполнения задания
 
 
     // actions
-    const ACTION_CANCEL = 'cancel';
-    const ACTION_RESPONSE = 'response'; // отменить - заказчик
-    const ACTION_COMPLETE = 'complete'; // откликнуться - исполнитель
-    const ACTION_REFUSE = 'refuse'; // завершить - заказчик
-    const ACTION_DONE = 'refuse'; // завершить - заказчик
+    const ACTION_CANCEL = 'cancel';  // Завершить - заказчик
+    const ACTION_RESPONSE = 'response'; // Откликнуться - исполнитель
+    const ACTION_COMPLETE = 'complete';
+    const ACTION_REFUSE = 'refuse';
+    const ACTION_DONE = 'refuse';
 
-//    public static $mapAction = [
-//        self::ACTION_CANCEL => 'Отменить',
-//        self::ACTION_RESPONSE => 'Откликнуться',
-//        self::ACTION_COMPLETE => 'Выполнено',
-//        self::ACTION_REFUSE => 'Отказаться',
-//        self::ACTION_DONE => 'Завершить'
-//    ];
 
-    public $actionNew, $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
+    public $actionCancel, $actionComplete, $actionRefuse, $actionResponse;
 
     public $mapStatus = [ // вернуть статус на русском языке
         self::STATUS_NEW => 'Новое',
@@ -62,10 +53,8 @@ class Task
         }
 
 
-
         $this->status = $status;
 
-        $this->actionNew = new ActionNew();
         $this->actionCancel = new ActionCancel();
         $this->actionComplete = new ActionComplete();
         $this->actionRefuse = new ActionRefuse();

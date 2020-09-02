@@ -7,7 +7,7 @@ class ActionRefuse extends Action
 {
     public function __construct()
     {
-        $this->actionName = 'Отказаться';
+        $this->actionName = 'Отказать';
         $this->innerName = 'refuse';
         $this->class = 'refuse';
 
