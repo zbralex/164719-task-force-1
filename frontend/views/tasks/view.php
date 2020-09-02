@@ -21,7 +21,7 @@ TaskActionsAsset::register($this);
                 <div class="content-view__card-wrapper">
                     <div class="content-view__header">
                         <div class="content-view__headline">
-                            <h1><?= $detail->name ?></h1>
+                            <h1><?= Html::encode($detail->name) ?></h1>
                             <span>Размещено в категории
                                     <a href="#" class="link-regular"><?= $detail->category->name ?></a>
                                    <?= Yii::$app->formatter->asRelativeTime(strtotime($detail->created_at)) ?></span>
@@ -33,7 +33,7 @@ TaskActionsAsset::register($this);
                     <div class="content-view__description">
                         <h3 class="content-view__h3">Общее описание</h3>
                         <p>
-                            <?= $detail->description ?>
+                            <?= Html::encode($detail->description) ?>
                         </p>
                     </div>
                     <div class="content-view__attach">
@@ -41,7 +41,7 @@ TaskActionsAsset::register($this);
 
                         <?php foreach ($detail->attachments as $item): ?>
 
-                            <a href="<?= Url::to($item->url); ?>" class="link-regular"><?= $item->name; ?></a><br>
+                            <a href="<?= Url::to($item->url); ?>" class="link-regular"><?= Html::encode($item->name); ?></a><br>
 
                         <?php endforeach; ?>
 
@@ -86,7 +86,7 @@ TaskActionsAsset::register($this);
                                     <p class="link-name"><a href="#" class="link-regular">
                                             <?php
                                             if ($item->userInfo) {
-                                                echo $item->userInfo->name . ' ' . $item->userInfo->surname;
+                                                echo Html::encode($item->userInfo->name . ' ' . $item->userInfo->surname);
                                             } else {
                                                 echo Yii::$app->user->identity->name;
                                             }
