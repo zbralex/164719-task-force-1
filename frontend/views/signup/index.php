@@ -48,9 +48,6 @@ use yii\widgets\ActiveForm;
                     'class' => 'input textarea',
                     'style' => 'width: 100%;box-sizing: border-box',
                     'placeholder' => 'Мамедов Кумар',
-                    'labelOptions' => [
-                        'class' => $model->getErrors('name') ? 'input-danger' : '',
-                    ]
                 ])->hint('Введите ваше имя и фамилию', [
                     'tag' => 'span'
                 ]);
@@ -73,11 +70,8 @@ use yii\widgets\ActiveForm;
                     ])->label('Город проживания'); ?>
 
                 <?= $formSignUp->field($model, 'password', [
-                    'options' => [
-
-                    ],
                     'labelOptions' => [
-                        'class' => $model->getErrors('password') ?? 'input-danger'
+
                     ]
                 ])->passwordInput([
                     'class' => 'input textarea',
@@ -85,6 +79,7 @@ use yii\widgets\ActiveForm;
                 ])->hint('Длина пароля от 8 символов', [
                     'tag' => 'span'
                 ]);
+
                 ?>
 
                 <?= Html::submitButton('Cоздать аккаунт', [

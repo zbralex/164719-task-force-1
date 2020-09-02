@@ -15,8 +15,6 @@ class SignupController extends Controller
 
     public function actionIndex()
 	{
-
-
 	    if(!Yii::$app->user->isGuest) {
             return $this->redirect('/tasks');
         }
@@ -24,6 +22,7 @@ class SignupController extends Controller
 
         $model = new User();
         $model->load(\Yii::$app->request->post());
+        $errors = [];
 
 
         if (Yii::$app->request->isAjax) {
@@ -36,10 +35,18 @@ class SignupController extends Controller
                 $model->setPassword($model->password);
                 return $model->save() && $this->goHome();
             }
+
+            if(!$model->validate()) {
+                $errors = $model->getErrors();
+                var_dump($errors);
+            }
+
 		}
 
+
 		return $this->render('index', [
-			'model' => $model
+			'model' => $model,
+            'errors' => $errors
 		]);
 	}
 }

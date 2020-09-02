@@ -22,6 +22,9 @@ class Task
     const STATUS_COMPLETE = 'completed'; // Выполнено	Заказчик отметил задание как выполненное
     const STATUS_FAIL = 'failed'; // Провалено	Исполнитель отказался от выполнения задания
 
+    const ROLE_EXECUTOR = 1;
+    const ROLE_CLIENT = 2;
+
 
     // actions
     const ACTION_RESPONSE = 'response'; // Откликнуться - действие исполнителя
@@ -79,11 +82,11 @@ class Task
         //$role == 1 - Заказчик
         //$role == 2 - Исполнитель
         switch ($this->status) {
-            case self::STATUS_NEW and $role == 1:
+            case self::STATUS_NEW and $role == self::ROLE_EXECUTOR:
                 $actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
                 break;
 
-            case self::STATUS_PROGRESS and $role == 2:
+            case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT:
                 $actions = [$this->actionResponse, $this->actionCancel];
                 break;
             // если ни одно из действий не найдено, вернуть исключение
