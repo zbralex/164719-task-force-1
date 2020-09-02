@@ -12,8 +12,6 @@ use \frontend\assets\TaskActionsAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-//use yii\web\User;
-$user_data = User::findOne(Yii::$app->user->id);
 TaskActionsAsset::register($this);
 ?>
 <main class="page-main">
@@ -64,19 +62,10 @@ TaskActionsAsset::register($this);
                     </div>
                 </div>
                 <div class="content-view__action-buttons">
-                    <!--                    <button class=" button button__big-color response-button open-modal"-->
-                    <!--                            type="button" data-for="response-form">Откликнуться-->
-                    <!--                    </button>-->
-                    <!--                    <button class="button button__big-color refusal-button open-modal"-->
-                    <!--                            type="button" data-for="refuse-form">Отказаться-->
-                    <!--                    </button>-->
-                    <!--                    <button class="button button__big-color request-button open-modal"-->
-                    <!--                            type="button" data-for="complete-form">Завершить-->
-                    <!--                    </button>-->
                     <?php
                     $task = new Task($detail->status);
-                    //var_dump($detail->role_id);
-                    foreach ($task->getAvailableActions(1) as $item) {
+
+                    foreach ($task->getAvailableActions($detail->userInfo->role_id) as $item) {
                         echo Html::button($item->actionName, [
                             'class' => 'button button__big-color ' . $item->innerName . '-button open-modal',
                             'data-for' => $item->class . '-form'
@@ -99,7 +88,7 @@ TaskActionsAsset::register($this);
                                             if ($item->userInfo) {
                                                 echo $detail->author->name . ' ' . $detail->author->surname;
                                             } else {
-                                                echo $user_data->name;
+                                                echo Yii::$app->user->identity->name;
                                             }
                                             ?>
 
@@ -139,7 +128,7 @@ TaskActionsAsset::register($this);
                             <p><?php if ($detail->author) {
                                     echo $detail->author->name . ' ' . $detail->author->surname;
                                 } else {
-                                    echo $user_data->name;
+                                    echo Yii::$app->user->identity->name;
                                 } ?></p>
                         </div>
                     </div>
