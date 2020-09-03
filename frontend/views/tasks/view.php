@@ -65,13 +65,12 @@ TaskActionsAsset::register($this);
                     <?php
                     $task = new Task($detail->status);
 
-                    foreach ($task->getAvailableActions($detail->userInfo->role_id) as $item) {
+                    foreach ($task->getAvailableActions($detail->author->role_id) as $item) {
                         echo Html::button($item->actionName, [
                             'class' => 'button button__big-color ' . $item->innerName . '-button open-modal',
                             'data-for' => $item->class . '-form'
                         ]);
                     }
-
                     ?>
                 </div>
             </div>
@@ -103,7 +102,7 @@ TaskActionsAsset::register($this);
                             </div>
                             <div class="feedback-card__content">
                                 <p>
-                                    <?= $item->comment; ?>
+                                    <?= Html::encode($item->comment); ?>
                                 </p>
                                 <span><?= $item->price; ?> ₽</span>
                             </div>
@@ -118,6 +117,7 @@ TaskActionsAsset::register($this);
                 </div>
             </div>
         </section>
+
         <section class="connect-desk">
             <div class="connect-desk__profile-mini">
                 <div class="profile-mini__wrapper">

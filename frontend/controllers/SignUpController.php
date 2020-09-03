@@ -5,6 +5,7 @@ namespace frontend\controllers;
 
 use frontend\models\Cities;
 use frontend\models\User;
+use frontend\models\UserInfo;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -21,6 +22,7 @@ class SignupController extends Controller
 
 
         $model = new User();
+	    $userInfo = new UserInfo();
         $model->load(\Yii::$app->request->post());
         $errors = [];
 
@@ -33,11 +35,17 @@ class SignupController extends Controller
 
             if ($model->validate()) {
                 $model->setPassword($model->password);
-                return $model->save() && $this->goHome();
+                $model->save(false);
+
+
+                $userInfo->role_id = 1;
+                $userInfo->user_id = $model->id;
+                $userInfo->save(false);
+
+                return $this->goHome();
             }
 
 		}
-
 
 		return $this->render('index', [
 			'model' => $model
