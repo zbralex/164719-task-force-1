@@ -28,13 +28,7 @@ class UsersController extends SecuredController
 			$request = Yii::$app->request;
 			$formContent = $request->post('UserForm');
 
-			$query = UserInfo::find()
-				->joinWith('user u')
-				->orderBy('u.created_at ASC');
-
-            FilterUtil::formFilter($formContent, $query);
-
-			$users = $query->all();
+            $users = FilterUtil::formFilter($formContent)->all();
 		}
 
 

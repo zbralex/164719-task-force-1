@@ -3,8 +3,14 @@
 namespace taskForce\classes\utils;
 
 
+use frontend\models\UserInfo;
+
 abstract class FilterUtil {
-    public static function formFilter($form, $query) {
+    public static function formFilter($form) {
+        $query = UserInfo::find()
+            ->joinWith('user u')
+            ->orderBy('u.created_at ASC');
+
         foreach ($form as $key => $item) {
             if ($item) {
                 switch ($key) {
@@ -33,6 +39,6 @@ abstract class FilterUtil {
                 }
             }
         }
-
+        return $query;
     }
 }
