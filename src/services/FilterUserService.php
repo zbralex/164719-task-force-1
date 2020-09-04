@@ -1,11 +1,11 @@
 <?php
 
-namespace taskForce\classes\utils;
+namespace taskForce\services;
 
 
 use frontend\models\UserInfo;
 
-abstract class FilterUtil {
+abstract class FilterUserService {
     public static function formFilter($form) {
         $query = UserInfo::find()
             ->joinWith('user u')

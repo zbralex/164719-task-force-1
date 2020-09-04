@@ -4,9 +4,10 @@ namespace frontend\controllers;
 
 use frontend\models\forms\UserForm;
 use frontend\models\UserInfo;
-use taskForce\classes\utils\FilterUtil;
+
+
+use taskForce\services\FilterUserService;
 use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 class UsersController extends SecuredController
@@ -28,9 +29,8 @@ class UsersController extends SecuredController
 			$request = Yii::$app->request;
 			$formContent = $request->post('UserForm');
 
-            $users = FilterUtil::formFilter($formContent)->all();
+            $users = FilterUserService::formFilter($formContent)->all();
 		}
-
 
 		return $this->render('index', [
 			'users' => $users,
