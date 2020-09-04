@@ -3,13 +3,8 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use yii\widgets\ActiveForm;
-use common\widgets\Alert;
-use frontend\models;
 use yii\widgets\Pjax;
 
 AppAsset::register($this);

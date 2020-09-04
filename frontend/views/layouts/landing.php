@@ -1,6 +1,6 @@
 <?php
 /* @var $this \yii\web\View */
-/* @var $content string */
+/* @var string $content  */
 
 use frontend\assets\PublicAsset;
 use yii\helpers\Html;

@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View
- * @property $cities = []
+ * @var array $cities
  */
 
 

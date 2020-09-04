@@ -1,8 +1,8 @@
 <?php
 /* @var $this yii\web\View
- * @var $users = []
- * @var $filter = []
- * @var $categories = []
+ * @var array $users
+ * @var array $filter
+ * @var array $categories
  */
 
 use frontend\models\Categories;

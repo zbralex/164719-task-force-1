@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @var $categories = []
- * @var $errors = []
- ** @var $categories
- * */
+ * @var array $categories
+ * @var array $errors
+ * @var array $categories
+ **/
 
 
 use frontend\assets\CreateTaskDropZone;

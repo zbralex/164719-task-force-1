@@ -1,7 +1,7 @@
 <?php
 /**
  * @var yii\web\View $this
- * @var $detail = []
+ * @var array $detail
  */
 
 use yii\helpers\Html;

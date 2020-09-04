@@ -1,12 +1,12 @@
 <?php
 /**
  * @var yii\web\View $this
- * @var $detail = []
- * @var $count_tasks = ''
- * @var $user = ''
+ * @var array $detail
+ * @var string $count_tasks
+ * @var string $user
  */
 
-use frontend\models\User;
+
 use taskForce\classes\Task;
 use \frontend\assets\TaskActionsAsset;
 use yii\helpers\Html;

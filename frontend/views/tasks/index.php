@@ -1,8 +1,8 @@
 <?php
 /**
  * @var yii\web\View $this
- * @var Task[] $tasks
- * @var Categories[] $categories
+ * @var array $tasks
+ * @var array $categories
  */
 
 use frontend\models\Categories;
