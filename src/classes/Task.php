@@ -22,8 +22,8 @@ class Task
     const STATUS_COMPLETE = 'completed'; // Выполнено	Заказчик отметил задание как выполненное
     const STATUS_FAIL = 'failed'; // Провалено	Исполнитель отказался от выполнения задания
 
-    const ROLE_EXECUTOR = 1;
-    const ROLE_CLIENT = 2;
+    const ROLE_EXECUTOR = 2; // исполнитель
+    const ROLE_CLIENT = 1;  //Заказчик
 
 
     // actions
@@ -45,9 +45,7 @@ class Task
         self::STATUS_FAIL => 'Провалено',
     ];
 
-    public $executorID; // исполнитель
-    public $clientId;// заказчик
-    public $currentUserId; // текущий пользователь
+
     public $status = ''; // статус
 
 
@@ -68,7 +66,7 @@ class Task
 
     }
 
-    public function getAvailableActions(string $role): array
+    public function getAvailableActions(string $role, int $author, int $currentUserId): array
     {
         $actions = []; // пустой массив действий
 
@@ -82,12 +80,12 @@ class Task
         //$role == 1 - Заказчик
         //$role == 2 - Исполнитель
         switch ($this->status) {
-            case self::STATUS_NEW and $role == self::ROLE_EXECUTOR:
-                $actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
+            case self::STATUS_NEW and $role == self::ROLE_EXECUTOR || $role == self::ROLE_CLIENT and $author !== $currentUserId:
+                $actions = [$this->actionResponse, $this->actionCancel];
                 break;
 
-            case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT:
-                $actions = [$this->actionResponse, $this->actionCancel];
+            case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT and $author === $currentUserId:
+                $actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
                 break;
             // если ни одно из действий не найдено, вернуть исключение
             default:
