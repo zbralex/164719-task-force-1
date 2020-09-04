@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+
+use taskForce\services\CreateTaskService;
 use Yii;
 use frontend\models\Categories;
 use frontend\models\forms\CreateTaskForm;
@@ -9,7 +11,6 @@ use frontend\models\forms\TaskForm;
 use frontend\models\Task;
 use frontend\models\User;
 use frontend\models\UserCategory;
-use taskForce\classes\utils\CreateTaskService;
 use taskForce\services\FilterTaskService;
 use yii\web\NotFoundHttpException;
 

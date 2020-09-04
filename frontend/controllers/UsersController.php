@@ -4,8 +4,6 @@ namespace frontend\controllers;
 
 use frontend\models\forms\UserForm;
 use frontend\models\UserInfo;
-
-
 use taskForce\services\FilterUserService;
 use Yii;
 use yii\web\NotFoundHttpException;
