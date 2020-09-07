@@ -3,6 +3,7 @@
  * @var array $users
  * @var array $filter
  * @var array $categories
+ * @var array $model
  */
 
 use frontend\models\Categories;

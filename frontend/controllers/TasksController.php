@@ -3,6 +3,9 @@
 namespace frontend\controllers;
 
 
+use frontend\models\forms\taskActions\doneForm;
+use frontend\models\forms\taskActions\refuseForm;
+use frontend\models\forms\taskActions\responseForm;
 use taskForce\services\CreateTaskService;
 use Yii;
 use frontend\models\Categories;
@@ -56,10 +59,17 @@ class TasksController extends SecuredController
 
 		$user_created_at = User::findOne($detail->author_id);
 
+        $actionResponseForm = new responseForm();
+        $actionRefuseForm = new refuseForm();
+		$actionDoneForm = new doneForm();
+
 		return $this->render('view', [
 			'detail' => $detail,
 			'count_tasks' => $count_tasks,
-			'user' => $user_created_at
+			'user' => $user_created_at,
+            'actionResponseForm' => $actionResponseForm,
+            'actionRefuseForm' => $actionRefuseForm,
+            'actionDoneForm' => $actionDoneForm
 		]);
 	}
 
