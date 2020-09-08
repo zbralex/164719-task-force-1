@@ -6,6 +6,7 @@ namespace frontend\controllers;
 use frontend\models\forms\taskActions\doneForm;
 use frontend\models\forms\taskActions\refuseForm;
 use frontend\models\forms\taskActions\responseForm;
+use frontend\models\Response;
 use taskForce\services\CreateTaskService;
 use Yii;
 use frontend\models\Categories;
@@ -62,6 +63,26 @@ class TasksController extends SecuredController
         $actionResponseForm = new responseForm();
         $actionRefuseForm = new refuseForm();
 		$actionDoneForm = new doneForm();
+
+		$responseTask = new Response();
+
+		if (Yii::$app->request->getIsPost()) {
+
+			$actionResponseForm->load(Yii::$app->request->post());
+			$request = Yii::$app->request;
+			$formResponse = $request->post('responseForm');
+
+
+
+			$responseTask->user_id = Yii::$app->user->id;
+			$responseTask->price = empty($formResponse['price']) ? 0 : $formResponse['price'];
+			$responseTask->comment = $formResponse['comment'];
+			$responseTask->task_id = $detail->id;
+
+			$responseTask->save(false);
+			return  $this->refresh();
+
+		}
 
 		return $this->render('view', [
 			'detail' => $detail,
