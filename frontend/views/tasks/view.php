@@ -69,9 +69,11 @@ TaskActionsAsset::register($this);
 				</div>
 				<div class="content-view__action-buttons">
 					<?php
+					$resp = \frontend\models\Response::find()->where(['user_id' =>Yii::$app->user->id, 'task_id' => $detail->id])->count();
+
 					$task = new Task($detail->status);
 
-					foreach ($task->getAvailableActions($detail->author->role_id, $detail->author_id, Yii::$app->user->id) as $item) {
+					foreach ($task->getAvailableActions($detail->author->role_id, $detail->author_id, Yii::$app->user->id,  $resp) as $item) {
 						echo Html::button($item->actionName, [
 							'class' => 'button button__big-color ' . $item->innerName . '-button open-modal',
 							'data-for' => $item->class . '-form'
@@ -156,11 +158,7 @@ TaskActionsAsset::register($this);
 </main>
 <section class="modal response-form form-modal" id="response-form">
 	<h2>Отклик на задание</h2>
-	<?php $formResponse = ActiveForm::begin([
-		'options' => [
-		],
-
-	]) ?>
+	<?php $formResponse = ActiveForm::begin() ?>
 	<?= $formResponse->field($actionResponseForm, 'price', [
 		'labelOptions' => [
 			'class' => 'form-modal-description',

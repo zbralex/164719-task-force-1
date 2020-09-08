@@ -72,8 +72,6 @@ class TasksController extends SecuredController
 			$request = Yii::$app->request;
 			$formResponse = $request->post('responseForm');
 
-
-
 			$responseTask->user_id = Yii::$app->user->id;
 			$responseTask->price = empty($formResponse['price']) ? 0 : $formResponse['price'];
 			$responseTask->comment = $formResponse['comment'];

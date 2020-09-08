@@ -4,6 +4,7 @@
  * @var array $categories
  * @var array $errors
  * @var array $categories
+ * @var array $model
  **/
 
 

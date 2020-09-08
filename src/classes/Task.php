@@ -66,7 +66,7 @@ class Task
 
     }
 
-    public function getAvailableActions(string $role, int $author, int $currentUserId): array
+    public function getAvailableActions(string $role, int $author, int $currentUserId,bool $responsed): array
     {
         $actions = []; // пустой массив действий
 
@@ -80,14 +80,23 @@ class Task
         //$role == 1 - Заказчик
         //$role == 2 - Исполнитель
         switch ($this->status) {
-            case self::STATUS_NEW and $role == self::ROLE_EXECUTOR || $role == self::ROLE_CLIENT and $author !== $currentUserId:
+            case self::STATUS_NEW and $role == self::ROLE_EXECUTOR or $role == self::ROLE_CLIENT and $author !== $currentUserId  and !$responsed:
                 $actions = [$this->actionResponse, $this->actionCancel];
                 break;
 
-            case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT and $author === $currentUserId:
+            case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT and $author === $currentUserId  and !$responsed:
                 $actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
                 break;
-            // если ни одно из действий не найдено, вернуть исключение
+
+//	        case self::STATUS_NEW or self::STATUS_PROGRESS and $role == self::ROLE_CLIENT and $responsed:
+//		        $actions = [$this->actionCancel];
+//	        	break;
+
+	        case self::STATUS_NEW and $author === $currentUserId and $responsed:
+		        $actions = [$this->actionDone, $this->actionCancel];
+		        break;
+
+				// если ни одно из действий не найдено, вернуть исключение
             default:
                 throw new TaskException('Действие не найдено');
         }

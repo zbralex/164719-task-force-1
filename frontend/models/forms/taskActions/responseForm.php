@@ -13,9 +13,9 @@ class responseForm extends Model
     public function rules()
     {
         return [
-//            [['price', 'comment'], 'require'],
+            [['price', 'comment'], 'required'],
             ['price', 'number', 'integerOnly' => true, 'min' => '1'],
-            ['comment', 'string', 'min' => 10, 'max' => 256],
+            ['comment', 'string', 'min' => 10, 'max' => 256]
         ];
     }
 
