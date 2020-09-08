@@ -70,10 +70,6 @@ TaskActionsAsset::register($this);
 				<div class="content-view__action-buttons">
 					<?php
 					$resp = \frontend\models\Response::find()->where(['user_id' =>Yii::$app->user->id, 'task_id' => $detail->id])->count();
-
-
-print_r('author_id: '. $detail->author_id . '<br>');
-print_r('current user: ' . Yii::$app->user->id . '<br>');
 					$task = new Task($detail->status);
 
 					foreach ($task->getAvailableActions($detail->author->role_id, $detail->author_id, Yii::$app->user->id,  $resp*1) as $item) {

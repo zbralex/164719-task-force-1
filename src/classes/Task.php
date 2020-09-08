@@ -79,7 +79,7 @@ class Task
 
         //$role == 1 - Заказчик
         //$role == 2 - Исполнитель
-	    var_dump($responsed);
+
         switch ($this->status) {
 	        case self::STATUS_NEW and $author === $currentUserId and $responsed:
 		        $actions = [$this->actionDone, $this->actionCancel];
@@ -93,7 +93,7 @@ class Task
                 $actions = [$this->actionResponse, $this->actionCancel];
                 break;
 
-            case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT and $author === $currentUserId  and $responsed:
+            case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT and $author === $currentUserId  and !$responsed:
                 $actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
                 break;
 

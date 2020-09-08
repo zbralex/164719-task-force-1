@@ -90,7 +90,7 @@ class TasksController extends SecuredController
 				$refuseTask->status = 'failed';
 
 				$refuseTask->update(false);
-				//return $this->refresh();
+				return $this->refresh();
 			}
 
 		}
