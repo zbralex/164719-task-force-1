@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
 
 TaskActionsAsset::register($this);
 ?>
+<?= $detail->status; ?>
 <main class="page-main">
 	<div class="main-container page-container">
 		<section class="content-view">
@@ -260,6 +261,7 @@ TaskActionsAsset::register($this);
 	</button>
 	<?php $formRefuse = ActiveForm::begin(); ?>
 
+	<?= $formRefuse->field($actionRefuseForm, 'refuse')->hiddenInput()->label(false); ?>
 	<?= Html::submitButton('Отказаться', [
 		'class' => 'button__form-modal refusal-button button'
 	]) ?>

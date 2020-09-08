@@ -64,33 +64,43 @@ class TasksController extends SecuredController
         $actionRefuseForm = new refuseForm();
 		$actionDoneForm = new doneForm();
 
-		$responseTask = new Response();
-		$refuseTask = new Task();
+
 
 		if (Yii::$app->request->getIsPost()) {
 
 			$actionResponseForm->load(Yii::$app->request->post());
+			$actionRefuseForm->load(Yii::$app->request->post());
+
 			$request = Yii::$app->request;
+
 			$formResponse = $request->post('responseForm');
 			$formDone = $request->post('doneForm');
 			$formRefuse = $request->post('refuseForm');
-			if($formResponse){
-				$responseTask->user_id = Yii::$app->user->id;
-				$responseTask->price = empty($formResponse['price']) ? 0 : $formResponse['price'];
-				$responseTask->comment = $formResponse['comment'];
-				$responseTask->task_id = $detail->id;
+			$response = new Response();
 
-				$responseTask->save(false);
+			if($formResponse){
+
+				$actionResponseForm->load(Yii::$app->request->post());
+				$response->user_id = Yii::$app->user->id;
+				$response->price = empty($formResponse['price']) ? 0 : $formResponse['price'];
+				$response->comment = $formResponse['comment'];
+				$response->task_id = $detail->id;
+
+				$response->save(false);
 				return $this->refresh();
 			}
-			var_dump($formRefuse);
-			if($formRefuse){
-				var_dump($formRefuse);
-				$refuseTask->id = $detail->id;
-				$refuseTask->status = 'failed';
 
-				$refuseTask->update(false);
+
+			if($formRefuse){
+				$response->id = $detail->id;
+				$response->status = 'failed';
+
+				$response->save(false);
 				return $this->refresh();
+			}
+
+			if($formDone) {
+				var_dump($formDone);
 			}
 
 		}
