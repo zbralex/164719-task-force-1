@@ -92,8 +92,9 @@ class TasksController extends SecuredController
 
 
 			if($formRefuse){
-				$response->id = $detail->id;
 				$response->status = 'failed';
+				$response->user_id = Yii::$app->user->id;
+				$response->task_id = $detail->id;
 
 				$response->save(false);
 				return $this->refresh();
