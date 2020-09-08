@@ -65,20 +65,33 @@ class TasksController extends SecuredController
 		$actionDoneForm = new doneForm();
 
 		$responseTask = new Response();
+		$refuseTask = new Task();
 
 		if (Yii::$app->request->getIsPost()) {
 
 			$actionResponseForm->load(Yii::$app->request->post());
 			$request = Yii::$app->request;
 			$formResponse = $request->post('responseForm');
+			$formDone = $request->post('doneForm');
+			$formRefuse = $request->post('refuseForm');
+			if($formResponse){
+				$responseTask->user_id = Yii::$app->user->id;
+				$responseTask->price = empty($formResponse['price']) ? 0 : $formResponse['price'];
+				$responseTask->comment = $formResponse['comment'];
+				$responseTask->task_id = $detail->id;
 
-			$responseTask->user_id = Yii::$app->user->id;
-			$responseTask->price = empty($formResponse['price']) ? 0 : $formResponse['price'];
-			$responseTask->comment = $formResponse['comment'];
-			$responseTask->task_id = $detail->id;
+				$responseTask->save(false);
+				return $this->refresh();
+			}
+			var_dump($formRefuse);
+			if($formRefuse){
+				var_dump($formRefuse);
+				$refuseTask->id = $detail->id;
+				$refuseTask->status = 'failed';
 
-			$responseTask->save(false);
-			return  $this->refresh();
+				$refuseTask->update(false);
+				//return $this->refresh();
+			}
 
 		}
 
