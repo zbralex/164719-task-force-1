@@ -70,6 +70,7 @@ class TasksController extends SecuredController
 
 			$actionResponseForm->load(Yii::$app->request->post());
 			$actionRefuseForm->load(Yii::$app->request->post());
+			$actionDoneForm->load(Yii::$app->request->post());
 
 			$request = Yii::$app->request;
 
@@ -77,12 +78,13 @@ class TasksController extends SecuredController
 			$formDone = $request->post('doneForm');
 			$formRefuse = $request->post('refuseForm');
 			$response = new Response();
+			$taskDone = new Task();
 
 			if($formResponse){
 
 				$actionResponseForm->load(Yii::$app->request->post());
 				$response->user_id = Yii::$app->user->id;
-				$response->price = empty($formResponse['price']) ? 0 : $formResponse['price'];
+				$response->price = empty($formResponse['price']) ? $detail->price : $formResponse['price'];
 				$response->comment = $formResponse['comment'];
 				$response->task_id = $detail->id;
 
@@ -101,7 +103,16 @@ class TasksController extends SecuredController
 			}
 
 			if($formDone) {
-				var_dump($formDone);
+				$response->user_id = Yii::$app->user->id;
+				$response->task_id = $detail->id;
+
+				$response->status = $formDone['isDone'] == 0 ? 'completed': 'failed';
+				$response->rating = $_POST['rating'];
+				$response->comment = $formDone['comment'];
+
+				$response->save(false);
+				return $this->refresh();
+
 			}
 
 		}

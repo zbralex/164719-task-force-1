@@ -82,6 +82,7 @@ TaskActionsAsset::register($this);
 					?>
 				</div>
 			</div>
+			<?php if ($detail->author_id == Yii::$app->user->id): ?>
 			<div class="content-view__feedback">
 				<h2>Отклики <span>(<?= count($detail->response) ?>)</span></h2>
 				<div class="content-view__feedback-wrapper">
@@ -124,6 +125,7 @@ TaskActionsAsset::register($this);
 					</div>
 				</div>
 			</div>
+			<?php endif;?>
 		</section>
 
 		<section class="connect-desk">
@@ -228,10 +230,10 @@ TaskActionsAsset::register($this);
 		<?= $formDone->field($actionDoneForm, 'rating', [
 			'options' => [
 				'tag' => false
-			]
+			],
 		])->hiddenInput([
 			'id' => 'rating',
-			'name' => 'rating'
+			'name' => 'rating',
 		]); ?>
 	<div class="feedback-card__top--name completion-form-star">
 		<span class="star-disabled"></span>
