@@ -9,6 +9,7 @@ class ActionComplete extends Action
     {
         $this->actionName = 'Выполнено';
         $this->innerName = 'complete';
+	    $this->class = 'complete';
 
     }
 

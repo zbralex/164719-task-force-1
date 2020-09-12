@@ -116,10 +116,17 @@ TaskActionsAsset::register($this);
 								<span><?= $item->price; ?> ₽</span>
 							</div>
 							<div class="feedback-card__actions">
-								<a class="button__small-color request-button button"
-									type="button">Подтвердить</a>
-								<a class="button__small-color refusal-button button"
-									type="button">Отказать</a>
+<!--								<a class="button__small-color request-button button"-->
+<!--									type="button">Подтвердить</a>-->
+<!--								<a class="button__small-color refusal-button button"-->
+<!--									type="button">Отказать</a>-->
+								<?php foreach ($task->getAvailableActionsClient($detail->author->role_id, $detail->author_id, Yii::$app->user->id,  $resp*1) as $item) {
+									echo Html::a($item->actionName, '', [
+										'class' => 'button__small-color ' . $item->class . '-button button',
+										'data-for' => $item->class . '-form'
+									]);
+								}
+								?>
 							</div>
 						<?php endforeach; ?>
 					</div>
