@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
 TaskActionsAsset::register($this);
 ?>
-<?= $detail->status; ?>
+
 <main class="page-main">
 	<div class="main-container page-container">
 		<section class="content-view">
