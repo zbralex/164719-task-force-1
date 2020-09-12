@@ -123,7 +123,7 @@ class Task
 
 		switch ($this->status) {
 
-			case self::STATUS_NEW and $responsed:
+			case self::STATUS_NEW :
 				$actions = [$this->actionRequest, $this->actionRefuse];
 				break;
 

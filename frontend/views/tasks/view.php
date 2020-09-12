@@ -73,7 +73,7 @@ TaskActionsAsset::register($this);
 					$resp = \frontend\models\Response::find()->where(['user_id' =>Yii::$app->user->id, 'task_id' => $detail->id])->count();
 					$task = new Task($detail->status);
 
-					foreach ($task->getAvailableActions($detail->author->role_id, $detail->author_id, Yii::$app->user->id,  $resp*1) as $item) {
+					foreach ($task->getAvailableActions($detail->author->role_id, $detail->author_id, Yii::$app->user->id,  $resp) as $item) {
 						echo Html::button($item->actionName, [
 							'class' => 'button button__big-color ' . $item->class . '-button open-modal',
 							'data-for' => $item->innerName . '-form'
