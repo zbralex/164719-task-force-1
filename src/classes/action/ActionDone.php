@@ -9,8 +9,8 @@ class ActionDone extends Action
     public function __construct()
     {
         $this->actionName = 'Завершить';
-        $this->innerName = 'done';
-        $this->class = 'done';
+        $this->innerName = 'complete';
+        $this->class = 'request';
     }
 
     public function checkAccess(int $executorId, int $clientId, int $currentUserId): bool

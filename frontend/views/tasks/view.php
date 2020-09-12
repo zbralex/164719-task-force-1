@@ -75,8 +75,8 @@ TaskActionsAsset::register($this);
 
 					foreach ($task->getAvailableActions($detail->author->role_id, $detail->author_id, Yii::$app->user->id,  $resp*1) as $item) {
 						echo Html::button($item->actionName, [
-							'class' => 'button button__big-color ' . $item->innerName . '-button open-modal',
-							'data-for' => $item->class . '-form'
+							'class' => 'button button__big-color ' . $item->class . '-button open-modal',
+							'data-for' => $item->innerName . '-form'
 						]);
 					}
 					?>

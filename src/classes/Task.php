@@ -121,9 +121,6 @@ class Task
 			throw new RoleException('Не передано имя роли в параметрах');
 		}
 
-		//$role == 1 - Заказчик
-		//$role == 2 - Исполнитель
-
 		switch ($this->status) {
 
 			case self::STATUS_NEW and $responsed:

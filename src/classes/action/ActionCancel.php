@@ -7,8 +7,8 @@ class ActionCancel extends Action
     public function __construct()
     {
         $this->actionName = 'Отказаться';
-        $this->innerName = 'refusal';
-        $this->class = 'refuse';
+        $this->innerName = 'refuse';
+        $this->class = 'refusal';
 
     }
 
