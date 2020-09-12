@@ -100,6 +100,7 @@ class Task
 				$actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
 				break;
 
+
 			// если ни одно из действий не найдено, вернуть исключение
 			default:
 				throw new TaskException('Действие не найдено');
@@ -123,8 +124,11 @@ class Task
 
 		switch ($this->status) {
 
-			case self::STATUS_NEW :
+			case self::STATUS_NEW:
 				$actions = [$this->actionRequest, $this->actionRefuse];
+				break;
+			case self::STATUS_FAIL:
+				$actions = [];
 				break;
 
 

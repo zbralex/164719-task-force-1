@@ -117,4 +117,9 @@ class UserInfo extends ActiveRecord
 	{
 		return $this->hasOne(Cities::className(), ['id' => 'city_id']);
 	}
+
+	public function getResponses()
+	{
+		return $this->hasMany(Response::className(), ['user_id' => 'user_id']);
+	}
 }
