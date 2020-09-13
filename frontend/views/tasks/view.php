@@ -90,13 +90,19 @@ TaskActionsAsset::register($this);
 					<h2>Отклики <span>(<?= count($detail->response) ?>)</span></h2>
 					<div class="content-view__feedback-wrapper">
 						<div class="content-view__feedback-card">
-							<?php foreach ($detail->response as $item): ?>
+							<?php foreach ($detail->responses as $item): ?>
 								<div class="feedback-card__top">
 									<a href="#"><img src="/img/man-blond.jpg" width="55" height="55"></a>
 									<div class="feedback-card__top--name">
 										<p class="link-name">
 											<a href="#" class="link-regular">
-												<?php echo Html::encode($item->user->name); ?>
+												<?php
+												if(isset($item->userInfo))  {
+													echo Html::encode($item->userInfo->name) .' '. Html::encode($item->userInfo->surname);
+												} else {
+													echo Html::encode($item->user->name);
+												}
+												 ?>
 											</a></p>
 										<span></span><span></span><span></span><span></span><span
 											class="star-disabled"></span>
@@ -113,7 +119,8 @@ TaskActionsAsset::register($this);
 									<span><?= $item->price; ?> ₽</span>
 								</div>
 								<div class="feedback-card__actions">
-									<?php foreach ($task->getAvailableActionsClient($detail->author->role_id, $detail->author_id, Yii::$app->user->id, $resp * 1) as $item) {
+									<?php foreach ($task->getAvailableActionsClient($detail->author->role_id, $detail->status) as $item) {
+
 										echo Html::a($item->actionName, '', [
 											'class' => 'button__small-color ' . $item->class . '-button button',
 											'data-for' => $item->class . '-form'
@@ -213,7 +220,9 @@ TaskActionsAsset::register($this);
 		?>
 	</p>
 
-	<?= $formDone->field($actionDoneForm, 'comment', [
+	<?= $formDone->field($actionDoneForm, 'comment',
+		[
+			'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
 		'labelOptions' => [
 			'style' => 'display: block;',
 			'class' => 'form-modal-description'

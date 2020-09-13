@@ -111,7 +111,7 @@ class Task
 	// в зависимости от статуса задания и ID пользователя
 
 
-	public function getAvailableActionsClient(string $role, int $author, int $currentUserId, bool $responsed): array
+	public function getAvailableActionsClient(string $role, $statusResponse): array
 	{
 		$actions = []; // пустой массив действий
 
@@ -122,11 +122,11 @@ class Task
 			throw new RoleException('Не передано имя роли в параметрах');
 		}
 
-		switch ($this->status) {
-
+		switch ($statusResponse) {
 			case self::STATUS_NEW:
 				$actions = [$this->actionRequest, $this->actionRefuse];
 				break;
+
 			case self::STATUS_FAIL:
 				$actions = [];
 				break;
