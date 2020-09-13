@@ -8,4 +8,4 @@
 Thumbs.db
 vendor
 queries
-frontend/upload/*
+frontend/web/upload/*

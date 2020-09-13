@@ -46,7 +46,7 @@ class CreateTaskForm extends Model
 
     public function upload()
     {
-        $dir = Yii::getAlias('@app') . '/upload/' . date("Y-m-d") .'_'. date("H-m-s") . '/';
+        $dir = Yii::getAlias('@app') . '/web/upload/' . date("Y-m-d") .'_'. date("H-m") . '/';
         $paths = [];
 
         if(!is_dir($dir)) {
@@ -56,7 +56,7 @@ class CreateTaskForm extends Model
         if ($this->validate()) {
             foreach ($this->files as $file) {
                 $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
-                $paths [] = '/upload/' . $file->baseName . '.' . $file->extension;
+                $paths [] = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $file->baseName . '.' . $file->extension;
             }
             return $paths;
         } else {

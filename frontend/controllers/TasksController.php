@@ -87,6 +87,7 @@ class TasksController extends SecuredController
 				$response->price = empty($formResponse['price']) ? $detail->price : $formResponse['price'];
 				$response->comment = $formResponse['comment'];
 				$response->task_id = $detail->id;
+				$response->status = 'new';
 
 				$response->save(false);
 				return $this->refresh();
