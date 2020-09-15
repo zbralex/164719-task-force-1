@@ -97,12 +97,12 @@ TaskActionsAsset::register($this);
 										<p class="link-name">
 											<a href="#" class="link-regular">
 												<?php
-												if(isset($item->userInfo))  {
-													echo Html::encode($item->userInfo->name) .' '. Html::encode($item->userInfo->surname);
+												if (isset($item->userInfo)) {
+													echo Html::encode($item->userInfo->name) . ' ' . Html::encode($item->userInfo->surname);
 												} else {
 													echo Html::encode($item->user->name);
 												}
-												 ?>
+												?>
 											</a></p>
 										<span></span><span></span><span></span><span></span><span
 											class="star-disabled"></span>
@@ -116,7 +116,14 @@ TaskActionsAsset::register($this);
 									<p>
 										<?= Html::encode($item->comment); ?>
 									</p>
-									<span><?= $item->price; ?> ₽</span>
+									<span>
+										<?php
+										if (isset($item->price)) {
+											echo $item->price . '₽';
+										} else {
+											echo 'Цена не установлена';
+										} ?>
+									</span>
 								</div>
 								<div class="feedback-card__actions">
 									<?php foreach ($task->getAvailableActionsClient($detail->author->role_id, $detail->status) as $item) {
@@ -223,11 +230,11 @@ TaskActionsAsset::register($this);
 	<?= $formDone->field($actionDoneForm, 'comment',
 		[
 			'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-		'labelOptions' => [
-			'style' => 'display: block;',
-			'class' => 'form-modal-description'
-		]
-	])->textarea([
+			'labelOptions' => [
+				'style' => 'display: block;',
+				'class' => 'form-modal-description'
+			]
+		])->textarea([
 		'class' => 'input textarea',
 		'id' => 'completion-comment',
 		'style' => 'width: 100%;box-sizing: border-box',
