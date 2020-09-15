@@ -2,13 +2,14 @@
 
 namespace taskForce\classes\action;
 
-
+// доступное действие для заказчика
 class ActionRefuse extends Action
 {
     public function __construct()
     {
-        $this->actionName = 'Отказаться';
+        $this->actionName = 'Отказать';
         $this->innerName = 'refuse';
+        $this->class = 'refusal';
 
     }
 

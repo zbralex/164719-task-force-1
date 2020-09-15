@@ -2,17 +2,21 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Attachment;
+
+use frontend\models\forms\taskActions\doneForm;
+use frontend\models\forms\taskActions\refuseForm;
+use frontend\models\forms\taskActions\responseForm;
+use frontend\models\Response;
+use taskForce\services\CreateTaskService;
+use Yii;
+use frontend\models\Categories;
 use frontend\models\forms\CreateTaskForm;
 use frontend\models\forms\TaskForm;
-use frontend\models\Response;
 use frontend\models\Task;
 use frontend\models\User;
-use frontend\models\UserInfo;
-use Yii;
-use yii\web\Controller;
+use frontend\models\UserCategory;
+use taskForce\services\FilterTaskService;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 
 
 class TasksController extends SecuredController
@@ -34,56 +38,7 @@ class TasksController extends SecuredController
 			$request = Yii::$app->request;
 			$formContent = $request->post('TaskForm');
 
-			$query = Task::find()
-				->orderBy('created_at ASC');
-
-
-			foreach ($formContent as $key => $item) {
-
-				if ($item) {
-					switch ($key) {
-						//Группа чекбоксов «Категории» выводит все категории, существующие на сайте.
-						case 'categories':
-							$query->joinWith('category c')->where(['c.id' => $item]);
-							break;
-
-						//Выпадающий список «Период» добавляет к условию фильтрации диапазон времени, когда было создано задание.
-						//Доступные значения: за день, за неделю, за месяц, за всё время.
-						case 'period':
-							switch ($item) {
-								case 'day':
-									$query->andWhere(['>=', 'created_at', date("Y-m-d H:i:s", strtotime("-1 day +3 hour"))]);
-									break;
-								case 'week':
-									$query->andWhere(['>=', 'created_at', date("Y-m-d H:i:s", strtotime("-1 week +3 hour"))]);
-									break;
-
-								case 'month':
-									$query->andWhere(['>=', 'created_at', date("Y-m-d H:i:s", strtotime("-1 month +3 hour"))]);
-									break;
-								case 'all':
-									$query->andWhere(['>=', 'created_at', date("Y-m-d H:i:s", strtotime("last year +3 hour"))]);
-									break;
-							}
-							break;
-
-						//«Без откликов» — добавляет к условию фильтрации показ заданий только без откликов исполнителей;
-						case 'noResponse':
-							$query->joinWith('response r');
-							$query->andWhere(['r.task_id' => null]);
-							break;
-
-						//«Удалённая работа» — добавляет к условию фильтрации показ заданий без географической привязки.
-						case 'remote':
-							$query->andWhere(['task.city_id' => null]);
-							break;
-						case 'search':
-							$query->andWhere(['LIKE', 'task.name', $item]);
-							break;
-					}
-				}
-			}
-			$tasks = $query->all();
+			$tasks = FilterTaskService::taskFilter($formContent)->all();
 		}
 		return $this->render('index', [
 			'tasks' => $tasks,
@@ -105,61 +60,109 @@ class TasksController extends SecuredController
 
 		$user_created_at = User::findOne($detail->author_id);
 
+        $actionResponseForm = new responseForm();
+        $actionRefuseForm = new refuseForm();
+		$actionDoneForm = new doneForm();
+
+
+
+		if (Yii::$app->request->getIsPost()) {
+
+			$actionResponseForm->load(Yii::$app->request->post());
+			$actionRefuseForm->load(Yii::$app->request->post());
+			$actionDoneForm->load(Yii::$app->request->post());
+
+			$request = Yii::$app->request;
+
+			$formResponse = $request->post('responseForm');
+			$formDone = $request->post('doneForm');
+			$formRefuse = $request->post('refuseForm');
+			$response = new Response();
+			$taskDone = new Task();
+
+			if($formResponse){
+
+				$actionResponseForm->load(Yii::$app->request->post());
+				$response->user_id = Yii::$app->user->id;
+				$response->price = empty($formResponse['price']) ? $detail->price : $formResponse['price'];
+				$response->comment = $formResponse['comment'];
+				$response->task_id = $detail->id;
+				$response->status = 'new';
+
+				$response->save(false);
+				return $this->refresh();
+			}
+
+
+			if($formRefuse){
+				$response->status = 'failed';
+				$response->user_id = Yii::$app->user->id;
+				$response->task_id = $detail->id;
+
+				$response->save(false);
+				return $this->refresh();
+			}
+
+			if($formDone) {
+				$response->user_id = Yii::$app->user->id;
+				$response->task_id = $detail->id;
+
+				$response->status = $formDone['isDone'] == 0 ? 'completed': 'failed';
+				$response->rating = $_POST['rating'];
+				$response->comment = $formDone['comment'];
+
+				$response->save(false);
+				return $this->refresh();
+
+			}
+
+		}
+
 		return $this->render('view', [
 			'detail' => $detail,
-			'count_tasks' =>$count_tasks,
-			'user' => $user_created_at
+			'count_tasks' => $count_tasks,
+			'user' => $user_created_at,
+            'actionResponseForm' => $actionResponseForm,
+            'actionRefuseForm' => $actionRefuseForm,
+            'actionDoneForm' => $actionDoneForm
 		]);
 	}
 
 	public function actionCreate() {
+        // По умолчанию, после регистрации пользователю присваивается роль «Заказчик». Чтобы стать исполнителем необходимо
+        // отметить хотя бы одну специализацию у себя в профиле.
+        // Соответственно, при отмене всех галочек пользователь вновь становится исполнителем.
+	    $speciality = UserCategory::find()->where(['user_id' => Yii::$app->user->id])->column();
+        //проверяем, является ли пользователь заказчиком
+
+        if(count($speciality) > 0) {
+            return $this->render(Yii::getAlias('@web') . '/site/error', [
+                'name' => 'Доступ к созданию задачи запрещен',
+                'message' => 'Вы являетесь исполнителем. Пожалуйста, уберите специализацию в настройках профиля'
+            ]);
+        }
+
+
 		$model = new CreateTaskForm();
-		$attachment = new Attachment();
 		$task = new Task();
-
-        $attachment->load(Yii::$app->request->post());
-        $task->load(Yii::$app->request->post());
-
+        $categories = Categories::find()->select(['name', 'id'])->indexBy('id')->column();
+        $errors = [];
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-			// данные в $model удачно проверены
-
-            $model->files = UploadedFile::getInstances($model, 'files');
-            $attachment->save(false);
-            $task->save(false);
-            if ($model->upload()) {
-                // file is uploaded successfully
-                //return $this->redirect(['/tasks']);
-            }
-
-
+            CreateTaskService::taskHandler($task, $model);
+            return $this->redirect('/tasks');
 		}
 		if(!$model->validate()) {
-			var_dump($model->getErrors());
+			$errors = $model->getErrors();
 		}
 
+
+
 		return $this->render('create', [
-			'model' => $model
+			'model' => $model,
+            'categories' => $categories,
+            'errors' => $errors
 		]);
 	}
-
-    public function upload()
-    {
-        $dir = Yii::getAlias('@app') . '/upload/' . date("Y-m-d") .'_'. date("H-m-s") . '/';
-
-        if(!is_dir($dir)) {
-            mkdir($dir, 0777);
-        }
-
-
-        if ($this->validate()) {
-            foreach ($this->files as $file) {
-                $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 }

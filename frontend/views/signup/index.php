@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View
- * @property $cities = []
+ * @var array $cities
  */
 
 
@@ -19,23 +19,13 @@ use yii\widgets\ActiveForm;
                 <?php
                 $formSignUp = ActiveForm::begin([
                     'id' => 'signup',
-//                    'enableAjaxValidation'=>true,
-//                    'validateOnSubmit' => true,
-//                    'validateOnChange' => true,
-//                    'validateOnType' => true,
+                    'enableClientValidation' => true,
                     'fieldConfig' => [
-                        'options' => [
-                            'tag' => false,
-                            'template' => "{label}\n{input}\n{hint}\n{error}",
-                        ],
-                        'labelOptions' => [
-                            //'class' => $model->getErrors() ?? 'input-danger'
-                        ]
+                        'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
                     ],
                     'options' => [
-                        'class' => 'registration__user-form form-create'
+                        'class' => 'registration__user-form form-create',
                     ]
-
                 ]); ?>
 
 
@@ -43,7 +33,8 @@ use yii\widgets\ActiveForm;
 
                 ])->textInput([
                     'class' => 'input textarea',
-                    'placeholder' => 'kumarm@mail.ru'
+                    'style' => 'width: 100%;box-sizing: border-box',
+                    'placeholder' => 'kumarm@mail.ru',
                 ])->hint('Введите валидный адрес электронной почты', [
                     'tag' => 'span'
                 ])
@@ -53,20 +44,22 @@ use yii\widgets\ActiveForm;
                     'options' => [
                         'class' => 'custom',
                     ],
-                    'labelOptions' => []
                 ])->textInput([
                     'class' => 'input textarea',
-                    'placeholder' => 'Мамедов Кумар'
+                    'style' => 'width: 100%;box-sizing: border-box',
+                    'placeholder' => 'Мамедов Кумар',
                 ])->hint('Введите ваше имя и фамилию', [
                     'tag' => 'span'
                 ]);
                 ?>
+
                 <?= $formSignUp->field($model, 'city_id', [
                     'options' => ['class' => 'custom']
                 ])
                     ->dropDownList(Cities::find()->select(['city', 'id'])->indexBy('id')->column(),
                         [
                             'class' => 'multiple-select input town-select registration-town',
+                            'style' => 'width: 100%;box-sizing: border-box',
                             'options' => [
                                 '1109' => [
                                     'Selected' => true
@@ -77,17 +70,16 @@ use yii\widgets\ActiveForm;
                     ])->label('Город проживания'); ?>
 
                 <?= $formSignUp->field($model, 'password', [
-                    'options' => [
-                        'class' => 'custom',
-                    ],
                     'labelOptions' => [
-                        'class' => 'input-danger'
+
                     ]
                 ])->passwordInput([
-                    'class' => 'input textarea'
+                    'class' => 'input textarea',
+                    'style' => 'width: 100%;box-sizing: border-box',
                 ])->hint('Длина пароля от 8 символов', [
                     'tag' => 'span'
                 ]);
+
                 ?>
 
                 <?= Html::submitButton('Cоздать аккаунт', [

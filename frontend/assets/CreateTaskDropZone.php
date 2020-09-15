@@ -7,15 +7,14 @@ use yii\web\AssetBundle;
 /**
  * Main frontend application asset bundle.
  */
-class AppAsset extends AssetBundle
+class CreateTaskDropZone extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-    public $css = [
-        '/css/normalize.css',
-        '/css/style.css',
-    ];
+
     public $js = [
+        '/js/dropzone.js',
+        '/js/initDropZone.js',
 
     ];
     public $depends = [

@@ -3,14 +3,14 @@
 namespace taskForce\classes\action;
 
 
-class ActionComplete extends Action
+class ActionDone extends Action
 {
+
     public function __construct()
     {
-        $this->actionName = 'Выполнено';
+        $this->actionName = 'Завершить';
         $this->innerName = 'complete';
-	    $this->class = 'complete';
-
+        $this->class = 'request';
     }
 
     public function checkAccess(int $executorId, int $clientId, int $currentUserId): bool

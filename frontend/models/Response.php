@@ -71,7 +71,7 @@ class Response extends ActiveRecord
 
     public function getUserInfo()
     {
-        return $this->hasOne(UserInfo::className(), ['id' => 'user_id']);
+        return $this->hasOne(UserInfo::className(), ['user_id' => 'user_id']);
     }
 
     /**

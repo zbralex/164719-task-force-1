@@ -3,13 +3,8 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use yii\widgets\ActiveForm;
-use common\widgets\Alert;
-use frontend\models;
 use yii\widgets\Pjax;
 
 AppAsset::register($this);
@@ -266,41 +261,33 @@ AppAsset::register($this);
 		<?php Pjax::begin([
 ]);?>
 		<?php $form = ActiveForm::begin([
-			'fieldConfig' => [
-				'options' => [
-					'tag' => false,
-				]
-			],
 			'options' => [
 				'data' => ['pjax' => true],
 				'name' => 'tasks',
-				'class' => 'search-task__form'
+				'class' => 'search-task__form',
 			],
+            'fieldConfig' => [
+                'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
+            ]
 
 		]); ?>
 
 		<?= $form->field($model, 'email', [
-			'template' => '{label}{input}{error}',
-			'options' => [
-				'class' => 'custom',
-			],
 			'labelOptions' => [
 				'class' => 'form-modal-description',
 			]
 		])->input('text', [
-			'class' => 'enter-form-email input input-middle'
+			'class' => 'enter-form-email input input-middle',
+            'style' => 'width: 100%;box-sizing: border-box',
 		]);
 		?>
 		<?= $form->field($model, 'password', [
-			'template' => '{label}{input}{error}',
-			'options' => [
-				'class' => 'custom',
-			],
 			'labelOptions' => [
 				'class' => 'form-modal-description',
 			]
 		])->input('password', [
-			'class' => 'enter-form-email input input-middle'
+			'class' => 'enter-form-email input input-middle',
+            'style' => 'width: 100%;box-sizing: border-box',
 		]);
 		?>
 		<?= Html::submitButton('Войти', ['class' => 'button']) ?>

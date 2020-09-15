@@ -20,6 +20,7 @@ use yii\db\ActiveRecord;
  * @property float|null $longitude
  * @property string|null $created_at
  * @property string|null $finished_at
+ * @property string|null $execution_date
  *
  * @property Attachment[] $attachments
  * @property Message[] $messages
@@ -33,6 +34,7 @@ use yii\db\ActiveRecord;
  */
 class Task extends ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -50,7 +52,7 @@ class Task extends ActiveRecord
             [['name', 'description', 'status', 'price', 'category_id', 'author_id', 'executor_id', 'city_id'], 'required'],
             [['price', 'category_id', 'author_id', 'executor_id', 'city_id'], 'integer'],
             [['latitude', 'longitude'], 'number'],
-            [['created_at', 'finished_at'], 'safe'],
+            [['created_at', 'finished_at', 'execution_date'], 'safe'],
             [['name', 'description', 'status'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],

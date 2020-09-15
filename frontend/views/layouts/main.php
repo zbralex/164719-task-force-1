@@ -1,7 +1,7 @@
 <?php
 /* @var $this \yii\web\View */
 
-/* @var $content string */
+/* @var string $content  */
 
 use frontend\assets\AppAsset;
 use yii\helpers\Html;
@@ -125,7 +125,7 @@ AppAsset::register($this);
 							alt="Аватар пользователя">
 					</a>
 					<span class="header__account-name">
-                  <?= Yii::$app->user->getIdentity()->name ?>
+                  <?= Html::encode(Yii::$app->user->getIdentity()->name) ?>
              </span>
 				</div>
 				<div class="account__pop-up">
@@ -215,9 +215,6 @@ AppAsset::register($this);
 
 <?php $this->endBody() ?>
 
-	<script>
-		var dropzone = new Dropzone("div.create__file", {url: "/", paramName: "Attach"});
-	</script>
 </body>
 </html>
 <?php $this->endPage() ?>

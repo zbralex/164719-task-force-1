@@ -1,8 +1,11 @@
 <?php
 /**
  * @var yii\web\View $this
- * @var $detail = []
+ * @var array $detail
  */
+
+use yii\helpers\Html;
+
 ?>
 <main class="page-main">
     <div class="main-container page-container">
@@ -11,7 +14,7 @@
                 <div class="user__card">
                     <img src="/img/man-hat.png" width="120" height="120" alt="Аватар пользователя">
                     <div class="content-view__headline">
-                        <h1><?= $detail->name ?> <?= $detail->surname ?></h1>
+                        <h1><?= Html::encode($detail->name .' '. $detail->surname) ?></h1>
                         <p>Россия, Санкт-Петербург, 30 лет</p>
                         <div class="profile-mini__name five-stars__rate">
                             <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
