@@ -16,6 +16,7 @@ use taskForce\classes\Task;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use frontend\models\Response;
 
 TaskActionsAsset::register($this);
 ?>
@@ -70,7 +71,7 @@ TaskActionsAsset::register($this);
 				</div>
 				<div class="content-view__action-buttons">
 					<?php
-					$resp = \frontend\models\Response::find()
+					$resp = Response::find()
 						->where(['user_id' => Yii::$app->user->id, 'task_id' => $detail->id, 'status' => 'new'])
 						->count();
 

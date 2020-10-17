@@ -85,21 +85,29 @@ class Task
 		switch ($this->status) {
 
 			case self::STATUS_NEW and $author === $currentUserId and $responsed:
+				// выполнить, отказаться
 				$actions = [$this->actionDone, $this->actionCancel];
 				break;
 
 			case self::STATUS_NEW and $responsed:
+				// отказаться
 				$actions = [$this->actionCancel];
 				break;
 
+			case self::STATUS_NEW and $role == self::ROLE_CLIENT and $responsed:
+				// ничего не показывать
+				$actions = [];
+				break;
+
 			case self::STATUS_NEW and $author !== $currentUserId and !$responsed:
+				//откликнуться, отказаться
 				$actions = [$this->actionResponse, $this->actionCancel];
 				break;
 
 			case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT and $author === $currentUserId and !$responsed:
+				// откликнуться, отказаться, завершить
 				$actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
 				break;
-
 
 			// если ни одно из действий не найдено, вернуть исключение
 			default:
