@@ -122,7 +122,7 @@ TaskActionsAsset::register($this);
 										if (isset($item->price)) {
 											echo $item->price . '₽';
 										} else {
-											echo 'Цена не установлена';
+											echo '-';
 										} ?>
 									</span>
 								</div>
