@@ -155,7 +155,9 @@ class TasksController extends SecuredController
 		}
 
 		if (Yii::$app->request->getIsPost()) {
+			$executor_id = Yii::$app->request->post('executor');
 			$detail->status = 'progress';
+			$detail->executor_id = $executor_id;
 			$detail->save(false);
 			sleep(1);
 			return $this->redirect(['../task/view/' . $id]);

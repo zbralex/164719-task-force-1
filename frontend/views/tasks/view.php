@@ -128,12 +128,16 @@ TaskActionsAsset::register($this);
 									</span>
 								</div>
 								<div class="feedback-card__actions">
-									<?php foreach ($task->getAvailableActionsClient($detail->author->role_id, $detail->status) as $item) {
 
-										echo Html::a($item->actionName, '/task/' . $item->innerName .'/' . $detail->id, [
-											'class' => 'button__small-color ' . $item->class . '-button button',
-											'data-for' => $item->class . '-form',
-											'data-method' => 'POST'
+									<?php foreach ($task->getAvailableActionsClient($detail->author->role_id, $detail->status) as $action) {
+
+										echo Html::a($action->actionName, '/task/' . $action->innerName .'/' . $detail->id,  [
+											'class' => 'button__small-color ' . $action->class . '-button button',
+											'data-for' => $action->class . '-form',
+											'data-method' => 'POST',
+											'data-params' => [
+												'executor' => $item->user_id
+											],
 										]);
 									}
 									?>
