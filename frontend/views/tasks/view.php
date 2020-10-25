@@ -129,7 +129,7 @@ TaskActionsAsset::register($this);
 								<div class="feedback-card__actions">
 									<?php foreach ($task->getAvailableActionsClient($detail->author->role_id, $detail->status) as $item) {
 
-										echo Html::a($item->actionName, '', [
+										echo Html::a($item->actionName, '/task/' .$item->innerName.'/' . $detail->id, [
 											'class' => 'button__small-color ' . $item->class . '-button button',
 											'data-for' => $item->class . '-form'
 										]);

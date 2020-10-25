@@ -128,6 +128,18 @@ class TasksController extends SecuredController
 		]);
 	}
 
+
+
+	public function actionRefuse($id = null) {
+		var_dump($id);
+		//return $this->redirect(['../tasks/view/' . $id]);
+	}
+
+	public function actionRequest($id = null) {
+		var_dump($id);
+		//return $this->redirect(['../tasks/view/' . $id]);
+	}
+
 	public function actionCreate() {
         // По умолчанию, после регистрации пользователю присваивается роль «Заказчик». Чтобы стать исполнителем необходимо
         // отметить хотя бы одну специализацию у себя в профиле.
