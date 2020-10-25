@@ -76,6 +76,7 @@ TaskActionsAsset::register($this);
 						->count();
 
 					$task = new Task($detail->status);
+					var_dump($detail->status, $resp);
 
 					foreach ($task->getAvailableActions($detail->author->role_id, $detail->author_id, Yii::$app->user->id, $resp) as $item) {
 						echo Html::button($item->actionName, [

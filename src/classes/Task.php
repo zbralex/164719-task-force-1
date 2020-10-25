@@ -68,7 +68,7 @@ class Task
 
 	}
 
-	public function getAvailableActions(string $role, int $author, int $currentUserId, bool $responsed): array
+	public function getAvailableActions(string $role, int $author, int $currentUserId, bool $responded): array
 	{
 		$actions = []; // пустой массив действий
 
@@ -84,29 +84,30 @@ class Task
 
 		switch ($this->status) {
 
-			case self::STATUS_NEW and $author === $currentUserId and $responsed:
-				// выполнить, отказаться
+
+			case self::STATUS_NEW == $this->status and $author === $currentUserId:
+				// завершить, отказаться
 				$actions = [$this->actionDone, $this->actionCancel];
 				break;
 
-			case self::STATUS_NEW and $responsed:
+			case self::STATUS_NEW == $this->status and !$responded:
 				// отказаться
-				$actions = [$this->actionCancel];
+				$actions = [$this->actionResponse, $this->actionCancel ];
 				break;
 
-			case self::STATUS_NEW and $role == self::ROLE_CLIENT and $responsed:
+			case self::STATUS_NEW == $this->status and $author !== $currentUserId and $responded:
 				// ничего не показывать
 				$actions = [];
 				break;
 
-			case self::STATUS_NEW and $author !== $currentUserId and !$responsed:
+			case self::STATUS_NEW == $this->status and $author !== $currentUserId:
 				//откликнуться, отказаться
 				$actions = [$this->actionResponse, $this->actionCancel];
 				break;
 
-			case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT and $author === $currentUserId and !$responsed:
-				// откликнуться, отказаться, завершить
-				$actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
+			case self::STATUS_PROGRESS == $this->status and $role == self::ROLE_CLIENT:
+				// завершить
+				$actions = [$this->actionDone];
 				break;
 
 			// если ни одно из действий не найдено, вернуть исключение
