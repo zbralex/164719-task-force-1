@@ -132,15 +132,12 @@ class TasksController extends SecuredController
 	{
 
 
-		$detail = Task::findOne($id);
-
-		if (empty($detail)) {
-			throw new NotFoundHttpException("Задание с № $id не найдено");
-		}
-
 		if (Yii::$app->request->getIsPost()) {
-			$detail->status = 'cancelled';
-			$detail->save(false);
+			$user_id = Yii::$app->request->post('user_refused');
+			$response = Response::findOne(['task_id' => $id, 'user_id' => $user_id]);
+
+			$response->status = 'cancelled';
+			$response->save(false);
 			sleep(1);
 			return $this->redirect(['../task/view/' . $id]);
 		}

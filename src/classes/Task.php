@@ -100,6 +100,7 @@ class Task
 				$actions = [];
 				break;
 
+
 			case self::STATUS_NEW == $this->status and $author !== $currentUserId:
 				//откликнуться, отказаться
 				$actions = [$this->actionResponse, $this->actionCancel];
@@ -132,11 +133,11 @@ class Task
 		}
 
 		switch ($statusResponse) {
-			case self::STATUS_NEW:
+			case self::STATUS_NEW == $statusResponse:
 				$actions = [$this->actionRequest, $this->actionRefuse];
 				break;
 
-			case self::STATUS_FAIL:
+			case self::STATUS_FAIL == $statusResponse or self::STATUS_CANCEL == $statusResponse:
 				$actions = [];
 				break;
 
