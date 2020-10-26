@@ -80,7 +80,6 @@ class TasksController extends SecuredController
 			$formDone = $request->post('doneForm');
 			$formRefuse = $request->post('refuseForm');
 			$response = new Response();
-			$taskDone = new Task();
 
 			if ($formResponse) {
 
@@ -139,6 +138,10 @@ class TasksController extends SecuredController
 		if (Yii::$app->request->getIsPost()) {
 			$user_id = Yii::$app->request->post('user_refused');
 			$response = Response::findOne(['task_id' => $id, 'user_id' => $user_id]);
+
+			if (isset($response)) {
+				throw new NotFoundHttpException("Задание с № $id для пользователя $user_id не найдено");
+			}
 
 			$response->status = 'cancelled';
 			$response->save(false);
