@@ -71,9 +71,6 @@ TaskActionsAsset::register($this);
 				</div>
 				<div class="content-view__action-buttons">
 					<?php
-					$resp = Response::find()
-						->where(['user_id' => Yii::$app->user->id, 'task_id' => $detail->id, 'status' => 'new'])
-						->count();
 
 					$task = new Task($detail->status);
 

@@ -50,6 +50,9 @@ class TasksController extends SecuredController
 	{
 
 		$detail = Task::findOne($id);
+		$resp = Response::find()
+			->where(['user_id' => Yii::$app->user->id, 'task_id' => $detail->id, 'status' => 'new'])
+			->count();
 		if (empty($detail)) {
 			throw new NotFoundHttpException("Задание с № $id не найдено");
 		}
@@ -123,7 +126,8 @@ class TasksController extends SecuredController
 			'user' => $user_created_at,
 			'actionResponseForm' => $actionResponseForm,
 			'actionRefuseForm' => $actionRefuseForm,
-			'actionDoneForm' => $actionDoneForm
+			'actionDoneForm' => $actionDoneForm,
+			'resp' => $resp
 		]);
 	}
 
