@@ -7,6 +7,7 @@
  * @var array $actionResponseForm
  * @var array $actionRefuseForm
  * @var array $actionDoneForm
+ * @var array $resp
  *
  */
 
@@ -125,7 +126,9 @@ TaskActionsAsset::register($this);
 								</div>
 								<div class="feedback-card__actions">
 
-									<?php foreach ($task->getAvailableActionsClient($detail->author->role_id, $item->status) as $action) {
+									<?php
+									var_dump($detail->author->role_id);
+									foreach ($task->getAvailableActionsClient($detail->author->role_id) as $action) {
 
 										echo Html::a($action->actionName, '/task/' . $action->innerName .'/' . $detail->id,  [
 											'class' => 'button__small-color ' . $action->class . '-button button',
