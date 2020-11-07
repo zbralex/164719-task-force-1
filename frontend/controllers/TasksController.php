@@ -145,7 +145,6 @@ class TasksController extends SecuredController
 
 			$response->status = 'cancelled';
 			$response->save(false);
-			sleep(1);
 			return $this->redirect(['../task/view/' . $id]);
 		}
 	}
@@ -163,7 +162,6 @@ class TasksController extends SecuredController
 			$detail->status = 'progress';
 			$detail->executor_id = $executor_id;
 			$detail->save(false);
-			sleep(1);
 			return $this->redirect(['../task/view/' . $id]);
 		}
 	}
