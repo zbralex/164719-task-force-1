@@ -127,7 +127,6 @@ TaskActionsAsset::register($this);
 								<div class="feedback-card__actions">
 
 									<?php
-									var_dump($detail->author->role_id);
 									foreach ($task->getAvailableActionsClient($detail->author->role_id) as $action) {
 
 										echo Html::a($action->actionName, '/task/' . $action->innerName .'/' . $detail->id,  [
