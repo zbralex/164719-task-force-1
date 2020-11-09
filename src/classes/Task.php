@@ -68,7 +68,7 @@ class Task
 
 	}
 
-	public function getAvailableActions(string $role, int $author, int $currentUserId, bool $responsed): array
+	public function getAvailableActions(string $role, int $author, int $currentUserId, bool $responded): array
 	{
 		$actions = []; // пустой массив действий
 
@@ -78,40 +78,34 @@ class Task
 		if (empty($role)) {
 			throw new RoleException('Не передано имя роли в параметрах');
 		}
-
+		if (!isset($this->status)) {
+			throw new RoleException('Не передан статус');
+		}
 		//$role == 1 - Заказчик
 		//$role == 2 - Исполнитель
 
-		switch ($this->status) {
 
-			case self::STATUS_NEW and $author === $currentUserId and $responsed:
-				$actions = [$this->actionDone, $this->actionCancel];
-				break;
-
-			case self::STATUS_NEW and $responsed:
-				$actions = [$this->actionCancel];
-				break;
-
-			case self::STATUS_NEW and $author !== $currentUserId and !$responsed:
+		//действия для заказчика
+		if($author === $currentUserId) {
+			if(self::STATUS_NEW or self::STATUS_PROGRESS == $this->status) {
+				$actions = [$this->actionDone];
+			}
+		} elseif ($author !== $currentUserId) {
+			if (self::STATUS_NEW == $this->status) {
 				$actions = [$this->actionResponse, $this->actionCancel];
-				break;
+			} elseif (self::STATUS_PROGRESS == $this->status) {
+				$actions = [];
+			}
 
-			case self::STATUS_PROGRESS and $role == self::ROLE_CLIENT and $author === $currentUserId and !$responsed:
-				$actions = [$this->actionResponse, $this->actionCancel, $this->actionDone];
-				break;
-
-
-			// если ни одно из действий не найдено, вернуть исключение
-			default:
-				throw new TaskException('Действие не найдено');
 		}
+
 		return $actions;
 	}
 	// он должен возвращать список доступных классов-действий
 	// в зависимости от статуса задания и ID пользователя
 
 
-	public function getAvailableActionsClient(string $role, $statusResponse): array
+	public function getAvailableActionsClient(string $role): array
 	{
 		$actions = []; // пустой массив действий
 
@@ -122,20 +116,12 @@ class Task
 			throw new RoleException('Не передано имя роли в параметрах');
 		}
 
-		switch ($statusResponse) {
-			case self::STATUS_NEW:
+		if ($role == self::ROLE_CLIENT) {
+			if ($this->status == self::STATUS_NEW ) {
 				$actions = [$this->actionRequest, $this->actionRefuse];
-				break;
-
-			case self::STATUS_FAIL:
-				$actions = [];
-				break;
-
-
-			// если ни одно из действий не найдено, вернуть исключение
-			default:
-				throw new TaskException('Действие не найдено');
+			}
 		}
 		return $actions;
+
 	}
 }

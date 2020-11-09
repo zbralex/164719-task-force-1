@@ -7,6 +7,7 @@
  * @var array $actionResponseForm
  * @var array $actionRefuseForm
  * @var array $actionDoneForm
+ * @var array $resp
  *
  */
 
@@ -16,6 +17,7 @@ use taskForce\classes\Task;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use frontend\models\Response;
 
 TaskActionsAsset::register($this);
 ?>
@@ -70,9 +72,6 @@ TaskActionsAsset::register($this);
 				</div>
 				<div class="content-view__action-buttons">
 					<?php
-					$resp = \frontend\models\Response::find()
-						->where(['user_id' => Yii::$app->user->id, 'task_id' => $detail->id, 'status' => 'new'])
-						->count();
 
 					$task = new Task($detail->status);
 
@@ -97,12 +96,12 @@ TaskActionsAsset::register($this);
 										<p class="link-name">
 											<a href="#" class="link-regular">
 												<?php
-												if(isset($item->userInfo))  {
-													echo Html::encode($item->userInfo->name) .' '. Html::encode($item->userInfo->surname);
+												if (isset($item->userInfo)) {
+													echo Html::encode($item->userInfo->name) . ' ' . Html::encode($item->userInfo->surname);
 												} else {
 													echo Html::encode($item->user->name);
 												}
-												 ?>
+												?>
 											</a></p>
 										<span></span><span></span><span></span><span></span><span
 											class="star-disabled"></span>
@@ -116,14 +115,28 @@ TaskActionsAsset::register($this);
 									<p>
 										<?= Html::encode($item->comment); ?>
 									</p>
-									<span><?= $item->price; ?> ₽</span>
+									<span>
+										<?php
+										if (isset($item->price)) {
+											echo $item->price . '₽';
+										} else {
+											echo '-';
+										} ?>
+									</span>
 								</div>
 								<div class="feedback-card__actions">
-									<?php foreach ($task->getAvailableActionsClient($detail->author->role_id, $detail->status) as $item) {
 
-										echo Html::a($item->actionName, '', [
-											'class' => 'button__small-color ' . $item->class . '-button button',
-											'data-for' => $item->class . '-form'
+									<?php
+									foreach ($task->getAvailableActionsClient($detail->author->role_id) as $action) {
+
+										echo Html::a($action->actionName, '/task/' . $action->innerName .'/' . $detail->id,  [
+											'class' => 'button__small-color ' . $action->class . '-button button',
+											'data-for' => $action->class . '-form',
+											'data-method' => 'POST',
+											'data-params' => [
+												'executor' => $item->user_id,
+												'user_refused' => $item->user_id
+											],
 										]);
 									}
 									?>
@@ -223,11 +236,11 @@ TaskActionsAsset::register($this);
 	<?= $formDone->field($actionDoneForm, 'comment',
 		[
 			'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-		'labelOptions' => [
-			'style' => 'display: block;',
-			'class' => 'form-modal-description'
-		]
-	])->textarea([
+			'labelOptions' => [
+				'style' => 'display: block;',
+				'class' => 'form-modal-description'
+			]
+		])->textarea([
 		'class' => 'input textarea',
 		'id' => 'completion-comment',
 		'style' => 'width: 100%;box-sizing: border-box',

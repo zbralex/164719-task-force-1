@@ -3,19 +3,19 @@
 namespace frontend\controllers;
 
 
+use frontend\models\Categories;
+use frontend\models\forms\CreateTaskForm;
 use frontend\models\forms\taskActions\doneForm;
 use frontend\models\forms\taskActions\refuseForm;
 use frontend\models\forms\taskActions\responseForm;
-use frontend\models\Response;
-use taskForce\services\CreateTaskService;
-use Yii;
-use frontend\models\Categories;
-use frontend\models\forms\CreateTaskForm;
 use frontend\models\forms\TaskForm;
+use frontend\models\Response;
 use frontend\models\Task;
 use frontend\models\User;
 use frontend\models\UserCategory;
+use taskForce\services\CreateTaskService;
 use taskForce\services\FilterTaskService;
+use Yii;
 use yii\web\NotFoundHttpException;
 
 
@@ -50,20 +50,22 @@ class TasksController extends SecuredController
 	{
 
 		$detail = Task::findOne($id);
-        if (empty($detail)) {
-            throw new NotFoundHttpException("Задание с № $id не найдено");
-        }
+		$resp = Response::find()
+			->where(['user_id' => Yii::$app->user->id, 'task_id' => $detail->id, 'status' => 'new'])
+			->count();
+		if (empty($detail)) {
+			throw new NotFoundHttpException("Задание с № $id не найдено");
+		}
 		$count_tasks = Task::find()
-			->where(['author_id'=> $detail->author_id])
+			->where(['author_id' => $detail->author_id])
 			->count('author_id');
 
 
 		$user_created_at = User::findOne($detail->author_id);
 
-        $actionResponseForm = new responseForm();
-        $actionRefuseForm = new refuseForm();
+		$actionResponseForm = new responseForm();
+		$actionRefuseForm = new refuseForm();
 		$actionDoneForm = new doneForm();
-
 
 
 		if (Yii::$app->request->getIsPost()) {
@@ -78,9 +80,8 @@ class TasksController extends SecuredController
 			$formDone = $request->post('doneForm');
 			$formRefuse = $request->post('refuseForm');
 			$response = new Response();
-			$taskDone = new Task();
 
-			if($formResponse){
+			if ($formResponse) {
 
 				$actionResponseForm->load(Yii::$app->request->post());
 				$response->user_id = Yii::$app->user->id;
@@ -94,7 +95,7 @@ class TasksController extends SecuredController
 			}
 
 
-			if($formRefuse){
+			if ($formRefuse) {
 				$response->status = 'failed';
 				$response->user_id = Yii::$app->user->id;
 				$response->task_id = $detail->id;
@@ -103,11 +104,11 @@ class TasksController extends SecuredController
 				return $this->refresh();
 			}
 
-			if($formDone) {
+			if ($formDone) {
 				$response->user_id = Yii::$app->user->id;
 				$response->task_id = $detail->id;
 
-				$response->status = $formDone['isDone'] == 0 ? 'completed': 'failed';
+				$response->status = $formDone['isDone'] == 0 ? 'completed' : 'failed';
 				$response->rating = $_POST['rating'];
 				$response->comment = $formDone['comment'];
 
@@ -122,46 +123,83 @@ class TasksController extends SecuredController
 			'detail' => $detail,
 			'count_tasks' => $count_tasks,
 			'user' => $user_created_at,
-            'actionResponseForm' => $actionResponseForm,
-            'actionRefuseForm' => $actionRefuseForm,
-            'actionDoneForm' => $actionDoneForm
+			'actionResponseForm' => $actionResponseForm,
+			'actionRefuseForm' => $actionRefuseForm,
+			'actionDoneForm' => $actionDoneForm,
+			'resp' => $resp
 		]);
 	}
 
-	public function actionCreate() {
-        // По умолчанию, после регистрации пользователю присваивается роль «Заказчик». Чтобы стать исполнителем необходимо
-        // отметить хотя бы одну специализацию у себя в профиле.
-        // Соответственно, при отмене всех галочек пользователь вновь становится исполнителем.
-	    $speciality = UserCategory::find()->where(['user_id' => Yii::$app->user->id])->column();
-        //проверяем, является ли пользователь заказчиком
 
-        if(count($speciality) > 0) {
-            return $this->render(Yii::getAlias('@web') . '/site/error', [
-                'name' => 'Доступ к созданию задачи запрещен',
-                'message' => 'Вы являетесь исполнителем. Пожалуйста, уберите специализацию в настройках профиля'
-            ]);
-        }
+	public function actionRefuse($id = null)
+	{
+
+
+		if (Yii::$app->request->getIsPost()) {
+			$user_id = Yii::$app->request->post('user_refused');
+			$response = Response::findOne(['task_id' => $id, 'user_id' => $user_id]);
+
+			if (null === $response) {
+				throw new NotFoundHttpException("Задание с № $id для пользователя $user_id не найдено");
+			}
+
+			$response->status = 'cancelled';
+			$response->save(false);
+			return $this->redirect(['../task/view/' . $id]);
+		}
+	}
+
+	public function actionRequest($id = null)
+	{
+		$detail = Task::findOne($id);
+
+		if (empty($detail)) {
+			throw new NotFoundHttpException("Задание с № $id не найдено");
+		}
+
+		if (Yii::$app->request->getIsPost()) {
+			$executor_id = Yii::$app->request->post('executor');
+			$detail->status = 'progress';
+			$detail->executor_id = $executor_id;
+			$detail->save(false);
+			return $this->redirect(['../task/view/' . $id]);
+		}
+	}
+
+	public function actionCreate()
+	{
+		// По умолчанию, после регистрации пользователю присваивается роль «Заказчик». Чтобы стать исполнителем необходимо
+		// отметить хотя бы одну специализацию у себя в профиле.
+		// Соответственно, при отмене всех галочек пользователь вновь становится исполнителем.
+		$speciality = UserCategory::find()->where(['user_id' => Yii::$app->user->id])->column();
+		//проверяем, является ли пользователь заказчиком
+
+		if (count($speciality) > 0) {
+			return $this->render(Yii::getAlias('@web') . '/site/error', [
+				'name' => 'Доступ к созданию задачи запрещен',
+				'message' => 'Вы являетесь исполнителем. Пожалуйста, уберите специализацию в настройках профиля'
+			]);
+		}
 
 
 		$model = new CreateTaskForm();
 		$task = new Task();
-        $categories = Categories::find()->select(['name', 'id'])->indexBy('id')->column();
-        $errors = [];
+		$categories = Categories::find()->select(['name', 'id'])->indexBy('id')->column();
+		$errors = [];
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            CreateTaskService::taskHandler($task, $model);
-            return $this->redirect('/tasks');
+		if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+			CreateTaskService::taskHandler($task, $model);
+			return $this->redirect('/tasks');
 		}
-		if(!$model->validate()) {
+		if (!$model->validate()) {
 			$errors = $model->getErrors();
 		}
 
 
-
 		return $this->render('create', [
 			'model' => $model,
-            'categories' => $categories,
-            'errors' => $errors
+			'categories' => $categories,
+			'errors' => $errors
 		]);
 	}
 

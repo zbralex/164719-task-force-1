@@ -27,6 +27,8 @@ return [
 				'/' => '/landing',
 				'user/view/<id:\d+>' => 'users/view',
 				'task/view/<id:\d+>' => 'tasks/view',
+				'task/refuse/<id:\d+>' => 'tasks/refuse',
+				'task/request/<id:\d+>' => 'tasks/request',
 			],
 		],
 		'cache' => [
