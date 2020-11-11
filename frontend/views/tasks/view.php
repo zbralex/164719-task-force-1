@@ -13,12 +13,11 @@
 
 
 use frontend\assets\TaskActionsAsset;
+use frontend\assets\YandexAPIKey;
 use taskForce\classes\Task;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use frontend\models\Response;
-use frontend\assets\YandexAPIKey;
 
 TaskActionsAsset::register($this);
 YandexAPIKey::register($this);
@@ -61,17 +60,22 @@ YandexAPIKey::register($this);
 						<h3 class="content-view__h3">Расположение</h3>
 						<div class="content-view__location-wrapper">
 							<div class="content-view__map">
-<!--								<a href="#"><img src="/img/map.jpg" width="361" height="292"-->
-<!--										alt="Москва, Новый арбат, 23 к. 1"></a>-->
+								<!--								<a href="#"><img src="/img/map.jpg" width="361" height="292"-->
+								<!--										alt="Москва, Новый арбат, 23 к. 1"></a>-->
 								<div id="map" style="width: 361px; height: 292px"></div>
-								<?= var_dump($detail->latitude, $detail->longitude)?>
+								<?= var_dump($detail->latitude, $detail->longitude) ?>
 								<?php echo '<script type="text/javascript">
 									ymaps.ready(init);
 									function init(){
 										var myMap = new ymaps.Map("map", {
-											center: [' .$detail->latitude.', '.$detail->longitude.'],
-											zoom: 13
-										});
+											center: [' . $detail->latitude . ', ' . $detail->longitude . '],
+											zoom: 15
+										}, {
+                                            searchControlProvider: "yandex#map"
+                                               });
+											myPlacemark = new ymaps.Placemark([' . $detail->latitude . ', ' . $detail->longitude . '], {
+							        });
+										myMap.geoObjects.add(myPlacemark);
 									}
 								</script>' ?>
 							</div>
@@ -142,7 +146,7 @@ YandexAPIKey::register($this);
 									<?php
 									foreach ($task->getAvailableActionsClient($detail->author->role_id) as $action) {
 
-										echo Html::a($action->actionName, '/task/' . $action->innerName .'/' . $detail->id,  [
+										echo Html::a($action->actionName, '/task/' . $action->innerName . '/' . $detail->id, [
 											'class' => 'button__small-color ' . $action->class . '-button button',
 											'data-for' => $action->class . '-form',
 											'data-method' => 'POST',
