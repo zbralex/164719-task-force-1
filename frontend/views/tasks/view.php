@@ -18,8 +18,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use frontend\models\Response;
+use frontend\assets\YandexAPIKey;
 
 TaskActionsAsset::register($this);
+YandexAPIKey::register($this);
 ?>
 
 <main class="page-main">
@@ -61,6 +63,7 @@ TaskActionsAsset::register($this);
 							<div class="content-view__map">
 								<a href="#"><img src="/img/map.jpg" width="361" height="292"
 										alt="Москва, Новый арбат, 23 к. 1"></a>
+								<a href="https://geocode-maps.yandex.ru/1.x/?apikey=e666f398-c983-4bde-8f14-e3fec900592a&geocode=37.597576,55.771899">map</a>
 							</div>
 							<div class="content-view__address">
 								<span class="address__town">Москва</span><br>
