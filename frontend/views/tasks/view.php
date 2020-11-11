@@ -61,9 +61,19 @@ YandexAPIKey::register($this);
 						<h3 class="content-view__h3">Расположение</h3>
 						<div class="content-view__location-wrapper">
 							<div class="content-view__map">
-								<a href="#"><img src="/img/map.jpg" width="361" height="292"
-										alt="Москва, Новый арбат, 23 к. 1"></a>
-								<a href="https://geocode-maps.yandex.ru/1.x/?apikey=e666f398-c983-4bde-8f14-e3fec900592a&geocode=37.597576,55.771899">map</a>
+<!--								<a href="#"><img src="/img/map.jpg" width="361" height="292"-->
+<!--										alt="Москва, Новый арбат, 23 к. 1"></a>-->
+								<div id="map" style="width: 361px; height: 292px"></div>
+								<?= var_dump($detail->latitude, $detail->longitude)?>
+								<?php echo '<script type="text/javascript">
+									ymaps.ready(init);
+									function init(){
+										var myMap = new ymaps.Map("map", {
+											center: [' .$detail->latitude.', '.$detail->longitude.'],
+											zoom: 13
+										});
+									}
+								</script>' ?>
 							</div>
 							<div class="content-view__address">
 								<span class="address__town">Москва</span><br>
