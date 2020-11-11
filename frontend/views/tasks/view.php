@@ -63,7 +63,6 @@ YandexAPIKey::register($this);
 								<!--								<a href="#"><img src="/img/map.jpg" width="361" height="292"-->
 								<!--										alt="Москва, Новый арбат, 23 к. 1"></a>-->
 								<div id="map" style="width: 361px; height: 292px"></div>
-								<?= var_dump($detail->latitude, $detail->longitude) ?>
 								<?php echo '<script type="text/javascript">
 									ymaps.ready(init);
 									function init(){
