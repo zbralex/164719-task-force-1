@@ -11,7 +11,7 @@ class CreateTaskForm extends Model
     public $description;
     public $category;
     public $files;
-    //public $location;
+    public $location;
     public $price;
     public $execution_date;
 
@@ -38,7 +38,7 @@ class CreateTaskForm extends Model
             'description' => 'Подробности задания',
             'category' => 'Категория',
             'files' => 'Файлы',
-            //'location' => 'Локация',
+            'location' => 'Локация',
             'price' => 'Бюджет',
             'execution_date' => 'Срок исполнения'
         ];
