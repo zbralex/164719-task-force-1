@@ -1,18 +1,22 @@
 <?php
 
 /**
- * @var array $categories
- * @var array $errors
- * @var array $categories
- * @var array $model
+ * @let array $categories
+ * @let array $errors
+ * @let array $categories
+ * @let array $model
  **/
 
 
 use frontend\assets\CreateTaskDropZone;
+use frontend\assets\AutoComplete;
+use frontend\assets\CustomAutoCompleteAsset;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 // CreateTaskDropZone::register($this);
+AutoComplete::register($this);
+CustomAutoCompleteAsset::register($this)
 ?>
 
 
@@ -100,13 +104,17 @@ use yii\widgets\ActiveForm;
 										<span>{error}</span>",
 	            ])->input('text', [
 		            'class' => 'input-navigation input-middle input',
+		            'id'=>'autoComplete',
 		            'style' => 'width: 100%; box-sizing: border-box;margin-top: 1em',
 		            'placeholder' => 'Санкт-Петербург, Калининский район',
 	            ])->hint('Укажите адрес исполнения, если задание требует присутствия');
 	            ?>
+	            <script>
+
+	            </script>
 
 <!--	            <label for="13">Локация</label>-->
-<!--	            <input class="input-navigation input-middle input" id="13" type="search" name="q" placeholder="Санкт-Петербург, Калининский район">-->
+<!--	            <input class="input-navigation input-middle input" id="autoComplete" type="search" name="q" placeholder="Санкт-Петербург, Калининский район">-->
 <!--	            <span>Укажите адрес исполнения, если задание требует присутствия</span>-->
                 <div class="create__price-time">
                     <div class="create__price-time--wrapper">
