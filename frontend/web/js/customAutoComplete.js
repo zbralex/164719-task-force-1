@@ -26,7 +26,7 @@ new autoComplete({
 			return collectionLocations;
 
 		},
-		key: ['name'],
+		key: ['name', 'description'],
 		cache: false
 	},
 	// query: {                               // Query Interceptor               | (Optional)
@@ -60,7 +60,7 @@ new autoComplete({
 	resultItem: {                          // Rendered result item            | (Optional)
 		content: (data, source) => {
 			console.log('data',data)
-			source.innerHTML = data.match + ', ' + data.value.description;
+			source.innerHTML = data.value.description + ', ' + data.value.metaDataProperty.GeocoderMetaData.text;
 		},
 		element: "li"
 	},
