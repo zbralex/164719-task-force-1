@@ -109,13 +109,11 @@ CustomAutoCompleteAsset::register($this)
 		            'placeholder' => 'Санкт-Петербург, Калининский район',
 	            ])->hint('Укажите адрес исполнения, если задание требует присутствия');
 	            ?>
-	            <script>
 
-	            </script>
+	            <?= $form->field($model, 'hiddenLocation')->hiddenInput([
+	            	'id'=> 'hiddenLocation'
+	            ])->label(false); ?>
 
-<!--	            <label for="13">Локация</label>-->
-<!--	            <input class="input-navigation input-middle input" id="autoComplete" type="search" name="q" placeholder="Санкт-Петербург, Калининский район">-->
-<!--	            <span>Укажите адрес исполнения, если задание требует присутствия</span>-->
                 <div class="create__price-time">
                     <div class="create__price-time--wrapper">
 

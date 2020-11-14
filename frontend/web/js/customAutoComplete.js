@@ -14,13 +14,19 @@ new autoComplete({
 
 			let collectionLocations = [];
 			console.log(keyMap);
-			for (let i = 0; i <keyMap.length; i++ ) {
-				collectionLocations.push(keyMap[i].GeoObject.name + ', ' + keyMap[i].GeoObject.description);
+			// for (let i = 0; i <keyMap.length; i++ ) {
+			// 	collectionLocations.push(keyMap[i].GeoObject.name + ', ' + keyMap[i].GeoObject.description);
+			// }
+
+			for(key in keyMap) {
+				if(keyMap.hasOwnProperty(key)) {
+					collectionLocations[key] = keyMap[key].GeoObject;
+				}
 			}
 			return collectionLocations;
 
 		},
-		key: [''],
+		key: ['name'],
 		cache: false
 	},
 	// query: {                               // Query Interceptor               | (Optional)
@@ -33,7 +39,7 @@ new autoComplete({
 		if (a.match > b.match) return 1;
 		return 0;
 	},
-	placeHolder: "Санкт-Петербург, Калининский район",     // Place Holder text                 | (Optional)
+	placeHolder: "",     // Place Holder text                 | (Optional)
 	selector: "#autoComplete",           // Input field selector              | (Optional)
 	threshold: 3,                        // Min. Chars length to start Engine | (Optional)
 	debounce: 300,                       // Post duration for engine to start | (Optional)
@@ -53,7 +59,8 @@ new autoComplete({
 	highlight: true,                       // Highlight matching results      | (Optional)
 	resultItem: {                          // Rendered result item            | (Optional)
 		content: (data, source) => {
-			source.innerHTML = data.match;
+			console.log('data',data)
+			source.innerHTML = data.match + ', ' + data.value.description;
 		},
 		element: "li"
 	},
@@ -66,7 +73,9 @@ new autoComplete({
 	},
 	onSelection: feedback => {             // Action script onSelection event | (Optional)
 		let inputValue = document.querySelector("#autoComplete");
-		inputValue.value = feedback.selection.value;
+		inputValue.value = feedback.selection.value.name +', '+ feedback.selection.value.description;
+		let hiddenInputLocation = document.querySelector('#hiddenLocation');
+		hiddenInputLocation.value = feedback.selection.value.Point.pos;
 		console.log(inputValue.value);
 	}
 });

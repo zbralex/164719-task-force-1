@@ -14,6 +14,7 @@ class CreateTaskForm extends Model
     public $location;
     public $price;
     public $execution_date;
+    public $hiddenLocation;
 
 
     public function rules()
