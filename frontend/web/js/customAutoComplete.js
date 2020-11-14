@@ -11,33 +11,20 @@ new autoComplete({
 			let data = await source.json();
 			// Return Fetched data
 			const keyMap = data.response.GeoObjectCollection.featureMember;
-
 			let collectionLocations = [];
-			console.log(keyMap);
-			// for (let i = 0; i <keyMap.length; i++ ) {
-			// 	collectionLocations.push(keyMap[i].GeoObject.name + ', ' + keyMap[i].GeoObject.description);
-			// }
 
-			for(key in keyMap) {
-				if(keyMap.hasOwnProperty(key)) {
-					collectionLocations[key] = keyMap[key].GeoObject;
+				for(key in keyMap) {
+					if(keyMap.hasOwnProperty(key)) {
+						collectionLocations[key] = keyMap[key].GeoObject;
+					}
 				}
-			}
+
+
 			return collectionLocations;
 
 		},
 		key: ['name', 'description'],
 		cache: false
-	},
-	// query: {                               // Query Interceptor               | (Optional)
-	//     manipulate: (query) => {
-	//         return query.replace("pizza", "burger");
-	//     }
-	// },
-	sort: (a, b) => {                    // Sort rendered results ascendingly | (Optional)
-		if (a.match < b.match) return -1;
-		if (a.match > b.match) return 1;
-		return 0;
 	},
 	placeHolder: "",     // Place Holder text                 | (Optional)
 	selector: "#autoComplete",           // Input field selector              | (Optional)
@@ -55,12 +42,12 @@ new autoComplete({
 		position: "afterend",
 		element: "ul"
 	},
-	maxResults: 10,                         // Max. number of rendered results | (Optional)
+	maxResults: 20,                         // Max. number of rendered results | (Optional)
 	highlight: true,                       // Highlight matching results      | (Optional)
 	resultItem: {                          // Rendered result item            | (Optional)
 		content: (data, source) => {
-			console.log('data',data)
-			source.innerHTML = data.value.description + ', ' + data.value.metaDataProperty.GeocoderMetaData.text;
+			console.log('data',data.match)
+			source.innerHTML = data.value.description + ', ' + data.value.name;
 		},
 		element: "li"
 	},
@@ -69,11 +56,11 @@ new autoComplete({
 		result.setAttribute("class", "no_result");
 		result.setAttribute("tabindex", "1");
 		result.innerHTML = "Ничего не найдено";
-		document.querySelector("#autoComplete_list").appendChild(result);
+		document.querySelector("#GeoObjectCollection").appendChild(result);
 	},
 	onSelection: feedback => {             // Action script onSelection event | (Optional)
 		let inputValue = document.querySelector("#autoComplete");
-		inputValue.value = feedback.selection.value.name +', '+ feedback.selection.value.description;
+		inputValue.value = feedback.selection.value.description + ', ' + feedback.selection.value.name;
 		let hiddenInputLocation = document.querySelector('#hiddenLocation');
 		hiddenInputLocation.value = feedback.selection.value.Point.pos;
 		console.log(inputValue.value);
