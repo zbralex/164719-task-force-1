@@ -64,18 +64,19 @@ YandexAPIKey::register($this);
 								<!--										alt="Москва, Новый арбат, 23 к. 1"></a>-->
 								<div id="map" style="width: 361px; height: 292px"></div>
 								<?php
-								echo '<script type="text/javascript">
+								if ($detail->geocode) {
+									echo '<script type="text/javascript">
 									ymaps.ready(init);
 
 											function init () {
 											    var myMap = new ymaps.Map("map", {
-											            center: [' . $detail->latitude . ', ' . $detail->longitude . '],
+											            center: [' . str_ireplace(" ", ",", $detail->geocode) . '],
 											            zoom: 15
 											        }, {
 											            searchControlProvider: "yandex#search"
 											        }),
 											        // Метка, содержимое балуна которой загружается с помощью AJAX.
-											        placemark = new ymaps.Placemark([' . $detail->latitude . ', ' . $detail->longitude . '], {
+											        placemark = new ymaps.Placemark([' . str_ireplace(" ", ",", $detail->geocode) . '], {
 											            iconContent: "",
 											            hintContent: "Перетащите метку и кликните, чтобы узнать адрес"
 											        }, {
@@ -111,7 +112,9 @@ YandexAPIKey::register($this);
 											
 											    myMap.geoObjects.add(placemark);
 											}
-								</script>' ?>
+								</script>';
+								}
+								 ?>
 							</div>
 							<div class="content-view__address">
 								<span class="address__town">Загрузка адреса...</span>
