@@ -21,6 +21,8 @@ class CreateTaskForm extends Model
     {
         return [
             ['category', 'safe'],
+	        ['hiddenLocation', 'safe'],
+	        ['location', 'safe'],
             [['description', 'name'], 'required'],
             [['description', 'name'], 'trim'],
             ['name', 'string', 'min' => 10, 'max' => 256],
