@@ -119,6 +119,11 @@ class TasksController extends SecuredController
 
 		}
 
+		// меняем местами широту и долготу, т.к. сохраняется из API в обратном порядке
+		$geocodeReverse = implode(' ', array_reverse(explode(' ', $detail->geocode)));
+		// вставляем в строку запятую и пробел для запроса к API и отрисовки карты
+		$geocode = str_ireplace(" ", ", ", $geocodeReverse);
+
 		return $this->render('view', [
 			'detail' => $detail,
 			'count_tasks' => $count_tasks,
@@ -126,7 +131,8 @@ class TasksController extends SecuredController
 			'actionResponseForm' => $actionResponseForm,
 			'actionRefuseForm' => $actionRefuseForm,
 			'actionDoneForm' => $actionDoneForm,
-			'resp' => $resp
+			'resp' => $resp,
+			'geocode' => $geocode
 		]);
 	}
 

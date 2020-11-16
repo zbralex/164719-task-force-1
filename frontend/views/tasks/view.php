@@ -8,6 +8,7 @@
  * @var array $actionRefuseForm
  * @var array $actionDoneForm
  * @var array $resp
+ * @var string $geocode
  *
  */
 
@@ -64,10 +65,7 @@ YandexAPIKey::register($this);
 								<!--										alt="Москва, Новый арбат, 23 к. 1"></a>-->
 								<div id="map" style="width: 361px; height: 292px"></div>
 								<?php
-								// меняем местами широту и долготу, т.к. сохраняется из API в обратном порядке
-								$geocodeReverse = implode(' ', array_reverse(explode(' ', $detail->geocode)));
-								// вставляем в строку запятую и пробел для запроса к API и отрисовки карты
-								$geocode = str_ireplace(" ", ", ", $geocodeReverse);
+
 
 								if ($detail->geocode) {
 									echo '<script type="text/javascript">
