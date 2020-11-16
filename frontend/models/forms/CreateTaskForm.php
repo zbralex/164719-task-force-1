@@ -11,15 +11,18 @@ class CreateTaskForm extends Model
     public $description;
     public $category;
     public $files;
-    //public $location;
+    public $location;
     public $price;
     public $execution_date;
+    public $hiddenLocation;
 
 
     public function rules()
     {
         return [
             ['category', 'safe'],
+	        ['hiddenLocation', 'safe'],
+	        ['location', 'safe'],
             [['description', 'name'], 'required'],
             [['description', 'name'], 'trim'],
             ['name', 'string', 'min' => 10, 'max' => 256],
@@ -38,7 +41,7 @@ class CreateTaskForm extends Model
             'description' => 'Подробности задания',
             'category' => 'Категория',
             'files' => 'Файлы',
-            //'location' => 'Локация',
+            'location' => 'Локация',
             'price' => 'Бюджет',
             'execution_date' => 'Срок исполнения'
         ];

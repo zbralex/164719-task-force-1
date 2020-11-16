@@ -8,18 +8,20 @@
  * @var array $actionRefuseForm
  * @var array $actionDoneForm
  * @var array $resp
+ * @var string $geocode
  *
  */
 
 
 use frontend\assets\TaskActionsAsset;
+use frontend\assets\YandexAPIKey;
 use taskForce\classes\Task;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use frontend\models\Response;
 
 TaskActionsAsset::register($this);
+YandexAPIKey::register($this);
 ?>
 
 <main class="page-main">
@@ -59,13 +61,72 @@ TaskActionsAsset::register($this);
 						<h3 class="content-view__h3">Расположение</h3>
 						<div class="content-view__location-wrapper">
 							<div class="content-view__map">
-								<a href="#"><img src="/img/map.jpg" width="361" height="292"
-										alt="Москва, Новый арбат, 23 к. 1"></a>
+								<!--								<a href="#"><img src="/img/map.jpg" width="361" height="292"-->
+								<!--										alt="Москва, Новый арбат, 23 к. 1"></a>-->
+								<div id="map" style="width: 361px; height: 292px"></div>
+								<?php
+
+
+								if ($detail->geocode) {
+									echo '<script type="text/javascript">
+									ymaps.ready(init);
+
+											function init () {
+											    var myMap = new ymaps.Map("map", {
+											            center: [' . $geocode . '],
+											            zoom: 15
+											        }, {
+											            searchControlProvider: "yandex#search"
+											        }),
+											        // Метка, содержимое балуна которой загружается с помощью AJAX.
+											        placemark = new ymaps.Placemark([' . $geocode . '], {
+											            iconContent: "",
+											            hintContent: "Перетащите метку и кликните, чтобы узнать адрес"
+											        }, {
+											 
+											            preset: "islands#blueStretchyIcon",
+											            // Заставляем балун открываться даже если в нем нет содержимого.
+											            openEmptyBalloon: true
+											        });
+											
+								
+											    	
+											    	var cityContent = document.querySelector(".address__town");
+											            ymaps.geocode(placemark.geometry.getCoordinates(), {
+											                results: 1
+											            }).then(
+											            	function (res) {
+											            		//показывает данные в панели карты
+											                var newContent = res.geoObjects.get(0) ?
+											                        res.geoObjects.get(0).properties.get("name") : "Не удалось определить адрес.";
+											
+											                console.log(res.geoObjects.get(0).properties.get("name"),
+											                res.geoObjects.get(0).properties.get("description"))
+											                if ( res.geoObjects.get(0)) {
+											                	 cityContent.innerText = res.geoObjects.get(0).properties.get("description");
+											                     cityContent.insertAdjacentHTML("afterend", "<br><span>" + res.geoObjects.get(0).properties.get("name") + "</span")
+											                } else {
+											                	cityContent.innerText = "Адрес не указан";
+											                }
+											               
+											                placemark.properties.set("balloonContent", newContent);
+											            });
+											  
+											
+											    myMap.geoObjects.add(placemark);
+											}
+								</script>';
+								}
+								 ?>
 							</div>
 							<div class="content-view__address">
-								<span class="address__town">Москва</span><br>
-								<span>Новый арбат, 23 к. 1</span>
-								<p>Вход под арку, код домофона 1122</p>
+								<span class="address__town">Загрузка адреса...</span>
+								<?php
+									if (isset($detail->address_description)) {
+										echo '<p>' . $detail->address_description . '</p>';
+									}
+								?>
+
 							</div>
 						</div>
 					</div>
@@ -129,7 +190,7 @@ TaskActionsAsset::register($this);
 									<?php
 									foreach ($task->getAvailableActionsClient($detail->author->role_id) as $action) {
 
-										echo Html::a($action->actionName, '/task/' . $action->innerName .'/' . $detail->id,  [
+										echo Html::a($action->actionName, '/task/' . $action->innerName . '/' . $detail->id, [
 											'class' => 'button__small-color ' . $action->class . '-button button',
 											'data-for' => $action->class . '-form',
 											'data-method' => 'POST',

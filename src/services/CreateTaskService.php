@@ -23,6 +23,8 @@ abstract class CreateTaskService
         $task->author_id = Yii::$app->user->getIdentity()->id;
         $task->execution_date = $model->execution_date;
 
+	    $task->address_description = $model->location;
+	    $task->geocode = $model->hiddenLocation;
         $task->save(false);
 
         $paths = [];
