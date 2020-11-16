@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @let array $categories
- * @let array $errors
- * @let array $categories
- * @let array $model
+ * @var array $categories
+ * @var array $errors
+ * @var array $categories
+ * @var array $model
  **/
 
 
