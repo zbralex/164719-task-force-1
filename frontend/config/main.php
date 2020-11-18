@@ -14,6 +14,11 @@ return [
 	'language' => 'ru-RU',
 	'timeZone' => 'Europe/Moscow',
 	'components' => [
+		'request' => [
+			'parsers' => [
+				'application/json' => 'yii\web\JsonParser',
+			],
+		],
 		'user' => [
 			'identityClass' => 'frontend\models\User',
 			'enableAutoLogin' => true,
@@ -22,15 +27,22 @@ return [
 		],
 		'urlManager' => [
 			'enablePrettyUrl' => true,
+			'enableStrictParsing' => true,
 			'showScriptName' => false,
 			'rules' => [
+				[
+					'class' => 'yii\rest\UrlRule',
+					'controller' => 'message'
+				],
 				'/' => '/landing',
 				'user/view/<id:\d+>' => 'users/view',
 				'task/view/<id:\d+>' => 'tasks/view',
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
+
 			],
 		],
+
 		'cache' => [
 			'class' => 'yii\caching\FileCache',
 		],
