@@ -1,7 +1,7 @@
 <?php
 /* @var $this \yii\web\View */
 
-/* @var string $content  */
+/* @var string $content */
 
 use frontend\assets\AppAsset;
 use yii\helpers\Html;
@@ -125,7 +125,12 @@ AppAsset::register($this);
 							alt="Аватар пользователя">
 					</a>
 					<span class="header__account-name">
-                  <?= Html::encode(Yii::$app->user->getIdentity()->name) ?>
+						<?php
+						if (!empty(Yii::$app->user->getIdentity()->name)) {
+							Html::encode(Yii::$app->user->getIdentity()->name);
+						}
+						?>
+
              </span>
 				</div>
 				<div class="account__pop-up">
@@ -143,7 +148,7 @@ AppAsset::register($this);
 										'method' => 'post'
 									]
 								]
-							);?>
+							); ?>
 
 					</ul>
 				</div>
