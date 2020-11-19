@@ -10,6 +10,11 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+	'modules' => [
+		'message' => [
+			'class' => 'app\api\message\Message',
+		],
+	],
     'controllerNamespace' => 'frontend\controllers',
 	'language' => 'ru-RU',
 	'timeZone' => 'Europe/Moscow',
@@ -27,19 +32,14 @@ return [
 		],
 		'urlManager' => [
 			'enablePrettyUrl' => true,
-			'enableStrictParsing' => true,
 			'showScriptName' => false,
 			'rules' => [
-				[
-					'class' => 'yii\rest\UrlRule',
-					'controller' => 'message'
-				],
 				'/' => '/landing',
 				'user/view/<id:\d+>' => 'users/view',
 				'task/view/<id:\d+>' => 'tasks/view',
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
-
+				['class' => 'yii\rest\UrlRule', 'controller' => ['api/message/controllers']],
 			],
 		],
 
