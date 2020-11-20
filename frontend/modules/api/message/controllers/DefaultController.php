@@ -1,6 +1,6 @@
 <?php
 
-namespace app\api\message\controllers;
+namespace app\modules\api\message\controllers;
 
 use yii\web\Controller;
 
