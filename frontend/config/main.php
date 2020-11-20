@@ -39,7 +39,7 @@ return [
 				'task/view/<id:\d+>' => 'tasks/view',
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
-				['class' => 'yii\rest\UrlRule', 'controller' => ['app/api/message/controllers']],
+
 			],
 		],
 
