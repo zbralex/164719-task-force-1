@@ -19,11 +19,7 @@ return [
 	'language' => 'ru-RU',
 	'timeZone' => 'Europe/Moscow',
 	'components' => [
-		'request' => [
-			'parsers' => [
-				'application/json' => 'yii\web\JsonParser',
-			],
-		],
+
 		'user' => [
 			'identityClass' => 'frontend\models\User',
 			'enableAutoLogin' => true,
@@ -39,6 +35,10 @@ return [
 				'task/view/<id:\d+>' => 'tasks/view',
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
+
+				'<module:\w+>/<action:\w+>/<id:(.*?)>' => '<module>/default/<action>',
+				'<module:\w+>/<action:\w+>' => '<module>/default/<action>',
+				'<module:\w+>' => '<module>/default/index',
 
 			],
 		],
