@@ -36,9 +36,11 @@ return [
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
 
-				'<module:\w+>/<action:\w+>/<id:(.*?)>' => '<module>/default/<action>',
-				'<module:\w+>/<action:\w+>' => '<module>/default/<action>',
-				'<module:\w+>' => '<module>/default/index',
+				//http://localhost:84/message/api/messages
+				'<module:\w+>/api/messages' => '<module>/default/index',
+
+				//http://localhost:84/message/api/messages/view/1
+				'<module:\w+>/api/messages/<action:\w+>/<id:(.*?)>' => '<module>/default/<action>',
 
 			],
 		],

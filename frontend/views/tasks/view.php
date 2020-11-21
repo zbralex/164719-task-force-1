@@ -232,9 +232,9 @@ YandexAPIKey::register($this);
 				</div>
 			</div>
 			<div id="chat-container">
-
 				<!--                    добавьте сюда атрибут task с указанием в нем id текущего задания-->
-				<chat class="connect-desk__chat"></chat>
+				<chat class="connect-desk__chat" task="<?php echo $detail->id?>"></chat>
+				<?php var_dump($detail->id); ?>
 			</div>
 		</section>
 	</div>
