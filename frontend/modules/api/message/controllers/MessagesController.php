@@ -17,20 +17,17 @@ class MessagesController extends ActiveController
 
 {
 	public $modelClass = 'frontend\models\Message';
-//    /**
-//     * {@inheritdoc}
-//     */
-//    public function behaviors()
-//    {
-//        return [
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'delete' => ['POST'],
-//                ],
-//            ],
-//        ];
-//    }
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+	    return \yii\helpers\ArrayHelper::merge(parent::behaviors(), [
+		    'corsFilter' => [
+			    'class' => \yii\filters\Cors::className(),
+		    ],
+	    ]);
+    }
 
     /**
      * Lists all Message models.

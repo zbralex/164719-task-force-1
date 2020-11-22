@@ -20,7 +20,7 @@ Vue.component('chat', {
       console.error("Не передан идентификатор задания (атрибут task) в теге 'chat'")
     }
     else {
-      this.api_url = '/message' + '?task_id=' + this.task;
+      this.api_url = '/message/api/messages' + '?task_id=' + this.task;
       this.getMessages();
     }
   },
