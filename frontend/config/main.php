@@ -41,11 +41,12 @@ return [
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
 
-				//http://localhost:84/message/api/messages
-				'<module:\w+>/api/messages' => '<module>/default/index',
 
-				//http://localhost:84/message/api/messages/view/1
-				'<module:\w+>/api/messages/<action:\w+>/<id:(.*?)>' => '<module>/default/<action>',
+
+				//http://localhost:84/message/api/messages
+				'<module:\w+>/api/messages' => '<module>/messages/index',
+				//http://localhost:84/message/api/messages/view/2
+				'<module:\w+>/api/messages/<action:\w+>/<id:(.*?)>' => '<module>/messages/<action>',
 
 			],
 		],

@@ -5,6 +5,7 @@ namespace app\modules\api\message\controllers;
 use Yii;
 use frontend\models\Message;
 use yii\data\ActiveDataProvider;
+use yii\rest\ActiveController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,22 +13,24 @@ use yii\filters\VerbFilter;
 /**
  * MessagesController implements the CRUD actions for Message model.
  */
-class MessagesController extends Controller
+class MessagesController extends ActiveController
+
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+	public $modelClass = 'frontend\models\Message';
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all Message models.
