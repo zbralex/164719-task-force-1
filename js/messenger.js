@@ -20,7 +20,7 @@ Vue.component('chat', {
       console.error("Не передан идентификатор задания (атрибут task) в теге 'chat'")
     }
     else {
-      this.api_url = '/message/api/messages';
+      this.api_url = '/message/';
       this.getMessages();
     }
   },
@@ -51,13 +51,13 @@ Vue.component('chat', {
         if (result.status !== 200) {
           return Promise.reject(new Error('Запрошенный ресурс не существует'));
         }
-
         return result.json();
       })
       .then(messages => {
         this.messages = messages;
       })
       .catch(err => {
+
         console.error('Не удалось получить сообщения чата', err);
       })
     }

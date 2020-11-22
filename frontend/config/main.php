@@ -14,6 +14,11 @@ return [
 		'message' => [
 			'class' => 'app\modules\api\message\Message',
 		],
+		'request' => [
+			'parsers' => [
+				'application/json' => 'yii\web\JsonParser',
+			]
+		]
 	],
     'controllerNamespace' => 'frontend\controllers',
 	'language' => 'ru-RU',
