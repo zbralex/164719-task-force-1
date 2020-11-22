@@ -5,7 +5,7 @@ Vue.component('chat', {
   template: `<div><h3>Переписка</h3>
              <div class="chat__overflow">
                <div class="chat__message" v-for="item in messages" :class="{'chat__message--out': item.is_mine}">
-                <p class="chat__message-time">{{ item.created_at }}</p>
+                <p class="chat__message-time">{{ item.created_at | formatDate }}</p>
                 <p class="chat__message-text">{{ item.text }}</p>
                </div>
               </div>
@@ -74,4 +74,11 @@ Vue.component('chat', {
 
 var app = new Vue({
   el: "#chat-container",
+});
+
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    moment.locale('ru');
+    return moment(String(value)).format('LLL')
+  }
 });

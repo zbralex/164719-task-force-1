@@ -15,7 +15,8 @@ class TaskActionsAsset extends AssetBundle
     ];
     public $js = [
         '/js/main.js',
-        '/js/messenger.js'
+        '/js/messenger.js',
+	    '/js/moment-with-locales.min.js'
     ];
     public $depends = [
     ];
