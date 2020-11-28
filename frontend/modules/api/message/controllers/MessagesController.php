@@ -109,6 +109,15 @@ class MessagesController extends ActiveController
         return $this->redirect(['index']);
     }
 
+
+	public function actionList($id)
+	{
+		if (!$id) {
+			throw new NotFoundHttpException('Неизвестный id');
+		}
+		return Message::find()->where(['task_id' => $id])->all();
+	}
+
     /**
      * Finds the Message model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -118,7 +127,7 @@ class MessagesController extends ActiveController
      */
     protected function findModel($id)
     {
-        if (($model = Message::findOne($id)) !== null) {
+        if (($model = Message::find()->where(['task_id' => $id])->all()) !== null) {
             return $model;
         }
 

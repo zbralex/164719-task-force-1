@@ -74,4 +74,8 @@ class Message extends ActiveRecord
     {
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
+	public function getMessage()
+	{
+		return $this->hasMany(Task::className(), ['id' => 'task_id']);
+	}
 }
