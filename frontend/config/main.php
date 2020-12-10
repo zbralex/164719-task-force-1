@@ -52,7 +52,7 @@ return [
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
 
-				//http://localhost:84/message/default/tasks?task_id=19 - возвращает сообщения с id 19
+				//http://localhost:84/message/default/messages?task_id=19 - возвращает сообщения с id 19
 				//http://localhost:84/message/default/ возвращает все сообщения
 
 

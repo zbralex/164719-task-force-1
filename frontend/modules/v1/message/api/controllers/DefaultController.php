@@ -21,7 +21,7 @@ class DefaultController extends ActiveController
         return $this->render('index');
     }
 
-	public function actionTasks($task_id)
+	public function actionMessages($task_id)
 	{
 
 		return Message::find()->where(['task_id' => $task_id])->all();
