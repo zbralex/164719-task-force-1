@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\api\message;
+namespace app\modules\v1\message\api;
 
 /**
  * message module definition class
@@ -10,7 +10,7 @@ class Message extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'app\modules\api\message\controllers';
+    public $controllerNamespace = 'app\modules\v1\message\api\controllers';
 
     /**
      * {@inheritdoc}

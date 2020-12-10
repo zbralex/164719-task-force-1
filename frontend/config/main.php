@@ -12,7 +12,18 @@ return [
     'bootstrap' => ['log'],
 	'modules' => [
 		'message' => [
-			'class' => 'app\modules\api\message\Message',
+			'class' => 'app\modules\v1\message\api\Message',
+			'components' => [
+				'urlManager' => [
+					'class' => 'yii\rest\UrlRule',
+					'controller' => ['message/v1/api/Message'],
+					'rules' => [
+						// не работает
+//						['class' => 'yii\rest\UrlRule', 'controller' => ['message/v1/api/Messager']]
+					]
+				]
+			]
+
 		],
 		'request' => [
 			'parsers' => [
@@ -41,12 +52,9 @@ return [
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
 
+				//http://localhost:84/message/default/tasks?task_id=19 - возвращает сообщения с id 19
+				//http://localhost:84/message/default/ возвращает все сообщения
 
-
-				//http://localhost:84/message/api/messages
-				'<module:\w+>/api/messages' => '<module>/messages/index',
-				//http://localhost:84/message/api/messages/view/2
-				'<module:\w+>/api/messages/<action:\w+>/<id:(.*?)>' => '<module>/messages/<action>',
 
 			],
 		],
