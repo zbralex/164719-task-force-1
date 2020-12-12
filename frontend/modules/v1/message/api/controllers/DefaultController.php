@@ -12,20 +12,15 @@ use yii\web\Controller;
 class DefaultController extends ActiveController
 {
 	public $modelClass = Message::class;
-    /**
-     * Renders the index view for the module
-     * @return string
-     */
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
 
-	public function actionMessages($task_id)
+
+	public function actionMessages($task_id = null)
 	{
-
-		return Message::find()->where(['task_id' => $task_id])->all();
-
-
+		if ($task_id) {
+			return Message::find()->where(['task_id' => $task_id])->all();
+		}
+		if(!$task_id) {
+			return Message::findAll($task_id);
+		}
 	}
 }

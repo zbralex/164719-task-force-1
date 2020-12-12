@@ -19,11 +19,32 @@ return [
 					'controller' => ['message/v1/api/Message'],
 					'rules' => [
 						// не работает
-//						['class' => 'yii\rest\UrlRule', 'controller' => ['message/v1/api/Messager']]
+//						['class' => 'yii\rest\UrlRule', 'controller' => ['message/v1/api/Message']]
 					]
 				]
 			]
 
+		],
+		'user' => [
+			'class' => 'app\modules\v2\user\api\Module',
+			'components' => [
+				'urlManager' => [
+					'class' => 'yii\rest\UrlRule',
+					'controller' => ['app/modules/v2/user/api/Module'],
+					'enablePrettyUrl' => true,
+					'enableStrictParsing' => true,
+					'showScriptName' => false,
+					'rules' => [
+						[
+							'class' => 'yii\rest\UrlRule',
+							'controller' => [
+								'user',
+								'attachment'
+							],
+						]
+					]
+				]
+			]
 		],
 		'request' => [
 			'parsers' => [
