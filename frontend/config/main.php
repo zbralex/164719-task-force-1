@@ -11,26 +11,11 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
 	'modules' => [
-		'message' => [
-			'class' => 'app\modules\v1\message\api\Message',
-			'components' => [
-				'urlManager' => [
-					'class' => 'yii\rest\UrlRule',
-					'controller' => ['message/v1/api/Message'],
-					'rules' => [
-						// не работает
-//						['class' => 'yii\rest\UrlRule', 'controller' => ['message/v1/api/Message']]
-					]
-				]
-			]
-
-		],
 		'user' => [
 			'class' => 'app\modules\v2\user\api\Module',
 			'components' => [
 				'urlManager' => [
 					'class' => 'yii\rest\UrlRule',
-					'controller' => ['app/modules/v2/user/api/Module'],
 					'enablePrettyUrl' => true,
 					'enableStrictParsing' => true,
 					'showScriptName' => false,
@@ -40,6 +25,25 @@ return [
 							'controller' => [
 								'user',
 								'attachment'
+							],
+						]
+					]
+				]
+			]
+		],
+		'api' => [
+			'class' => 'app\modules\api\v1\messages\Module',
+			'components' => [
+				'urlManager' => [
+					'class' => 'yii\rest\UrlRule',
+					'enablePrettyUrl' => true,
+					'enableStrictParsing' => true,
+					'showScriptName' => false,
+					'rules' => [
+						[
+							'class' => 'yii\rest\UrlRule',
+							'controller' => [
+								'messages'
 							],
 						]
 					]
