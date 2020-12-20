@@ -22,6 +22,16 @@ class MessagesController extends ActiveController {
 		return Message::find()->where(['task_id' => $task_id])->all();
 
 	}
+	public function actionCreate()
+	{
+		$model = new Message();
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$model->task_id = Yii::$app->request->post('task_id');
+			$model->user_id = Yii::$app->user->id;
+			$model->text = Yii::$app->request->post('message');
+		}
+
+	}
 
 
 	public function actions()
@@ -34,6 +44,12 @@ class MessagesController extends ActiveController {
 				'modelClass' => $this->modelClass,
 				'checkAccess' => [$this, 'checkAccess'],
 				'prepareDataProvider' => [$this, 'actionIndex'],
+			],
+			'create' => [
+				'class' => 'yii\rest\CreateAction',
+				'modelClass' => $this->modelClass,
+				'checkAccess' => [$this, 'checkAccess'],
+				'prepareDataProvider' => [$this, 'actionCreate'],
 			],
 		];
 	}
