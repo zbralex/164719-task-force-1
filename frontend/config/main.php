@@ -42,6 +42,7 @@ return [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
 			'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['api/v1/messages'], 'pluralize' => false],
                 '/' => '/landing',
 				'user/view/<id:\d+>' => 'users/view',
 				'task/view/<id:\d+>' => 'tasks/view',
