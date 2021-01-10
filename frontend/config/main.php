@@ -16,6 +16,7 @@ return [
             'modules' => [
                 // версионирование
                 'v1' => [
+                    // http://taskforce.local/api/v1/messages?task_id=100
                     'class' => 'app\modules\api\v1\messages\Module'
                 ]
             ]
@@ -41,9 +42,7 @@ return [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
 			'rules' => [
-			    // http://taskforce.local/api/messages?task_id=100
-
-				'/' => '/landing',
+                '/' => '/landing',
 				'user/view/<id:\d+>' => 'users/view',
 				'task/view/<id:\d+>' => 'tasks/view',
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
