@@ -13,22 +13,12 @@ return [
 	'modules' => [
 		'api' => [
 			'class' => 'app\modules\api\v1\messages\Module',
-			'components' => [
-				'urlManager' => [
-					'class' => 'yii\rest\UrlRule',
-					'enablePrettyUrl' => true,
-					'enableStrictParsing' => true,
-					'showScriptName' => false,
-					'rules' => [
-						[
-							'class' => 'yii\rest\UrlRule',
-							'controller' => [
-								'messages'
-							],
-						]
-					]
-				]
-			]
+            'modules' => [
+                // версионирование
+                'v1' => [
+                    'class' => 'app\modules\api\v1\messages\Module'
+                ]
+            ]
 		],
 		'request' => [
 			'parsers' => [
@@ -51,16 +41,13 @@ return [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
 			'rules' => [
+			    // http://taskforce.local/api/messages?task_id=100
+
 				'/' => '/landing',
 				'user/view/<id:\d+>' => 'users/view',
 				'task/view/<id:\d+>' => 'tasks/view',
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
-
-				//http://localhost:84/message/default/messages?task_id=19 - возвращает сообщения с id 19
-				//http://localhost:84/message/default/ возвращает все сообщения
-
-
 			],
 		],
 

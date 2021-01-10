@@ -9,6 +9,7 @@ use yii\web\ForbiddenHttpException;
 
 class MessagesController extends ActiveController {
 	public $modelClass = Message::class;
+    public $allowedActions = ['index', 'view', 'update', 'create', 'delete'];
 
 	public function actionIndex()
 	{
@@ -22,14 +23,14 @@ class MessagesController extends ActiveController {
     public function actionCreate()
     {
         $message = new Message();
-        $message_text = Yii::$app->request->get('message');
+        $message_text = Yii::$app->request->post('message');
         $task_id = Yii::$app->request->get('task_id');
         $message->task_id = $task_id;
         $message->user_id = Yii::$app->user->id;
         $message->text = $message_text;
         $message->save(false);
 
-        return Message::find()->where(['task_id' => $task_id])->all();
+        //return Message::find()->where(['task_id' => $task_id])->all();
 
     }
 
@@ -47,7 +48,7 @@ class MessagesController extends ActiveController {
 				'prepareDataProvider' => [$this, 'actionIndex'],
 			],
             'create' => [
-                'class' => 'yii\rest\IndexCreate',
+                'class' => 'yii\rest\CreateAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
                 'prepareDataProvider' => [$this, 'actionCreate'],
