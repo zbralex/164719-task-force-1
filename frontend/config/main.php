@@ -11,26 +11,6 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
 	'modules' => [
-		'user' => [
-			'class' => 'app\modules\v2\user\api\Module',
-			'components' => [
-				'urlManager' => [
-					'class' => 'yii\rest\UrlRule',
-					'enablePrettyUrl' => true,
-					'enableStrictParsing' => true,
-					'showScriptName' => false,
-					'rules' => [
-						[
-							'class' => 'yii\rest\UrlRule',
-							'controller' => [
-								'user',
-								'attachment'
-							],
-						]
-					]
-				]
-			]
-		],
 		'api' => [
 			'class' => 'app\modules\api\v1\messages\Module',
 			'components' => [

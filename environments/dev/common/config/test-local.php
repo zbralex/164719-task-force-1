@@ -2,7 +2,7 @@
 return [
     'components' => [
         'db' => [
-            'dsn' => 'mysql:host=localhost;dbname=TASK_FORCE',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=TASK_FORCE',
         ],
     ],
 ];
