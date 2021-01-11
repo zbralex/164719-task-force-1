@@ -9,7 +9,7 @@ use yii\web\ForbiddenHttpException;
 
 class MessagesController extends ActiveController {
 	public $modelClass = Message::class;
-    public $allowedActions = ['index', 'view', 'update', 'create', 'delete'];
+    public $allowedActions = ['index', 'view', 'update', 'create'];
 
 	public function actionIndex()
 	{
