@@ -30,8 +30,6 @@ class MessagesController extends ActiveController {
         $message->text = $message_text;
         $message->save(false);
 
-        //return Message::find()->where(['task_id' => $task_id])->all();
-
     }
 
 
