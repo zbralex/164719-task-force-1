@@ -45,12 +45,6 @@ class MessagesController extends ActiveController {
 				'checkAccess' => [$this, 'checkAccess'],
 				'prepareDataProvider' => [$this, 'actionIndex'],
 			],
-            'create' => [
-                'class' => 'yii\rest\CreateAction',
-                'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
-                'prepareDataProvider' => [$this, 'actionCreate'],
-            ],
 
 		];
 	}
