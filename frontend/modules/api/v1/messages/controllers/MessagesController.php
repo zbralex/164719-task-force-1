@@ -11,6 +11,7 @@ use yii\web\ForbiddenHttpException;
 class MessagesController extends ActiveController {
 	public $modelClass = Message::class;
     public $allowedActions = ['index', 'view', 'update', 'create'];
+    public $enableCsrfValidation = false;
 
 	public function actionIndex()
 	{
@@ -25,18 +26,20 @@ class MessagesController extends ActiveController {
     {
         $request = Yii::$app->request;
         $message = new Message();
-        $task_id = Yii::$app->request->get('task_id');
+        $task_id = Yii::$app->getRequest()->get('id');
 
 
 
         // проблема в этом
-        $message->task_id = $task_id;
-        $message->user_id = 100;
+        $message->task_id = 100;
+        $message->user_id = Yii::$app->user->getId();;
 
         $message_body = json_decode(Yii::$app->getRequest()->getRawBody(), true);
         $message->text = $message_body['message'];
 
         $message->save(false);
+
+        return $message;
 
     }
 
