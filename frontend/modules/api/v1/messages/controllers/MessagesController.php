@@ -3,6 +3,7 @@
 namespace app\modules\api\v1\messages\controllers;
 
 use frontend\models\Message;
+use frontend\models\Task;
 use Yii;
 use yii\rest\ActiveController;
 use yii\web\ForbiddenHttpException;
@@ -22,12 +23,17 @@ class MessagesController extends ActiveController {
 	}
     public function actionCreate()
     {
+        $request = Yii::$app->request;
         $message = new Message();
-        $message_text = Yii::$app->request->post('message');
-        $task_id = Yii::$app->request->get('task_id');
-        $message->task_id = $task_id;
-        $message->user_id = Yii::$app->user->id;
-        $message->text = $message_text;
+
+
+        // проблема в этом
+        $message->task_id = 100;
+        $message->user_id = 100;
+
+        $messageCurrent = json_decode(Yii::$app->getRequest()->getRawBody(), true);
+        $message->text = $messageCurrent['message'];
+
         $message->save(false);
 
     }
@@ -36,8 +42,7 @@ class MessagesController extends ActiveController {
 
 	public function actions()
 	{
-		$actions = parent::actions();
-		unset($actions['create']);
+
 		return [
 			'index' => [
 				'class' => 'yii\rest\IndexAction',
@@ -49,5 +54,11 @@ class MessagesController extends ActiveController {
 		];
 	}
 
-
+    protected function verbs()
+    {
+        return [
+            'index' => ['GET', 'HEAD'],
+            'create' => ['POST'],
+        ];
+    }
 }

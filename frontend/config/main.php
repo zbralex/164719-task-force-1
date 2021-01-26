@@ -23,7 +23,7 @@ return [
 		],
 		'request' => [
 			'parsers' => [
-				'application/json' => 'yii\web\JsonParser',
+				'application/json' => \yii\web\JsonParser::class,
 			]
 		]
 	],
@@ -42,7 +42,7 @@ return [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
 			'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => ['api/v1/messages'], 'pluralize' => false],
+                //['class' => 'yii\rest\UrlRule', 'controller' => ['api/v1/messages/controllers/MessagesController'], 'pluralize' => false],
                 '/' => '/landing',
 				'user/view/<id:\d+>' => 'users/view',
 				'task/view/<id:\d+>' => 'tasks/view',
