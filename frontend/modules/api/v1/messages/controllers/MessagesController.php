@@ -25,14 +25,16 @@ class MessagesController extends ActiveController {
     {
         $request = Yii::$app->request;
         $message = new Message();
+        $task_id = Yii::$app->request->get('task_id');
+
 
 
         // проблема в этом
-        $message->task_id = 100;
+        $message->task_id = $task_id;
         $message->user_id = 100;
 
-        $messageCurrent = json_decode(Yii::$app->getRequest()->getRawBody(), true);
-        $message->text = $messageCurrent['message'];
+        $message_body = json_decode(Yii::$app->getRequest()->getRawBody(), true);
+        $message->text = $message_body['message'];
 
         $message->save(false);
 
