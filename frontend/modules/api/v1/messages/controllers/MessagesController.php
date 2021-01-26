@@ -32,7 +32,7 @@ class MessagesController extends ActiveController {
 
         // проблема в этом
         $message->task_id = 100;
-        $message->user_id = Yii::$app->user->getId();;
+        $message->user_id = Yii::$app->user->getId();
 
         $message_body = json_decode(Yii::$app->getRequest()->getRawBody(), true);
         $message->text = $message_body['message'];
