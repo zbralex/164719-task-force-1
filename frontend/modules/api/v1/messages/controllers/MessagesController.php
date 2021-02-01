@@ -22,16 +22,27 @@ class MessagesController extends ActiveController {
 		return Message::find()->where(['task_id' => $task_id])->all();
 
 	}
-    public function actionCreate()
+
+    public function actionTask()
+    {
+        $task_id = Yii::$app->request->get('task_id');
+        if (!$task_id) {
+            throw new ForbiddenHttpException();
+        }
+        return $task_id;
+
+    }
+
+    public function actionCreate($task_id)
     {
         $request = Yii::$app->request;
         $message = new Message();
-        $task_id = Yii::$app->getRequest()->get('id');
+        $task_id = $this->actionTask();
 
 
 
         // проблема в этом
-        $message->task_id = 100;
+        $message->task_id = $task_id;
         $message->user_id = Yii::$app->user->getId();
 
         $message_body = json_decode(Yii::$app->getRequest()->getRawBody(), true);

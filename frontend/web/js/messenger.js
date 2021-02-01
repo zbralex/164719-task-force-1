@@ -26,7 +26,7 @@ Vue.component('chat', {
   },
   methods: {
     sendMessage: function() {
-      fetch(this.api_url + '/create', {
+      fetch(this.api_url + '/create'+ '?task_id=' + this.task, {
         method: 'POST',
         body: JSON.stringify({message: this.message})
       })
