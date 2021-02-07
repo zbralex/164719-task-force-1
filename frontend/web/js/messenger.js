@@ -28,39 +28,38 @@ Vue.component('chat', {
     sendMessage: function() {
       fetch(this.api_url, {
         method: 'POST',
-        body: JSON.stringify({message: this.message})
+        body: JSON.stringify({message: this.message, task_id: this.task})
       })
-      .then(result => {
-        if (result.status !== 201) {
-          return Promise.reject(new Error('Запрошенный ресурс не существует'));
-        }
+        .then(result => {
+          if (result.status !== 201) {
+            return Promise.reject(new Error('Запрошенный ресурс не существует'));
+          }
 
-        return result.json();
-      })
-      .then(msg => {
-        this.messages.push(msg);
-        this.message = null;
-      })
-      .catch(err => {
-        console.error('Не удалось отправить сообщение', err);
-      })
+          return result.json();
+        })
+        .then(msg => {
+          this.messages.push(msg);
+          this.message = null;
+        })
+        .catch(err => {
+          console.error('Не удалось отправить сообщение', err);
+        })
     },
     getMessages: function () {
       fetch(this.api_url + '?task_id=' + this.task)
-      .then(result => {
-        if (result.status !== 200) {
-          return Promise.reject(new Error('Запрошенный ресурс не существует'));
-        }
+        .then(result => {
+          if (result.status !== 200) {
+            return Promise.reject(new Error('Запрошенный ресурс не существует'));
+          }
 
-        return result.json();
-      })
-      .then(messages => {
-        console.log(messages)
-        this.messages = messages;
-      })
-      .catch(err => {
-        console.error('Не удалось получить сообщения чата', err);
-      })
+          return result.json();
+        })
+        .then(messages => {
+          this.messages = messages;
+        })
+        .catch(err => {
+          console.error('Не удалось получить сообщения чата', err);
+        })
     }
   },
   data: function () {
