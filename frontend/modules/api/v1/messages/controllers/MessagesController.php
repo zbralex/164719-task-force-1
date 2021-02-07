@@ -17,27 +17,6 @@ class MessagesController extends ActiveController
     public $enableCsrfValidation = false;
 
 
-//    public function actionCreate($task_id)
-//    {
-//        $request = Yii::$app->request;
-//        $message = new Message();
-//
-//
-//
-//
-//        $message->task_id = $task_id;
-//        $message->user_id = Yii::$app->user->getId();
-//
-//        $message_body = json_decode(Yii::$app->getRequest()->getRawBody(), true);
-//        $message->text = $message_body['message'];
-//
-//        $message->save(false);
-//
-//        return $message;
-//
-//    }
-
-
     public function actions():array
     {
 
@@ -82,9 +61,8 @@ class MessagesController extends ActiveController
             $message = new Message();
 
             $message->user_id = Yii::$app->user->getId();
-            //как получить task_id?
-            $message->task_id = 100;
             $message_body = json_decode(Yii::$app->getRequest()->getRawBody(), true);
+            $message->task_id = $message_body['task_id'];
             $message->text = $message_body['message'];
 
             $message->save(false);
@@ -94,7 +72,7 @@ class MessagesController extends ActiveController
 
     public function checkAccess($action, $model = null, $params = [])
     {
-        if ($action === 'index' || $action === 'create') {
+        if ($action === 'index' || $action === 'create' ) {
             if (!\Yii::$app->user->id)
                 throw new \yii\web\ForbiddenHttpException(sprintf('Доступ только для авторизованных пользователей.', $action));
         }
