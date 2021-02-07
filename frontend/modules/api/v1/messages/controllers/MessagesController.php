@@ -13,7 +13,7 @@ use yii\web\ForbiddenHttpException;
 class MessagesController extends ActiveController
 {
     public $modelClass = Message::class;
-    public $allowedActions = ['index', 'view', 'update', 'create'];
+    public $allowedActions = ['index', 'create'];
     public $enableCsrfValidation = false;
 
 
