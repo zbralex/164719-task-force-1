@@ -5,7 +5,7 @@ Vue.component('chat', {
   template: `<div><h3>Переписка</h3>
              <div class="chat__overflow">
                <div class="chat__message" v-for="item in messages" :class="{'chat__message--out': item.is_mine}">
-                <p class="chat__message-time">{{ item.created_at | formatDate }}</p>
+                <p class="chat__message-time">{{ item.created_at }}</p>
                 <p class="chat__message-text">{{ item.text }}</p>
                </div>
               </div>
@@ -30,36 +30,36 @@ Vue.component('chat', {
         method: 'POST',
         body: JSON.stringify({message: this.message, task_id: this.task})
       })
-        .then(result => {
-          if (result.status !== 201) {
-            return Promise.reject(new Error('Запрошенный ресурс не существует'));
-          }
+      .then(result => {
+        if (result.status !== 201) {
+          return Promise.reject(new Error('Запрошенный ресурс не существует'));
+        }
 
-          return result.json();
-        })
-        .then(msg => {
-          this.messages.push(msg);
-          this.message = null;
-        })
-        .catch(err => {
-          console.error('Не удалось отправить сообщение', err);
-        })
+        return result.json();
+      })
+      .then(msg => {
+        this.messages.push(msg);
+        this.message = null;
+      })
+      .catch(err => {
+        console.error('Не удалось отправить сообщение', err);
+      })
     },
     getMessages: function () {
       fetch(this.api_url + '?task_id=' + this.task)
-        .then(result => {
-          if (result.status !== 200) {
-            return Promise.reject(new Error('Запрошенный ресурс не существует'));
-          }
+      .then(result => {
+        if (result.status !== 200) {
+          return Promise.reject(new Error('Запрошенный ресурс не существует'));
+        }
 
-          return result.json();
-        })
-        .then(messages => {
-          this.messages = messages;
-        })
-        .catch(err => {
-          console.error('Не удалось получить сообщения чата', err);
-        })
+        return result.json();
+      })
+      .then(messages => {
+        this.messages = messages;
+      })
+      .catch(err => {
+        console.error('Не удалось получить сообщения чата', err);
+      })
     }
   },
   data: function () {
@@ -73,11 +73,4 @@ Vue.component('chat', {
 
 var app = new Vue({
   el: "#chat-container",
-});
-
-Vue.filter('formatDate', function(value) {
-  if (value) {
-    moment.locale('ru');
-    return moment(String(value)).format('LLL')
-  }
 });

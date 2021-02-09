@@ -8,54 +8,38 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use yii\rest\ActiveController;
+use yii\rest\IndexAction;
 use yii\web\ForbiddenHttpException;
 
 class MessagesController extends ActiveController
 {
     public $modelClass = Message::class;
-    public $allowedActions = ['index', 'create'];
+    public $allowedActions = ['index'];
     public $enableCsrfValidation = false;
 
 
-    public function actions():array
+    public function actions()
     {
+        $actions = parent::actions();
+        unset($actions['index']);
 
-        return [
-            'index' => [
-                'class' => 'yii\rest\IndexAction',
-                'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
-                'prepareDataProvider' => [$this, 'prepareDataProvider'],
-            ],
-            'create' => [
-                'class' => 'yii\rest\CreateAction',
-                'modelClass' => $this->modelClass,
-                'checkAccess' => [$this, 'checkAccess'],
-                'scenario' => [$this, 'prepareDataProvider'],
-            ],
 
-        ];
+        return $actions;
     }
 
-    protected function verbs():array
+    public function actionIndex(int $task_id = null)
     {
-        return [
-            'index' => ['GET', 'HEAD', 'POST'],
-            'create' => ['POST'],
-        ];
-    }
+        if (!\Yii::$app->user->id)
+            throw new \yii\web\ForbiddenHttpException(sprintf('Доступ только для авторизованных пользователей.'));
 
-
-    public function prepareDataProvider()
-    {
         $request = Yii::$app->request;
-        if ($_GET) {
-            $task_id = Yii::$app->request->get('task_id');
+        if ($request->isGet) {
             if (!$task_id) {
                 throw new ForbiddenHttpException();
             }
             return Message::find()->where(['task_id' => $task_id])->all();
         }
+
 
         if ($request->isPost) {
             $message = new Message();
@@ -66,15 +50,15 @@ class MessagesController extends ActiveController
             $message->text = $message_body['message'];
 
             $message->save(false);
+            Yii::$app->getResponse()->setStatusCode(201);
+            return $message;
         }
-
     }
 
-    public function checkAccess($action, $model = null, $params = [])
+    protected function verbs()
     {
-        if ($action === 'index' || $action === 'create' ) {
-            if (!\Yii::$app->user->id)
-                throw new \yii\web\ForbiddenHttpException(sprintf('Доступ только для авторизованных пользователей.', $action));
-        }
+        return [
+            'index' => ['GET', 'HEAD', 'POST'],
+        ];
     }
 }
