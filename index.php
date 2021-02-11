@@ -17,35 +17,37 @@ use taskForce\exceptions\DataLoaderException;
 
 
 require_once 'vendor/autoload.php';
+error_reporting(E_ALL);
 
-
-$task = new Task('new');
-$task1 = new Task('progress');
-
-$converter = new DataLoader();
-$converter->scanDirectory('./data');
-$converter->toSql();
-
-
-$actionNew =  new ActionNew();
-$actionCancel = new ActionCancel();
-$actionComplete = new ActionComplete();
-$actionRefuse = new ActionRefuse();
-$actionResponse = new ActionResponse();
-
-try {
-    $task->getAvailableActions('executor');
-    $task1->getAvailableActions('client');
-    $converter->import();
-}
-catch (TaskException $e) {
-    printf('Error: ' . $e->getMessage());
-}
-catch (RoleException $e) {
-    printf('Error: ' . $e->getMessage());
-}
-
-catch (DataLoaderException $e) {
-    printf('Error: ' . $e->getMessage());
-}
+//
+//
+//$task = new Task('new');
+//$task1 = new Task('progress');
+//
+//$converter = new DataLoader();
+//$converter->scanDirectory('./data');
+//$converter->toSql();
+//
+//
+//$actionNew =  new ActionNew();
+//$actionCancel = new ActionCancel();
+//$actionComplete = new ActionComplete();
+//$actionRefuse = new ActionRefuse();
+//$actionResponse = new ActionResponse();
+//
+//try {
+//    $task->getAvailableActions('executor');
+//    $task1->getAvailableActions('client');
+//    $converter->import();
+//}
+//catch (TaskException $e) {
+//    printf('Error: ' . $e->getMessage());
+//}
+//catch (RoleException $e) {
+//    printf('Error: ' . $e->getMessage());
+//}
+//
+//catch (DataLoaderException $e) {
+//    printf('Error: ' . $e->getMessage());
+//}
 

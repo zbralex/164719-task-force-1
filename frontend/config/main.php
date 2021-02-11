@@ -10,10 +10,28 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+	'modules' => [
+		'api' => [
+			'class' => 'app\modules\api\v1\messages\Module',
+            'modules' => [
+                // версионирование
+                'v1' => [
+                    // http://taskforce.local/api/v1/messages?task_id=100
+                    'class' => 'app\modules\api\v1\messages\Module'
+                ]
+            ]
+		],
+		'request' => [
+			'parsers' => [
+				'application/json' => \yii\web\JsonParser::class,
+			]
+		]
+	],
     'controllerNamespace' => 'frontend\controllers',
 	'language' => 'ru-RU',
 	'timeZone' => 'Europe/Moscow',
 	'components' => [
+
 		'user' => [
 			'identityClass' => 'frontend\models\User',
 			'enableAutoLogin' => true,
@@ -24,13 +42,15 @@ return [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
 			'rules' => [
-				'/' => '/landing',
+                //['class' => 'yii\rest\UrlRule', 'controller' => ['api/v1/messages/controllers/MessagesController'], 'pluralize' => false],
+                '/' => '/landing',
 				'user/view/<id:\d+>' => 'users/view',
 				'task/view/<id:\d+>' => 'tasks/view',
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
 			],
 		],
+
 		'cache' => [
 			'class' => 'yii\caching\FileCache',
 		],
