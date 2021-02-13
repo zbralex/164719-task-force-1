@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 
 use frontend\models\forms\AccountForm;
+use frontend\models\Task;
 use frontend\models\User;
 use frontend\models\UserInfo;
 use Yii;
@@ -13,7 +14,7 @@ class AccountController extends \yii\web\Controller {
     {
 
         $model = new AccountForm();
-        $userInfo = new UserInfo();
+        $userInfo = UserInfo::findOne(Yii::$app->user->id);
 
 
         if (Yii::$app->request->isAjax) {
@@ -23,7 +24,8 @@ class AccountController extends \yii\web\Controller {
 
 
         return $this->render('index', [
-            'model' => $model
+            'model' => $model,
+            'userInfo' => $userInfo
         ]);
     }
 }
