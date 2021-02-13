@@ -1,11 +1,27 @@
 <?php
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
 ?>
 
 <main class="page-main">
     <div class="main-container page-container">
         <section class="account__redaction-wrapper">
             <h1>Редактирование настроек профиля</h1>
-            <form enctype="multipart/form-data" id="account" method="post">
+
+            <?php $form = ActiveForm::begin([
+                'id' => 'account',
+                'enableClientValidation' => true,
+                'options' => [
+                    'enctype' => 'multipart/form-data',
+                ],
+                'fieldConfig' => [
+                    'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
+                ]
+
+            ]) ?>
+
                 <div class="account__redaction-section">
                     <h3 class="div-line">Настройки аккаунта</h3>
                     <div class="account__redaction-section-wrapper">
@@ -25,15 +41,30 @@
                             </div>
                             <div class="field-container account__input account__input--address">
                                 <label for="202">Адрес</label>
-                                <input class="input textarea" id="202" name="" placeholder="Санкт-Петербург, Московский район">
+                                <input class="input textarea" id="202" name=""
+                                       placeholder="Санкт-Петербург, Московский район">
                             </div>
                             <div class="field-container account__input account__input--date">
                                 <label for="203">День рождения</label>
-                                <input id="203" class="input-middle input input-date" type="text" placeholder="15.08.1987">
+                                <input id="203" class="input-middle input input-date" type="text"
+                                       placeholder="15.08.1987">
                             </div>
                             <div class="field-container account__input account__input--info">
                                 <label for="204">Информация о себе</label>
-                                <textarea class="input textarea" rows="7" id="204" name="" placeholder="Place your text"></textarea>
+                                <textarea class="input textarea" rows="7" id="204" name=""
+                                          placeholder="Place your text"></textarea>
+
+                                <?= $form->field($model, 'about_myself', [
+                                    'labelOptions' => [
+                                        'style' => 'display: block;'
+                                    ]
+                                ])->textarea([
+                                    'class' => 'input textarea',
+                                    'style' => 'width: 100%;box-sizing: border-box',
+                                    'rows' => 7,
+                                    'placeholder' => 'Place your text'
+                                ])->hint('Не заполняйте для оценки исполнителем');
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -61,7 +92,8 @@
                                 <span>Удалённая помощь</span>
                             </label>
                             <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" id="210" type="checkbox" name="" value="">
+                                <input class="visually-hidden checkbox__input" id="210" type="checkbox" name=""
+                                       value="">
                                 <span>Выезд на стрелку</span>
                             </label>
                         </div>
@@ -128,8 +160,10 @@
                         </div>
                     </div>
                 </div>
-                <button class="button" type="submit">Сохранить изменения</button>
-            </form>
+
+                <?= Html::submitButton('Сохранить изменения', ['class' => 'button']) ?>
+
+                <?php ActiveForm::end(); ?>
         </section>
     </div>
 </main>

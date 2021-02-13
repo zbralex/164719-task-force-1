@@ -1,0 +1,107 @@
+<?php
+
+namespace frontend\models\forms;
+
+use Yii;
+use yii\base\Model;
+
+class AccountForm extends Model
+{
+    public
+        $name,
+        $user_pic,
+        $email,
+
+        $password,
+        $re_password,
+
+        $address,
+        $date_of_birth,
+        $about_myself,
+        $user_category,
+
+        $photos_of_works,
+
+        $phone,
+        $skype,
+        $another_messenger,
+
+        $show_new_messages,
+        $show_actions_of_task,
+        $show_new_review,
+        $show_my_contacts_customer,
+        $hide_account;
+
+    public function rules(): array
+    {
+        return [
+            ['name', 'string', 'min' => 2, 'max' => 256],
+
+            [['email', 'password'], 'safe'],
+            ['email', 'email'],
+
+
+            ['password', 'compare'],
+            ['password', 'compare', 'compareAttribute' => 're_password'],
+
+
+            ['address', 'string', 'min' => 10, 'max' => 256],
+            ['date_of_birth', 'date', 'format' => 'php:Y-m-d', 'min' => date('Y-m-d')],
+            [['about_myself', 'name'], 'trim'],
+
+            ['phone', 'match', 'pattern' => '/^\8\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/' ],
+            [['photos_of_works'], 'file', 'maxFiles' => 10],
+            ['user_pic', 'file', 'maxFiles' => 1],
+            [['skype','another_messenger'], 'string'],
+            [['skype','another_messenger'], 'trim']
+        ];
+    }
+    public function attributeLabels(): array
+    {
+        return [
+            "name" => 'ВАШЕ ИМЯ',
+            "email" => 'EMAIL',
+
+            "password" => 'НОВЫЙ ПАРОЛЬ',
+            "re_password" => 'ПОВТОР ПАРОЛЯ',
+
+            "address" => 'АДРЕС',
+            "date_of_birth" => 'ДЕНЬ РОЖДЕНИЯ',
+            "about_myself" => 'ИНФОРМАЦИЯ О СЕБЕ',
+            "user_category" => '',
+
+            "photos_of_works" => 'Выбрать фотографии',
+
+            "phone" => 'ТЕЛЕФОН',
+            "skype" => 'SKYPE',
+            "another_messenger" => 'ДРУГОЙ МЕССЕНДЖЕР',
+
+            "show_new_messages" => 'Новое сообщение',
+            "show_actions_of_task" => 'Действие по заданию',
+            "show_new_review" => 'Новый отзыв',
+            "show_my_contacts_customer" => 'Показывать мои контакты только заказчику',
+            "hide_account" => 'Не показывать мой профиль',
+        ];
+    }
+
+    public function upload()
+    {
+        $dir = Yii::getAlias('@app') . '/web/upload/' . date("Y-m-d") .'_'. date("H-m") . '/';
+        $paths = [];
+
+        if(!is_dir($dir)) {
+            mkdir($dir, 0777);
+        }
+
+        if ($this->validate()) {
+            foreach ($this->files as $file) {
+                $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
+                $paths [] = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $file->baseName . '.' . $file->extension;
+            }
+            return $paths;
+        } else {
+            return false;
+        }
+    }
+
+}

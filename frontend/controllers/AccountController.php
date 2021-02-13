@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 
+use frontend\models\forms\AccountForm;
 use frontend\models\User;
 use frontend\models\UserInfo;
 use Yii;
@@ -11,31 +12,15 @@ class AccountController extends \yii\web\Controller {
     public function actionIndex()
     {
 
-        $model = new User();
+        $model = new AccountForm();
         $userInfo = new UserInfo();
-        $model->load(\Yii::$app->request->post());
-        $errors = [];
 
 
         if (Yii::$app->request->isAjax) {
             return ActiveForm::validate($model);
         }
 
-        if (Yii::$app->request->getIsPost()) {
 
-            if ($model->validate()) {
-                $model->setPassword($model->password);
-                $model->save(false);
-
-
-                $userInfo->role_id = 1;
-                $userInfo->user_id = $model->id;
-                $userInfo->save(false);
-
-                return $this->goHome();
-            }
-
-        }
 
         return $this->render('index', [
             'model' => $model
