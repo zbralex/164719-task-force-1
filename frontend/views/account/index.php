@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var array $model
+ */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -50,10 +53,6 @@ use yii\widgets\ActiveForm;
                                        placeholder="15.08.1987">
                             </div>
                             <div class="field-container account__input account__input--info">
-                                <label for="204">Информация о себе</label>
-                                <textarea class="input textarea" rows="7" id="204" name=""
-                                          placeholder="Place your text"></textarea>
-
                                 <?= $form->field($model, 'about_myself', [
                                     'labelOptions' => [
                                         'style' => 'display: block;'
@@ -63,7 +62,7 @@ use yii\widgets\ActiveForm;
                                     'style' => 'width: 100%;box-sizing: border-box',
                                     'rows' => 7,
                                     'placeholder' => 'Place your text'
-                                ])->hint('Не заполняйте для оценки исполнителем');
+                                ]);
                                 ?>
                             </div>
                         </div>
