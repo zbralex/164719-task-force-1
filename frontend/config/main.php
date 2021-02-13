@@ -48,7 +48,6 @@ return [
 				'task/view/<id:\d+>' => 'tasks/view',
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
-                'mylist' => 'mylist/index',
 			],
 		],
 
