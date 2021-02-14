@@ -4,6 +4,7 @@
  * @var array $userInfo
  */
 
+use frontend\models\Categories;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $formatter = \Yii::$app->formatter;
@@ -38,7 +39,7 @@ $formatter = \Yii::$app->formatter;
                         <div class="account__redaction">
                             <div class="field-container account__input account__input--name">
                                 <label for="200">Ваше имя</label>
-                                <input class="input textarea" id="200" name="" placeholder="Титов Денис" disabled value="<?= $userInfo->user->name?>">
+                                <input class="input textarea" id="200" name="" placeholder="<?= $userInfo->user->name?>" disabled value="<?= $userInfo->user->name?>">
                             </div>
                             <div class="field-container account__input account__input--email">
                                 <label for="201">email</label>
@@ -73,31 +74,19 @@ $formatter = \Yii::$app->formatter;
                     <h3 class="div-line">Выберите свои специализации</h3>
                     <div class="account__redaction-section-wrapper">
                         <div class="search-task__categories account_checkbox--bottom">
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="" checked>
-                                <span>Курьерские услуги</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="" checked>
-                                <span>Грузоперевозки</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
-                                <span>Перевод текстов</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="" checked>
-                                <span>Ремонт транспорта</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
-                                <span>Удалённая помощь</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" id="210" type="checkbox" name=""
-                                       value="">
-                                <span>Выезд на стрелку</span>
-                            </label>
+
+                                <?= $form->field($model, 'user_category')
+                                    ->checkboxList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
+                                        [
+                                            'item' => function ($index, $label, $name, $checked, $value)  {
+                                                $checked = $checked ? 'checked':'';
+                                                return "<label for='{$index}' class='checkbox__legend'>
+                                                            <input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
+                                                            <span>{$label}</span>
+							                            </label>";
+                                            },
+                                            'class'=> 'search-task__categories account_checkbox--bottom'])->label(false) ?>
+
                         </div>
                     </div>
                     <h3 class="div-line">Безопасность</h3>
