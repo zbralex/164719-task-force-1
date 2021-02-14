@@ -7,7 +7,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $formatter = \Yii::$app->formatter;
-var_dump($userInfo);
+//var_dump($userInfo);
 ?>
 
 <main class="page-main">
@@ -63,7 +63,8 @@ var_dump($userInfo);
                                     'class' => 'input textarea',
                                     'style' => 'width: 100%;box-sizing: border-box',
                                     'rows' => 7,
-                                    'placeholder' => 'Place your text'
+                                    'placeholder' => 'Place your text',
+                                    'value' => $userInfo->about
                                 ]);
                                 ?>
                             </div>

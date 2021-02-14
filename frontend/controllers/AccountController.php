@@ -14,7 +14,8 @@ class AccountController extends \yii\web\Controller {
     {
 
         $model = new AccountForm();
-        $userInfo = UserInfo::findOne(Yii::$app->user->id);
+
+        $userInfo = UserInfo::findOne(['user_id'=> Yii::$app->user->identity->getId()]);
 
 
         if (Yii::$app->request->isAjax) {
