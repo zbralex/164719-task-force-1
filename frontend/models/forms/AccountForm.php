@@ -50,7 +50,7 @@ class AccountForm extends Model
             [['about_myself', 'name'], 'trim'],
 
             ['phone', 'match', 'pattern' => '/^\8\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/' ],
-            [['photos_of_works'], 'file', 'maxFiles' => 10],
+            [['photos_of_works'], 'file', 'maxFiles' => 6],
             ['user_pic', 'file', 'maxFiles' => 1],
             [['skype','another_messenger'], 'string'],
             [['skype','another_messenger'], 'trim']

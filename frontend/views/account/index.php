@@ -121,15 +121,15 @@ var_dump($userInfo);
                     <div class="account__redaction-section-wrapper account__redaction">
                         <div class="field-container account__input">
                             <label for="213">Телефон</label>
-                            <input class="input textarea" type="tel" id="213" name="" placeholder="8 (555) 187 44 87">
+                            <input class="input textarea" type="tel" id="213" name="" placeholder="8 (555) 187 44 87" value="<?= $userInfo->phone?>">
                         </div>
                         <div class="field-container account__input">
                             <label for="214">Skype</label>
-                            <input class="input textarea" type="password" id="214" name="" placeholder="DenisT">
+                            <input class="input textarea" type="password" id="214" name="" placeholder="DenisT" value="<?= $userInfo->skype?>">
                         </div>
                         <div class="field-container account__input">
                             <label for="215">Другой мессенджер</label>
-                            <input class="input textarea" id="215" name="" placeholder="@DenisT">
+                            <input class="input textarea" id="215" name="" placeholder="@DenisT" value="<?= $userInfo->telegram?>">
                         </div>
                     </div>
                     <h3 class="div-line">Настройки сайта</h3>
