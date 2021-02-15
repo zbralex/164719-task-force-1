@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 
 use frontend\models\Cities;
+use frontend\models\SiteSettings;
 use frontend\models\User;
 use frontend\models\UserInfo;
 use Yii;
@@ -23,6 +24,7 @@ class SignupController extends Controller
 
         $model = new User();
 	    $userInfo = new UserInfo();
+	    $siteSettings = new SiteSettings();
         $model->load(\Yii::$app->request->post());
         $errors = [];
 
@@ -41,6 +43,8 @@ class SignupController extends Controller
                 $userInfo->role_id = 1;
                 $userInfo->user_id = $model->id;
                 $userInfo->save(false);
+                $siteSettings->user_id = $model->id;
+                $siteSettings->save(false);
 
                 return $this->goHome();
             }

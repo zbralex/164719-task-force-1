@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View
  * @var array $cities
+ * @var array $model
  */
 
 
