@@ -5,6 +5,8 @@
  */
 
 use frontend\models\Categories;
+use frontend\models\UserCategory;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $formatter = \Yii::$app->formatter;
@@ -75,16 +77,36 @@ $formatter = \Yii::$app->formatter;
                     <div class="account__redaction-section-wrapper">
                         <div class="search-task__categories account_checkbox--bottom">
 
-                                <?= $form->field($model, 'user_category')
-                                    ->checkboxList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
-                                        [
-                                            'item' => function ($index, $label, $name, $checked, $value)  {
-                                                $checked = $checked ? 'checked':'';
-                                                return "<label for='{$index}' class='checkbox__legend'>
+                                <?php
+                                $cat_list = Categories::find()->select(['name'])->orderBy('id')->asArray()->all();
+                                $result = ArrayHelper::getColumn($cat_list, 'name');
+                               // var_dump($result);
+                                function getCheckboxList($index, $label, $name, $checked, $value): string
+                                {
+
+                                        $cat_list = UserCategory::find()->where(['user_id' => Yii::$app->user->getId()])->all();
+                                        $result = ArrayHelper::getColumn($cat_list, 'category_id');
+
+                                        foreach ($result as  $item) {
+                                            if ($value == $item) {
+                                                $checked = 'checked';
+                                            }
+                                        }
+
+                                        return "<label for='{$index}' class='checkbox__legend'>
                                                             <input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
                                                             <span>{$label}</span>
 							                            </label>";
-                                            },
+                                }
+
+
+                                echo $form->field($model, 'user_category')
+                                    ->checkboxList($result,
+                                        [
+                                            'inputTemplate' => [
+                                                'value' => $userInfo->about,
+                                            ],
+                                            'item' => 'getCheckboxList',
                                             'class'=> 'search-task__categories account_checkbox--bottom'])->label(false) ?>
 
                         </div>
