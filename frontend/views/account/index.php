@@ -188,7 +188,7 @@ $formatter = \Yii::$app->formatter;
 
                             ])->checkbox([
                                 'class' => 'visually-hidden checkbox__input',
-                                'checked' => $userInfo->user->siteSettings->new_message ? true: false
+                                'checked' => $userInfo->user->siteSettings->new_review ? true: false
                             ],
                                 false)->label(false); ?>
 
@@ -230,7 +230,7 @@ $formatter = \Yii::$app->formatter;
                         </div>
                     </div>
                 </div>
-<?php var_dump($userInfo->user->siteSettings->show_profile);?>
+
                 <?= Html::submitButton('Сохранить изменения', ['class' => 'button']) ?>
 
                 <?php ActiveForm::end(); ?>
