@@ -104,9 +104,6 @@ $formatter = \Yii::$app->formatter;
                                 echo $form->field($model, 'user_category')
                                     ->checkboxList($result,
                                         [
-                                            'inputTemplate' => [
-                                                'value' => $userInfo->about,
-                                            ],
                                             'item' => 'getCheckboxList',
                                             'class'=> 'search-task__categories account_checkbox--bottom'])->label(false) ?>
 
@@ -149,32 +146,91 @@ $formatter = \Yii::$app->formatter;
                     <h4>Уведомления</h4>
                     <div class="account__redaction-section-wrapper account_section--bottom">
                         <div class="search-task__categories account_checkbox--bottom">
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="" checked>
+
+
+                            <?= $form->field($model, 'show_new_messages', [
+                                'labelOptions' => [
+                                    'class' => 'checkbox__legend'
+                                ],
+                                'template' => '<label class="checkbox__legend">
+                                {input}
                                 <span>Новое сообщение</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="" checked>
+                            </label>',
+
+                            ])->checkbox([
+                                'class' => 'visually-hidden checkbox__input',
+                                'checked' => $userInfo->user->siteSettings->new_message ? true: false
+                            ],
+                                false)->label(false); ?>
+                            <?= $form->field($model, 'show_actions_of_task', [
+                                'labelOptions' => [
+                                    'class' => 'checkbox__legend'
+                                ],
+                                'template' => '<label class="checkbox__legend">
+                                {input}
                                 <span>Действия по заданию</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="" checked>
+                            </label>',
+
+                            ])->checkbox([
+                                'class' => 'visually-hidden checkbox__input',
+                                'checked' => $userInfo->user->siteSettings->actions_in_task ? true: false
+                            ],
+                                false)->label(false); ?>
+
+                            <?= $form->field($model, 'show_new_review', [
+                                'labelOptions' => [
+                                    'class' => 'checkbox__legend'
+                                ],
+                                'template' => '<label class="checkbox__legend">
+                                {input}
                                 <span>Новый отзыв</span>
-                            </label>
+                            </label>',
+
+                            ])->checkbox([
+                                'class' => 'visually-hidden checkbox__input',
+                                'checked' => $userInfo->user->siteSettings->new_message ? true: false
+                            ],
+                                false)->label(false); ?>
+
+
+
                         </div>
                         <div class="search-task__categories account_checkbox account_checkbox--secrecy">
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
+
+
+                            <?= $form->field($model, 'show_my_contacts_customer', [
+                                'labelOptions' => [
+                                    'class' => 'checkbox__legend'
+                                ],
+                                'template' => '<label class="checkbox__legend">
+                                {input}
                                 <span>Показывать мои контакты только заказчику</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="" checked>
+                            </label>',
+
+                            ])->checkbox([
+                                'class' => 'visually-hidden checkbox__input',
+                                'checked' => $userInfo->user->siteSettings->show_contacts_client ?  true : false
+                            ],
+                                false)->label(false); ?>
+
+                            <?= $form->field($model, 'hide_account', [
+                                'labelOptions' => [
+                                    'class' => 'checkbox__legend'
+                                ],
+                                'template' => '<label class="checkbox__legend">
+                                {input}
                                 <span>Не показывать мой профиль</span>
-                            </label>
+                            </label>',
+
+                            ])->checkbox([
+                                'class' => 'visually-hidden checkbox__input',
+                                'checked' => $userInfo->user->siteSettings->show_profile ? true : false
+                            ],
+                                false)->label(false); ?>
                         </div>
                     </div>
                 </div>
-
+<?php var_dump($userInfo->user->siteSettings->show_profile);?>
                 <?= Html::submitButton('Сохранить изменения', ['class' => 'button']) ?>
 
                 <?php ActiveForm::end(); ?>

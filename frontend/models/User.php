@@ -151,7 +151,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getSiteSettings()
     {
-        return $this->hasMany(SiteSettings::className(), ['user_id' => 'id']);
+        return $this->hasOne(SiteSettings::className(), ['user_id' => 'id']);
     }
 
     /**
