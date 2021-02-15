@@ -80,7 +80,7 @@ $formatter = \Yii::$app->formatter;
                                 <?php
                                 $cat_list = Categories::find()->select(['name'])->orderBy('id')->asArray()->all();
                                 $result = ArrayHelper::getColumn($cat_list, 'name');
-                               // var_dump($result);
+
                                 function getCheckboxList($index, $label, $name, $checked, $value): string
                                 {
 
@@ -88,7 +88,8 @@ $formatter = \Yii::$app->formatter;
                                         $result = ArrayHelper::getColumn($cat_list, 'category_id');
 
                                         foreach ($result as  $item) {
-                                            if ($value == $item) {
+
+                                            if ($value == $item-1) { // тк массив начинается с 0
                                                 $checked = 'checked';
                                             }
                                         }
