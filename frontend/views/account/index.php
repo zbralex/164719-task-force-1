@@ -112,12 +112,25 @@ $formatter = \Yii::$app->formatter;
                     <h3 class="div-line">Безопасность</h3>
                     <div class="account__redaction-section-wrapper account__redaction">
                         <div class="field-container account__input">
-                            <label for="211">Новый пароль</label>
-                            <input class="input textarea" type="password" id="211" name="" value="moiparol">
+<!--                            <label for="211">Новый пароль</label>-->
+<!--                            <input class="input textarea" type="password" id="211" name="" value="moiparol">-->
+                            <?= $form->field($model, 'password', [
+                                'options' => ['tag' => false]
+                            ])->passwordInput([
+                                'class' => 'input textarea',
+
+                            ]) ?>
                         </div>
                         <div class="field-container account__input">
-                            <label for="212">Повтор пароля</label>
-                            <input class="input textarea" type="password" id="212" name="" value="moiparol">
+<!--                            <label for="212">Повтор пароля</label>-->
+<!--                            <input class="input textarea" type="password" id="212" name="" value="moiparol">-->
+
+                            <?= $form->field($model, 're_password', [
+                                'options' => ['tag' => false]
+                            ])->passwordInput([
+                                'class' => 'input textarea',
+
+                            ]) ?>
                         </div>
                     </div>
 
@@ -130,16 +143,35 @@ $formatter = \Yii::$app->formatter;
                     <h3 class="div-line">Контакты</h3>
                     <div class="account__redaction-section-wrapper account__redaction">
                         <div class="field-container account__input">
-                            <label for="213">Телефон</label>
-                            <input class="input textarea" type="tel" id="213" name="" placeholder="8 (555) 187 44 87" value="<?= $userInfo->phone?>">
+
+                            <?= $form->field($model, 'phone', [
+                                'options' => ['tag' => false]
+                            ])->textInput([
+                                'class' => 'input textarea',
+                                'placeholder' => '8 (555) 187 44 87',
+                                'value' => $userInfo->phone
+                            ]) ?>
                         </div>
                         <div class="field-container account__input">
-                            <label for="214">Skype</label>
-                            <input class="input textarea" type="password" id="214" name="" placeholder="DenisT" value="<?= $userInfo->skype?>">
+
+                            <?= $form->field($model, 'skype', [
+                                'options' => ['tag' => false]
+                            ])->textInput([
+                                'class' => 'input textarea',
+                                'placeholder' => 'DenisT',
+                                'value' => $userInfo->skype
+                            ]) ?>
                         </div>
                         <div class="field-container account__input">
-                            <label for="215">Другой мессенджер</label>
-                            <input class="input textarea" id="215" name="" placeholder="@DenisT" value="<?= $userInfo->telegram?>">
+
+
+                            <?= $form->field($model, 'another_messenger', [
+                                'options' => ['tag' => false]
+                            ])->textInput([
+                                'class' => 'input textarea',
+                                'placeholder' => '@DenisT',
+                                'value' => $userInfo->telegram
+                            ]) ?>
                         </div>
                     </div>
                     <h3 class="div-line">Настройки сайта</h3>
