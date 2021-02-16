@@ -13,7 +13,7 @@ AppAsset::register($this);
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
-	<title>TaskForce</title>
+    <title><?= Html::encode($this->title) ?></title>
 	<?php $this->head() ?>
 </head>
 <body>

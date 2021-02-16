@@ -16,7 +16,8 @@ use yii\widgets\ActiveForm;
 
 // CreateTaskDropZone::register($this);
 AutoComplete::register($this);
-CustomAutoCompleteAsset::register($this)
+CustomAutoCompleteAsset::register($this);
+$this->title = 'Публикация нового задания';
 ?>
 
 

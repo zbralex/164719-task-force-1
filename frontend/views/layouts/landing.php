@@ -12,8 +12,9 @@ PublicAsset::register($this);
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
-	<title>TaskForce</title>
+    <title><?= Html::encode($this->title) ?></title>
 	<?= Html::csrfMetaTags() ?>
+
 	<?php $this->head()?>
 </head>
 <body class="landing">

@@ -22,6 +22,7 @@ use yii\widgets\ActiveForm;
 
 TaskActionsAsset::register($this);
 YandexAPIKey::register($this);
+$this->title = 'Задание';
 ?>
 
 <main class="page-main">
@@ -83,14 +84,14 @@ YandexAPIKey::register($this);
 											            iconContent: "",
 											            hintContent: "Перетащите метку и кликните, чтобы узнать адрес"
 											        }, {
-											 
+
 											            preset: "islands#blueStretchyIcon",
 											            // Заставляем балун открываться даже если в нем нет содержимого.
 											            openEmptyBalloon: true
 											        });
-											
-								
-											    	
+
+
+
 											    	var cityContent = document.querySelector(".address__town");
 											            ymaps.geocode(placemark.geometry.getCoordinates(), {
 											                results: 1
@@ -99,7 +100,7 @@ YandexAPIKey::register($this);
 											            		//показывает данные в панели карты
 											                var newContent = res.geoObjects.get(0) ?
 											                        res.geoObjects.get(0).properties.get("name") : "Не удалось определить адрес.";
-											
+
 											                console.log(res.geoObjects.get(0).properties.get("name"),
 											                res.geoObjects.get(0).properties.get("description"))
 											                if ( res.geoObjects.get(0)) {
@@ -108,11 +109,11 @@ YandexAPIKey::register($this);
 											                } else {
 											                	cityContent.innerText = "Адрес не указан";
 											                }
-											               
+
 											                placemark.properties.set("balloonContent", newContent);
 											            });
-											  
-											
+
+
 											    myMap.geoObjects.add(placemark);
 											}
 								</script>';
@@ -282,10 +283,10 @@ YandexAPIKey::register($this);
 				[
 					'item' => function ($index, $label, $name) {
 						$class = ['yes', 'difficult'];
-						return "<input class=\"visually-hidden completion-input completion-input--{$class[$index]}\" 
-							id='{$index}' 
-							type='radio' 
-							name='{$name}' 
+						return "<input class=\"visually-hidden completion-input completion-input--{$class[$index]}\"
+							id='{$index}'
+							type='radio'
+							name='{$name}'
 							value='{$index}' >
 							<label class=\"completion-label completion-label--{$class[$index]}\" for='{$index}'>{$label}</label>";
 					}

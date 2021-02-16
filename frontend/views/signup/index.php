@@ -9,6 +9,7 @@ use frontend\models\Cities;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+$this->title = 'Регистрация аккаунта';
 ?>
 
 <main class="page-main">

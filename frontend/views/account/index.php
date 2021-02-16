@@ -2,6 +2,7 @@
 /**
  * @var array $model
  * @var array $userInfo
+ * @var $this yii\web\View
  */
 
 use frontend\models\Categories;
@@ -10,7 +11,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $formatter = \Yii::$app->formatter;
-//var_dump($userInfo);
+$this->title = 'Редактирование настроек профиля';
+
 ?>
 
 <main class="page-main">

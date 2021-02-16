@@ -11,7 +11,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Users';
+$this->title = 'Исполнители';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <main class="page-main">

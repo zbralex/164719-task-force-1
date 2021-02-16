@@ -9,6 +9,7 @@ use frontend\models\Categories;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+$this->title = 'Новые задания';
 
 ?>
 <main class="page-main">

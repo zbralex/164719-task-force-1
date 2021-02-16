@@ -5,7 +5,7 @@
  */
 
 use yii\helpers\Html;
-
+$this->title = Html::encode($detail->name .' '. $detail->surname);
 ?>
 <main class="page-main">
     <div class="main-container page-container">

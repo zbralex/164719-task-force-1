@@ -8,6 +8,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 AppAsset::register($this);
+$this->title = 'TaskForce | Работа там, где ты!';
 ?>
 <div class="table-layout">
 	<header class=" page-header--index">
