@@ -26,7 +26,7 @@ $formatter = \Yii::$app->formatter;
                 ],
                 'fieldConfig' => [
                     'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-                ]
+                ],
 
             ]) ?>
 
@@ -40,8 +40,15 @@ $formatter = \Yii::$app->formatter;
                         </div>
                         <div class="account__redaction">
                             <div class="field-container account__input account__input--name">
-                                <label for="200">Ваше имя</label>
-                                <input class="input textarea" id="200" name="" placeholder="<?= $userInfo->user->name?>" disabled value="<?= $userInfo->user->name?>">
+
+                                <?= $form->field($model, 'name', [
+                                    'options' => ['tag' => false]
+                                ])->textInput([
+                                    'class' => 'input textarea',
+                                    'placeholder' => 'DenisT@bk.ru',
+                                    'value' => $userInfo->user->name,
+                                    'disabled' => true
+                                ]) ?>
                             </div>
                             <div class="field-container account__input account__input--email">
 
@@ -68,7 +75,8 @@ $formatter = \Yii::$app->formatter;
                             </div>
                             <div class="field-container account__input account__input--date">
 
-                                <?= $form->field($model, 'date_of_birth', [
+                                <?=
+                                $form->field($model, 'date_of_birth', [
                                     'options' => ['tag' => false]
                                 ])->widget(\yii\jui\DatePicker::className(),
                                     [ 'dateFormat' => 'php:m/d/Y',
@@ -83,7 +91,8 @@ $formatter = \Yii::$app->formatter;
                                         'placeholder' => \Yii::t('app', '15.08.1987'),
                                         'class'=> 'input-middle input input-date',
                                         'value' => $formatter->asDate($userInfo->date_birth, 'php:d.m.Y'),
-                                    ]) ;?>
+                                    ]) ;
+                                ?>
                             </div>
                             <div class="field-container account__input account__input--info">
                                 <?= $form->field($model, 'about_myself', [
@@ -139,25 +148,23 @@ $formatter = \Yii::$app->formatter;
                     </div>
                     <h3 class="div-line">Безопасность</h3>
                     <div class="account__redaction-section-wrapper account__redaction">
-                        <div class="field-container account__input">
 
                             <?= $form->field($model, 'password', [
-                                'options' => ['tag' => false]
-                            ])->passwordInput([
-                                'class' => 'input textarea',
-
-                            ]) ?>
-
-                        </div>
-                        <div class="field-container account__input">
+                                'template' => "<div class='field-container account__input'>". " {label}{input}<span>{error}</span> </div>",
+                            ])
+                                ->passwordInput([
+                                    'class' => 'input textarea',
+                                ]); ?>
 
                             <?= $form->field($model, 're_password', [
-                                'options' => ['tag' => false]
-                            ])->passwordInput([
-                                'class' => 'input textarea',
-                            ]) ?>
 
-                        </div>
+                                'template' => "<div class='field-container account__input'>". " {label}{input}<span>{error}</span> </div>",
+                            ])
+                                ->passwordInput([
+                                    'class' => 'input textarea',
+                                ]); ?>
+
+
                     </div>
 
                     <h3 class="div-line">Фото работ</h3>

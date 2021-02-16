@@ -36,20 +36,18 @@ class AccountForm extends Model
     {
         return [
             ['name', 'string', 'min' => 2, 'max' => 256],
-
             [['email', 'password'], 'safe'],
             ['email', 'email'],
 
 
-            ['password', 'compare'],
-            ['password', 'compare', 'compareAttribute' => 're_password'],
+            ['password', 'string', 'min' => 6],
+            ['re_password', 'compare', 'compareAttribute'=>'password', 'message'=>"Пароли не совпадают" ],
 
-
-            ['address', 'string', 'min' => 10, 'max' => 256],
+            ['address', 'string', 'min' => 3, 'max' => 256],
             ['date_of_birth', 'date', 'format' => 'php:Y-m-d', 'min' => date('Y-m-d')],
             [['about_myself', 'name'], 'trim'],
 
-            ['phone', 'match', 'pattern' => '/^\8\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/' ],
+//            ['phone', 'match', 'pattern' => '/^\8\s\([0-9]{3}\)\s[0-9]{3}\s\[0-9]{2}\s\[0-9]{2}$/' ],
             [['photos_of_works'], 'file', 'maxFiles' => 6],
             ['user_pic', 'file', 'maxFiles' => 1],
             [['skype','another_messenger'], 'string'],

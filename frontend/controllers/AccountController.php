@@ -14,12 +14,16 @@ class AccountController extends \yii\web\Controller {
     {
 
         $model = new AccountForm();
+        $request = Yii::$app->request;
 
         $userInfo = UserInfo::findOne(['user_id'=> Yii::$app->user->identity->getId()]);
 
 
         if (Yii::$app->request->isAjax) {
             return ActiveForm::validate($model);
+        }
+        if ($request->isPost) {
+            var_dump($model);
         }
 
 
