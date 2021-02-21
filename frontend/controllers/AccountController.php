@@ -19,13 +19,13 @@ class AccountController extends \yii\web\Controller {
         $userInfo = UserInfo::findOne(['user_id'=> Yii::$app->user->identity->getId()]);
 
 
-        if (Yii::$app->request->isAjax) {
-            return ActiveForm::validate($model);
-        }
-        if ($request->isPost) {
-            var_dump($model);
-        }
+        if (Yii::$app->request->getIsPost()) {
 
+            if ($model->validate()) {
+               var_dump($model);
+            }
+
+        }
 
 
         return $this->render('index', [

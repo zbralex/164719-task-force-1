@@ -47,11 +47,11 @@ class AccountForm extends Model
             ['date_of_birth', 'date', 'format' => 'php:Y-m-d', 'min' => date('Y-m-d')],
             [['about_myself', 'name'], 'trim'],
 
-//            ['phone', 'match', 'pattern' => '/^\8\s\([0-9]{3}\)\s[0-9]{3}\s\[0-9]{2}\s\[0-9]{2}$/' ],
+            ['phone', 'match', 'pattern' => '/^\8\s\([0-9]{3}\)\s[0-9]{3}\s\[0-9]{2}\s\[0-9]{2}$/' ],
             [['photos_of_works'], 'file', 'maxFiles' => 6],
             ['user_pic', 'file', 'maxFiles' => 1],
-            [['skype','another_messenger'], 'string'],
-            [['skype','another_messenger'], 'trim']
+            [['skype','another_messenger'], 'string', 'max' => 256],
+            [['skype','another_messenger'], 'trim'],
         ];
     }
     public function attributeLabels(): array

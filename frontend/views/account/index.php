@@ -41,32 +41,32 @@ $this->title = 'Редактирование настроек профиля';
                             <label for="upload-avatar" class="link-regular">Сменить аватар</label>
                         </div>
                         <div class="account__redaction">
-                            <div class="field-container account__input account__input--name">
+
 
                                 <?= $form->field($model, 'name', [
-                                    'options' => ['tag' => false]
+                                    'template' => "<div class='field-container account__input account__input--name'>". " {label}{input}<span>{error}</span> </div>",
                                 ])->textInput([
                                     'class' => 'input textarea',
                                     'placeholder' => 'DenisT@bk.ru',
                                     'value' => $userInfo->user->name,
                                     'disabled' => true
                                 ]) ?>
-                            </div>
-                            <div class="field-container account__input account__input--email">
+
+
 
 
                                 <?= $form->field($model, 'email', [
-                                    'options' => ['tag' => false]
+                                    'template' => "<div class='field-container account__input account__input--email'>". " {label}{input}<span>{error}</span> </div>",
                                 ])->textInput([
                                     'class' => 'input textarea',
                                     'placeholder' => 'DenisT@bk.ru',
                                     'value' => $userInfo->user->email
                                 ]) ?>
-                            </div>
-                            <div class="field-container account__input account__input--address">
+
+
 
                                 <?= $form->field($model, 'address', [
-                                    'options' => ['tag' => false]
+                                    'template' => "<div class='field-container account__input account__input--address'>". " {label}{input}<span>{error}</span> </div>",
                                 ])->textInput([
                                     'class' => 'input textarea',
                                     'placeholder' => 'Санкт-Петербург, Московский район',
@@ -74,12 +74,10 @@ $this->title = 'Редактирование настроек профиля';
                                 ]) ?>
 
 
-                            </div>
-                            <div class="field-container account__input account__input--date">
 
-                                <?=
-                                $form->field($model, 'date_of_birth', [
-                                    'options' => ['tag' => false]
+
+                                <?= $form->field($model, 'date_of_birth', [
+                                    'template' => "<div class='field-container account__input account__input--date'>". " {label}{input}<span>{error}</span> </div>",
                                 ])->widget(\yii\jui\DatePicker::className(),
                                     [ 'dateFormat' => 'php:m/d/Y',
                                         'clientOptions' => [
@@ -95,9 +93,11 @@ $this->title = 'Редактирование настроек профиля';
                                         'value' => $formatter->asDate($userInfo->date_birth, 'php:d.m.Y'),
                                     ]) ;
                                 ?>
-                            </div>
-                            <div class="field-container account__input account__input--info">
+
+
                                 <?= $form->field($model, 'about_myself', [
+                                    'options' => ['tag'=> false],
+                                    'template' => "<div class='field-container account__input account__input--info'>". " {label}{input}<span>{error}</span> </div>",
                                     'labelOptions' => [
                                         'style' => 'display: block;'
                                     ]
@@ -109,7 +109,7 @@ $this->title = 'Редактирование настроек профиля';
                                     'value' => $userInfo->about
                                 ]);
                                 ?>
-                            </div>
+
                         </div>
                     </div>
                     <h3 class="div-line">Выберите свои специализации</h3>
@@ -177,37 +177,46 @@ $this->title = 'Редактирование настроек профиля';
 
                     <h3 class="div-line">Контакты</h3>
                     <div class="account__redaction-section-wrapper account__redaction">
-                        <div class="field-container account__input">
+
 
                             <?= $form->field($model, 'phone', [
+                                'template' => "<div class='field-container account__input'>". " {label}{input}<span>{error}</span> </div>",
                                 'options' => ['tag' => false]
+                            ])->widget(\yii\widgets\MaskedInput::class, [
+                                'mask' => '8 (999) 999 99 99',
+                                'clientOptions' => [
+                                    'removeMaskOnSubmit' => true,
+                                ]
                             ])->textInput([
                                 'class' => 'input textarea',
                                 'placeholder' => '8 (555) 187 44 87',
-                                'value' => $userInfo->phone
-                            ]) ?>
-                        </div>
-                        <div class="field-container account__input">
+                                'value' => $userInfo->skype
+                            ]); ?>
+
 
                             <?= $form->field($model, 'skype', [
+                                'template' => "<div class='field-container account__input'>". " {label}{input}<span>{error}</span> </div>",
                                 'options' => ['tag' => false]
                             ])->textInput([
                                 'class' => 'input textarea',
                                 'placeholder' => 'DenisT',
                                 'value' => $userInfo->skype
                             ]) ?>
-                        </div>
-                        <div class="field-container account__input">
-
 
                             <?= $form->field($model, 'another_messenger', [
+                                'template' => "<div class='field-container account__input'>". " {label}{input}<span>{error}</span> </div>",
                                 'options' => ['tag' => false]
+                            ])->widget(\yii\widgets\MaskedInput::class, [
+                                'mask' => ['@'.'[*]{1,15}'],
+                                'clientOptions' => [
+                                    'removeMaskOnSubmit' => true,
+                                ]
                             ])->textInput([
                                 'class' => 'input textarea',
                                 'placeholder' => '@DenisT',
                                 'value' => $userInfo->telegram
                             ]) ?>
-                        </div>
+
                     </div>
                     <h3 class="div-line">Настройки сайта</h3>
                     <h4>Уведомления</h4>
