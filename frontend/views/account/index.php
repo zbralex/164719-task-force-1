@@ -78,7 +78,7 @@ $this->title = 'Редактирование настроек профиля';
 
                                 <?= $form->field($model, 'date_of_birth', [
                                     'template' => "<div class='field-container account__input account__input--date'>". " {label}{input}<span>{error}</span> </div>",
-                                ])->widget(\yii\jui\DatePicker::className(),
+                                ])->widget(\yii\jui\DatePicker::class,
                                     [ 'dateFormat' => 'php:m/d/Y',
                                         'clientOptions' => [
                                             'changeYear' => true,
@@ -90,7 +90,7 @@ $this->title = 'Редактирование настроек профиля';
                                     ->textInput([
                                         'placeholder' => \Yii::t('app', '15.08.1987'),
                                         'class'=> 'input-middle input input-date',
-                                        'value' => $formatter->asDate($userInfo->date_birth, 'php:d.m.Y'),
+                                        'value' =>  $userInfo->date_birth ? $formatter->asDate($userInfo->date_birth, 'php:d.m.Y') : '',
                                     ]) ;
                                 ?>
 
