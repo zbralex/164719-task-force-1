@@ -36,7 +36,6 @@ class AccountForm extends Model
     {
         return [
             ['name', 'string', 'min' => 2, 'max' => 256],
-            [['email', 'password'], 'safe'],
             ['email', 'email'],
 
 

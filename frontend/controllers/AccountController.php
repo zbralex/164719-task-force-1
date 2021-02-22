@@ -14,25 +14,27 @@ class AccountController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        var_dump(Yii::$app->user->identity->getId());
 
         $model = new AccountForm();
         $request = Yii::$app->request;
 
         $userInfo = UserInfo::findOne(['user_id' => Yii::$app->user->identity->getId()]);
+
+        // для изменения данных полей не нужно использовать ключевое слово new (ex.: User())
+        // для создания новой записи в БД используется ключевое слово new (ex.: new User())
         $user = User::findOne(['id' => Yii::$app->user->identity->getId()]);
 
 
         if (Yii::$app->request->getIsPost()) {
 
-            if ($model->validate()) {
+            if ($model->validate() && Yii::$app->request->getIsPost()) {
+                // n.b. обязательно загружать данные  POST-запроса из формы!
+                $model->load(Yii::$app->request->post());
 
-                print_r($model->email);
+                $user->id = Yii::$app->user->identity->getId();
+                $user->email = $model->email;
 
-
-                //$user->email = $model->email;
-
-                //$user->password = Yii::$app->getSecurity()->generatePasswordHash($model->re_password);
+                $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->re_password);
 
 //                $userInfo = $model->address;
 //                $userInfo = $model->date_of_birth;
@@ -50,7 +52,7 @@ class AccountController extends \yii\web\Controller
 //                $userInfo = $model->show_new_review;
 //                $userInfo = $model->show_my_contacts_customer;
 //                $userInfo = $model->hide_account;
-                //$user->save(false);
+                $user->save(false);
             }
 
         }
