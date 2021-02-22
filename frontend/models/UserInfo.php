@@ -20,6 +20,7 @@ use yii\db\ActiveRecord;
  * @property string $phone
  * @property string $telegram
  * @property string $skype
+ * @property string $about
  *
  * @property UserCategory[] $userCategories
  * @property User $user

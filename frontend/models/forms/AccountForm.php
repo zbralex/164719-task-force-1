@@ -50,6 +50,7 @@ class AccountForm extends Model
             ['user_pic', 'file', 'maxFiles' => 1],
             [['skype','another_messenger'], 'string', 'max' => 256],
             [['skype','another_messenger'], 'trim'],
+            ['phone', 'string', 'min' => 8]
         ];
     }
     public function attributeLabels(): array

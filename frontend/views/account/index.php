@@ -181,16 +181,16 @@ $this->title = 'Редактирование настроек профиля';
 
                             <?= $form->field($model, 'phone', [
                                 'template' => "<div class='field-container account__input'>". " {label}{input}<span>{error}</span> </div>",
-                                'options' => ['tag' => false]
-                            ])->widget(\yii\widgets\MaskedInput::class, [
-                                'mask' => '8 (999) 999 99 99',
+
+                            ])->widget(\yii\widgets\MaskedInput::className(), [
+                                'mask' => '9 (999) 999 99 99',
                                 'clientOptions' => [
                                     'removeMaskOnSubmit' => true,
                                 ]
                             ])->textInput([
                                 'class' => 'input textarea',
                                 'placeholder' => '8 (555) 187 44 87',
-                                'value' => $userInfo->skype
+                                'value' => $userInfo->phone
                             ]); ?>
 
 
