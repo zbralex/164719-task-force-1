@@ -70,7 +70,7 @@ $this->title = 'Редактирование настроек профиля';
                                 ])->textInput([
                                     'class' => 'input textarea',
                                     'placeholder' => 'Санкт-Петербург, Московский район',
-                                    'value' => $userInfo->city->city
+                                    'value' => $userInfo->cities->city
                                 ]) ?>
 
 

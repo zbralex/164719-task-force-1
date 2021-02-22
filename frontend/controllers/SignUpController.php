@@ -42,6 +42,7 @@ class SignupController extends Controller
 
                 $userInfo->role_id = 1;
                 $userInfo->user_id = $model->id;
+                $userInfo->city_id = $model->city_id;
                 $userInfo->save(false);
                 $siteSettings->user_id = $model->id;
                 $siteSettings->save(false);
