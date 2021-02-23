@@ -52,16 +52,14 @@ class AccountController extends \yii\web\Controller
 
 
 
-//                $userCategories->user_id = Yii::$app->user->identity->getId();
-//
-//
-//                $userCategories->category_id = $model->user_category;
-//                $userCategories->save(false);
+                $userCategories->user_id = Yii::$app->user->identity->getId();
+                $userCategories->category_id = $model->user_category;
+                $userCategories->save(false);
 
 
-//
-//                $userInfo = $model->photos_of_works;
-//
+
+                //$userInfo = $model->photos_of_works;
+
 
 
                 $siteSettings->user_id = Yii::$app->user->identity->getId();

@@ -132,7 +132,8 @@ CustomAutoCompleteAsset::register($this);
                                         [
                                             'item' => function($index, $label, $name, $checked, $value)
                                             {
-                                                $checked = $checked ? $value : '';
+
+                                                $checked = $checked ? 'checked' : '';
 
                                                 return "<label for='checkbox__input--{$index}' class='checkbox__legend'>
                                                             <input class=\"visually-hidden checkbox__input\" id='checkbox__input--{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
