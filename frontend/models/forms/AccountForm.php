@@ -16,6 +16,7 @@ class AccountForm extends Model
         $re_password,
 
         $address,
+        $hiddenLocation,
         $date_of_birth,
         $about_myself,
         $user_category,

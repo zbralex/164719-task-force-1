@@ -37,7 +37,7 @@ class AccountController extends \yii\web\Controller
 
 
                 $userInfo->user_id = Yii::$app->user->identity->getId();
-//                $userInfo = $model->address;
+                $userInfo->address = $model->address;
 //                $userInfo = $model->date_of_birth;
                 $userInfo->about = $model->about_myself;
 //                $userInfo = $model->user_category;

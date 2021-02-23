@@ -5,6 +5,8 @@
  * @var $this yii\web\View
  */
 
+use frontend\assets\AutoComplete;
+use frontend\assets\CustomAutoCompleteAsset;
 use frontend\models\Categories;
 use frontend\models\UserCategory;
 use yii\helpers\ArrayHelper;
@@ -12,7 +14,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $formatter = \Yii::$app->formatter;
 $this->title = 'Редактирование настроек профиля';
-
+AutoComplete::register($this);
+CustomAutoCompleteAsset::register($this);
 ?>
 
 <main class="page-main">
@@ -70,9 +73,10 @@ $this->title = 'Редактирование настроек профиля';
                                 ])->textInput([
                                     'class' => 'input textarea',
                                     'placeholder' => 'Санкт-Петербург, Московский район',
-                                    'value' => $userInfo->cities->city
+                                    'value' => '',
+                                    'id'=>'autoComplete',
+                                    'value' => $userInfo->address
                                 ]) ?>
-
 
 
 

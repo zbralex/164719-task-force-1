@@ -21,6 +21,7 @@ use yii\db\ActiveRecord;
  * @property string $telegram
  * @property string $skype
  * @property string $about
+ * @property string $address
  *
  * @property UserCategory[] $userCategories
  * @property User $user
