@@ -84,7 +84,7 @@ $this->title = 'Регистрация аккаунта';
 
                 ?>
 
-                <?= Html::submitButton('Cоздать аккаунт', [
+                <?= Html::submitButton('Создать аккаунт', [
                     'class' => 'button button__registration'
                 ]) ?>
                 <?php ActiveForm::end(); ?>

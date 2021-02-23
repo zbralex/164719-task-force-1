@@ -75,7 +75,7 @@ CustomAutoCompleteAsset::register($this);
                                     'placeholder' => 'Санкт-Петербург, Московский район',
                                     'value' => '',
                                     'id'=>'autoComplete',
-                                    'value' => $userInfo->address
+                                    'value' => $userInfo->address ? $userInfo->address: $userInfo->cities->city
                                 ]) ?>
 
 
