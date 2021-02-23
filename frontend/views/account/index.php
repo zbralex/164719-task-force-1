@@ -83,18 +83,20 @@ CustomAutoCompleteAsset::register($this);
                                 <?= $form->field($model, 'date_of_birth', [
                                     'template' => "<div class='field-container account__input account__input--date'>". " {label}{input}<span>{error}</span> </div>",
                                 ])->widget(\yii\jui\DatePicker::class,
-                                    [ 'dateFormat' => 'php:m/d/Y',
+                                    [ 'dateFormat' => 'php:Y-m-d',
                                         'clientOptions' => [
                                             'changeYear' => true,
                                             'changeMonth' => true,
                                             'yearRange' => '-50:-12',
                                             'altFormat' => 'yy-mm-dd',
-
-                                        ]],['placeholder' => 'dd.mm.yyyy'])
+                                        ]],
+                                    [
+                                        'placeholder' => 'dd.mm.yyyy'
+                                    ])
                                     ->textInput([
                                         'placeholder' => \Yii::t('app', '15.08.1987'),
                                         'class'=> 'input-middle input input-date',
-                                        'value' =>  $userInfo->date_birth ? $formatter->asDate($userInfo->date_birth, 'php:d.m.Y') : '',
+                                        'value' =>  $userInfo->date_birth ?  $userInfo->date_birth  : '',
                                     ]) ;
                                 ?>
 
@@ -124,30 +126,19 @@ CustomAutoCompleteAsset::register($this);
                                 $cat_list = Categories::find()->select(['name'])->orderBy('id')->asArray()->all();
                                 $result = ArrayHelper::getColumn($cat_list, 'name');
 
-                                function getCheckboxList($index, $label, $name, $checked, $value): string
-                                {
-
-                                        $cat_list = UserCategory::find()->where(['user_id' => Yii::$app->user->getId()])->all();
-                                        $result = ArrayHelper::getColumn($cat_list, 'category_id');
-
-                                        foreach ($result as  $item) {
-
-                                            if ($value == $item-1) { // тк массив начинается с 0
-                                                $checked = 'checked';
-                                            }
-                                        }
-
-                                        return "<label for='{$index}' class='checkbox__legend'>
-                                                            <input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
-                                                            <span>{$label}</span>
-							                            </label>";
-                                }
-
 
                                 echo $form->field($model, 'user_category')
-                                    ->checkboxList($result,
+                                    ->checkboxList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
                                         [
-                                            'item' => 'getCheckboxList',
+                                            'item' => function($index, $label, $name, $checked, $value)
+                                            {
+                                                $checked = $checked ? $value : '';
+
+                                                return "<label for='checkbox__input--{$index}' class='checkbox__legend'>
+                                                            <input class=\"visually-hidden checkbox__input\" id='checkbox__input--{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
+                                                            <span>{$label}</span>
+							                            </label>";
+                                            },
                                             'class'=> 'search-task__categories account_checkbox--bottom'])->label(false) ?>
 
                         </div>
@@ -289,7 +280,7 @@ CustomAutoCompleteAsset::register($this);
 
                             ])->checkbox([
                                 'class' => 'visually-hidden checkbox__input',
-                                'checked' => $userInfo->user->siteSettings->show_contacts_client ?  true : false
+                                'checked' => $userInfo->user->siteSettings->show_contacts_client ?  true : false,
                             ],
                                 false)->label(false); ?>
 

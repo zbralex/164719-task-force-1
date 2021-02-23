@@ -19,7 +19,7 @@ class AccountForm extends Model
         $hiddenLocation,
         $date_of_birth,
         $about_myself,
-        $user_category,
+        $user_category = [],
 
         $photos_of_works,
 
@@ -51,7 +51,17 @@ class AccountForm extends Model
             ['user_pic', 'file', 'maxFiles' => 1],
             [['skype','another_messenger'], 'string', 'max' => 256],
             [['skype','another_messenger'], 'trim'],
-            ['phone', 'string', 'min' => 8]
+            ['phone', 'string', 'min' => 8],
+            ['user_category', 'each', 'rule' => ['integer']],
+
+            [
+                [
+                    'show_new_messages',
+                    'show_actions_of_task',
+                    'show_new_review',
+                    'show_my_contacts_customer',
+                    'hide_account'
+                ], 'integer'],
         ];
     }
     public function attributeLabels(): array
@@ -66,7 +76,7 @@ class AccountForm extends Model
             "address" => 'АДРЕС',
             "date_of_birth" => 'ДЕНЬ РОЖДЕНИЯ',
             "about_myself" => 'ИНФОРМАЦИЯ О СЕБЕ',
-            "user_category" => '',
+            "user_category" => 'Специализации',
 
             "photos_of_works" => 'Выбрать фотографии',
 

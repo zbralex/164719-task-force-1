@@ -13,6 +13,7 @@ use  \yii\db\ActiveRecord;
  * @property int|null $actions_in_task
  * @property int|null $show_contacts_client
  * @property int|null $show_profile
+ * @property int|null $new_review
  *
  * @property User $user
  */
