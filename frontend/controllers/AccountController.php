@@ -22,14 +22,14 @@ class AccountController extends \yii\web\Controller
         $all_categories = Categories::find()->all();
         $user_categories = UserCategory::find()->where(['user_id'=> Yii::$app->user->identity->getId()])->all();
 
-        foreach ($all_categories as $key => $cat) {
+        foreach ($all_categories as $i => $a_cat) {
             $checked = false;
             foreach ($user_categories as $j => $u_category) {
-                if ($cat->id == $u_category->category_id) {
+                if ($a_cat->id == $u_category->category_id) {
                     $checked = true;
                 }
            }
-            $checked_categories [] = ['id'=> $key, 'name' => $cat->name, 'checked' => $checked ];
+            $checked_categories [] = ['id'=> $i, 'name' => $a_cat->name, 'checked' => $checked ];
         }
         return $checked_categories;
     }
@@ -69,20 +69,10 @@ class AccountController extends \yii\web\Controller
                 $userInfo->telegram = $model->another_messenger;
                 $userInfo->save(false);
 
-
-
-
-
-
-
                     $userCategories->user_id = Yii::$app->user->identity->getId();
                     $userCategories->category_id = $model->user_category;
 
                     $userCategories->save(false);
-
-
-
-
 
 
                 //$userInfo = $model->photos_of_works;

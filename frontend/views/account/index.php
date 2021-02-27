@@ -124,7 +124,6 @@ CustomAutoCompleteAsset::register($this);
                         <div class="search-task__categories account_checkbox--bottom">
 
                             <?php
-
                             foreach ($checkedCategories as $item) {
                                 echo $form->field($model, 'user_category[]', [
                                     'labelOptions' => [
