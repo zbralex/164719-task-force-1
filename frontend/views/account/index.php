@@ -122,25 +122,25 @@ CustomAutoCompleteAsset::register($this);
                     <div class="account__redaction-section-wrapper">
                         <div class="search-task__categories account_checkbox--bottom">
 
-                                <?php
-                                $cat_list = Categories::find()->select(['name'])->orderBy('id')->asArray()->all();
-                                $result = ArrayHelper::getColumn($cat_list, 'name');
+                            <?php
+                            $categories = Categories::find()->all();
+                            foreach ($checkedCategories as $item) {
+                                echo $form->field($model, 'user_category[]', [
+                                    'labelOptions' => [
+                                        'class' => 'checkbox__legend'
+                                    ],
+                                    'template' => '<label class="checkbox__legend">
+                                {input}
+                                <span>'.$item["name"].'</span>
+                            </label>',
 
-
-                                echo $form->field($model, 'user_category')
-                                    ->checkboxList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
-                                        [
-                                            'item' => function($index, $label, $name, $checked, $value)
-                                            {
-
-                                                $checked = $checked ? 'checked' : '';
-
-                                                return "<label for='checkbox__input--{$index}' class='checkbox__legend'>
-                                                            <input class=\"visually-hidden checkbox__input\" id='checkbox__input--{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
-                                                            <span>{$label}</span>
-							                            </label>";
-                                            },
-                                            'class'=> 'search-task__categories account_checkbox--bottom'])->label(false) ?>
+                                ])->checkbox([
+                                    'class' => 'visually-hidden checkbox__input',
+                                    'checked' => $item["checked"]
+                                ],
+                                    false)->label(false);
+                            }
+                            ?>
 
                         </div>
                     </div>
@@ -167,9 +167,15 @@ CustomAutoCompleteAsset::register($this);
 
                     <h3 class="div-line">Фото работ</h3>
 
-                    <div class="account__redaction-section-wrapper account__redaction">
-                        <span class="dropzone">Выбрать фотографии</span>
-                    </div>
+
+                    <?= $form->field($model, 'photos_of_works', [
+                        'template' => "<div class='account__redaction-section-wrapper account__redaction'>". " {label}{input}<span>{error}</span> </div>",
+                        'options' => ['tag' => false]
+                    ])->fileInput([
+                        'class' => 'dropzone',
+                        'placeholder' => 'Выбрать фотографии',
+                        'style' => ['display'=> 'none']
+                    ]) ?>
 
                     <h3 class="div-line">Контакты</h3>
                     <div class="account__redaction-section-wrapper account__redaction">

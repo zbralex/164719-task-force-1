@@ -52,7 +52,7 @@ class AccountForm extends Model
             [['skype','another_messenger'], 'string', 'max' => 256],
             [['skype','another_messenger'], 'trim'],
             ['phone', 'string', 'min' => 8],
-            ['user_category', 'each', 'rule' => ['integer']],
+            ['user_category', 'safe'],
 
             [
                 [

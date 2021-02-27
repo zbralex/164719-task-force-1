@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 
+use frontend\models\Categories;
 use frontend\models\forms\AccountForm;
 use frontend\models\SiteSettings;
 use frontend\models\Task;
@@ -10,10 +11,30 @@ use frontend\models\User;
 use frontend\models\UserCategory;
 use frontend\models\UserInfo;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 
 class AccountController extends \yii\web\Controller
 {
+    public function getCheckedCategories()
+    {
+        $checked_categories = [];
+        $all_categories = Categories::find()->all();
+        $user_categories = UserCategory::find()->where(['user_id'=> Yii::$app->user->identity->getId()])->all();
+
+        foreach ($all_categories as $key => $cat) {
+            foreach ($user_categories as $j => $u_category) {
+
+//                if ($cat->id == $u_category->category_id) {
+//                   $checked_categories [] = ['checked' => true];
+//               }
+                $checked_categories [] = ['id'=> $key, 'name' => $cat->name, 'checked' => $cat->id == $u_category->category_id ? true: false ];
+           }
+
+
+        }
+        return $checked_categories;
+    }
     public function actionIndex()
     {
 
@@ -52,9 +73,17 @@ class AccountController extends \yii\web\Controller
 
 
 
-                $userCategories->user_id = Yii::$app->user->identity->getId();
-                $userCategories->category_id = $model->user_category;
-                $userCategories->save(false);
+
+
+
+
+                    $userCategories->user_id = Yii::$app->user->identity->getId();
+                    $userCategories->category_id = $model->user_category;
+
+                    $userCategories->save(false);
+
+
+
 
 
 
@@ -74,9 +103,15 @@ class AccountController extends \yii\web\Controller
         }
 
 
+
+
+
+
+
         return $this->render('index', [
             'model' => $model,
-            'userInfo' => $userInfo
+            'userInfo' => $userInfo,
+            'checkedCategories'=> $this->getCheckedCategories()
         ]);
     }
 }
