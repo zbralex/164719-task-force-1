@@ -23,15 +23,13 @@ class AccountController extends \yii\web\Controller
         $user_categories = UserCategory::find()->where(['user_id'=> Yii::$app->user->identity->getId()])->all();
 
         foreach ($all_categories as $key => $cat) {
+            $checked = false;
             foreach ($user_categories as $j => $u_category) {
-
-//                if ($cat->id == $u_category->category_id) {
-//                   $checked_categories [] = ['checked' => true];
-//               }
-                $checked_categories [] = ['id'=> $key, 'name' => $cat->name, 'checked' => $cat->id == $u_category->category_id ? true: false ];
+                if ($cat->id == $u_category->category_id) {
+                    $checked = true;
+                }
            }
-
-
+            $checked_categories [] = ['id'=> $key, 'name' => $cat->name, 'checked' => $checked ];
         }
         return $checked_categories;
     }
