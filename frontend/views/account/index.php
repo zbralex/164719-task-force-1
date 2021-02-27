@@ -2,6 +2,7 @@
 /**
  * @var array $model
  * @var array $userInfo
+ * @var array $checkedCategories
  * @var $this yii\web\View
  */
 
@@ -123,7 +124,7 @@ CustomAutoCompleteAsset::register($this);
                         <div class="search-task__categories account_checkbox--bottom">
 
                             <?php
-                            $categories = Categories::find()->all();
+
                             foreach ($checkedCategories as $item) {
                                 echo $form->field($model, 'user_category[]', [
                                     'labelOptions' => [
