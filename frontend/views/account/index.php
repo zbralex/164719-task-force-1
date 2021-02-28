@@ -2,7 +2,6 @@
 /**
  * @var array $model
  * @var array $userInfo
- * @var array $checkedCategories
  * @var $this yii\web\View
  */
 
@@ -123,24 +122,17 @@ CustomAutoCompleteAsset::register($this);
                     <div class="account__redaction-section-wrapper">
                         <div class="search-task__categories account_checkbox--bottom">
 
-                            <?php
-                            foreach ($checkedCategories as $item) {
-                                echo $form->field($model, 'user_category[]', [
-                                    'labelOptions' => [
-                                        'class' => 'checkbox__legend'
-                                    ],
-                                    'template' => '<label class="checkbox__legend">
-                                {input}
-                                <span>'.$item["name"].'</span>
-                            </label>',
-
-                                ])->checkbox([
-                                    'class' => 'visually-hidden checkbox__input',
-                                    'checked' => $item["checked"]
-                                ],
-                                    false)->label(false);
-                            }
-                            ?>
+                            <?= $form->field($model, 'user_category[]')
+                                ->checkboxList(Categories::find()->select(['name', 'id'])->indexBy('id')->column(),
+                                    [
+                                        'item' => function ($index, $label, $name, $checked, $value)  {
+                                            $checked = $checked ? 'checked':'';
+                                            return "<label for='{$index}' class='checkbox__legend'>
+                                                            <input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
+                                                            <span>{$label}</span>
+							                            </label>";
+                                        },
+                                        'class'=> 'search-task__categories account_checkbox--bottom'])->label(false) ?>
 
                         </div>
                     </div>

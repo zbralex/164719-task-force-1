@@ -16,23 +16,7 @@ use yii\widgets\ActiveForm;
 
 class AccountController extends \yii\web\Controller
 {
-    public function getCheckedCategories()
-    {
-        $checked_categories = [];
-        $all_categories = Categories::find()->all();
-        $user_categories = UserCategory::find()->where(['user_id'=> Yii::$app->user->identity->getId()])->all();
 
-        foreach ($all_categories as $i => $a_cat) {
-            $checked = false;
-            foreach ($user_categories as $j => $u_category) {
-                if ($a_cat->id == $u_category->category_id) {
-                    $checked = true;
-                }
-           }
-            $checked_categories [] = ['id'=> $i, 'name' => $a_cat->name, 'checked' => $checked ];
-        }
-        return $checked_categories;
-    }
     public function actionIndex()
     {
 
@@ -43,7 +27,7 @@ class AccountController extends \yii\web\Controller
         // для изменения данных полей не нужно использовать ключевое слово new (ex.: User())
         // для создания новой записи в БД используется ключевое слово new (ex.: new User())
         $user = User::findOne(['id' => Yii::$app->user->identity->getId()]);
-        $userCategories = new UserCategory();
+
         $siteSettings = SiteSettings::findOne(['user_id' => Yii::$app->user->identity->getId()]);
 
 
@@ -69,13 +53,26 @@ class AccountController extends \yii\web\Controller
                 $userInfo->telegram = $model->another_messenger;
                 $userInfo->save(false);
 
-                    $userCategories->user_id = Yii::$app->user->identity->getId();
-                    $userCategories->category_id = $model->user_category;
-
-                    $userCategories->save(false);
+                if ($model->user_category) {
+                    foreach ($model->user_category as $item) {
 
 
-                //$userInfo = $model->photos_of_works;
+                        $userCategories = new UserCategory();
+
+
+                        $userCategories->user_id = Yii::$app->user->identity->getId();
+                        $userCategories->category_id = intval($item);
+
+
+                        $userCategories->save(false);
+
+
+                    }
+                }
+
+
+//
+//                //$userInfo = $model->photos_of_works;
 
 
 
@@ -87,19 +84,13 @@ class AccountController extends \yii\web\Controller
                 $siteSettings->show_profile = $model->hide_account;
                 $siteSettings->save(false);
             }
-
         }
-
-
-
-
-
 
 
         return $this->render('index', [
             'model' => $model,
-            'userInfo' => $userInfo,
-            'checkedCategories'=> $this->getCheckedCategories()
+            'userInfo' => $userInfo
         ]);
     }
+
 }
