@@ -69,6 +69,7 @@ class AccountForm extends Model
         return [
             "name" => 'ВАШЕ ИМЯ',
             "email" => 'EMAIL',
+            "user_pic" => 'Сменить аватар',
 
             "password" => 'НОВЫЙ ПАРОЛЬ',
             "re_password" => 'ПОВТОР ПАРОЛЯ',
@@ -95,18 +96,16 @@ class AccountForm extends Model
     public function upload()
     {
         $dir = Yii::getAlias('@app') . '/web/upload/' . date("Y-m-d") .'_'. date("H-m") . '/';
-        $paths = [];
+        $path = '';
 
         if(!is_dir($dir)) {
             mkdir($dir, 0777);
         }
 
         if ($this->validate()) {
-            foreach ($this->files as $file) {
-                $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
-                $paths [] = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $file->baseName . '.' . $file->extension;
-            }
-            return $paths;
+                $this->user_pic->saveAs( $dir . $this->user_pic->baseName . '.' . $this->user_pic->extension);
+                $path = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $this->user_pic->baseName . '.' . $this->user_pic->extension;
+            return $path;
         } else {
             return false;
         }

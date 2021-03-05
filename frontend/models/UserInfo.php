@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property int $city_id
  * @property string|null $edited_at
  * @property string $date_birth
+ * @property string $user_pic
  * @property int $role_id
  * @property float|null $rating
  * @property string $phone

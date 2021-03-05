@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 
+use frontend\models\Attachment;
 use frontend\models\Categories;
 use frontend\models\forms\AccountForm;
 use frontend\models\SiteSettings;
@@ -12,6 +13,7 @@ use frontend\models\UserCategory;
 use frontend\models\UserInfo;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
 
 class AccountController extends \yii\web\Controller
@@ -51,7 +53,14 @@ class AccountController extends \yii\web\Controller
                 $userInfo->phone = $model->phone;
                 $userInfo->skype = $model->skype;
                 $userInfo->telegram = $model->another_messenger;
+                $userInfo->user_pic = UploadedFile::getInstance($model, 'user_pic');
                 $userInfo->save(false);
+
+
+
+
+                var_dump($model->user_pic);
+
 
                 if ($model->user_category) {
                     foreach ($model->user_category as $item) {
@@ -71,8 +80,6 @@ class AccountController extends \yii\web\Controller
                 }
 
 
-//
-//                //$userInfo = $model->photos_of_works;
 
 
 

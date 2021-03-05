@@ -73,21 +73,30 @@ $this->title = 'Новые задания';
 							[
 								'item' => function ($index, $label, $name, $checked, $value)  {
 									$checked = $checked ? 'checked':'';
-									return "<input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
-										<label for='{$index}'>{$label}</label>";
+									return "
+										<label class='checkbox__legend' for='{$index}'><input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
+										<span>{$label}</span>
+										</label>";
 								}])->label(false) ?>
 
 				</fieldset>
 				<fieldset class="search-task__categories">
 					<legend>Дополнительно</legend>
-					<?= $form->field($model, 'noResponse', [
-						'template' => '{input}{label}',
+					<?= $form->field($model, 'noResponse',
+                        [
+						'template' => '<label class="checkbox__legend">
+                                    {input}
+                  <span>Без откликов</span>
+                </label>',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
 						false); ?>
 					<?= $form->field($model, 'remote', [
-						'template' => '{input}{label}',
+						'template' => '<label class="checkbox__legend">
+                                    {input}
+                  <span>Удаленная работа</span>
+                </label>',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],

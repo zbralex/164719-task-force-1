@@ -40,9 +40,17 @@ CustomAutoCompleteAsset::register($this);
                     <div class="account__redaction-section-wrapper">
                         <div class="account__redaction-avatar">
                             <img src="./img/man-glasses.jpg" width="156" height="156">
-                            <input type="file" name="avatar" id="upload-avatar">
-                            <label for="upload-avatar" class="link-regular">Сменить аватар</label>
-                        </div>
+
+
+                            <?= $form->field($model, 'user_pic', [
+                                'template' => "<div class='account__redaction-avatar'>". " {label}{input}<span>{error}</span> </div>",
+                                'labelOptions' => [
+                                    'class'=> 'link-regular'
+                                ]
+                            ])->fileInput([
+                                'id' => 'upload-avatar',
+                                'name' => 'avatar'
+                            ]) ?></div>
                         <div class="account__redaction">
 
 
