@@ -87,32 +87,45 @@ $this->params['breadcrumbs'][] = $this->title;
 							[
 								'item' => function ($index, $label, $name, $checked, $value)  {
 									$checked = $checked ? 'checked':'';
-									return "<input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
-										<label for='{$index}'>{$label}</label>";
+									return "<label class='checkbox__legend' for='{$index}'><input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
+										<span>{$label}</span>
+										</label>";
 								}])->label(false) ?>
 				</fieldset>
 				<fieldset class="search-task__categories">
 					<legend>Дополнительно</legend>
 					<?= $form->field($model, 'online', [
-						'template' => '{input}{label}',
+                        'template' => '<label class="checkbox__legend">
+                                    {input}
+                            <span>Сейчас онлайн</span>
+                        </label>',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
 						false); ?>
 					<?= $form->field($model, 'isFree', [
-						'template' => '{input}{label}',
+                        'template' => '<label class="checkbox__legend">
+                                    {input}
+                            <span>Сейчас свободен</span>
+                        </label>',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
 						false); ?>
 					<?= $form->field($model, 'review', [
-						'template' => '{input}{label}',
+                        'template' => '<label class="checkbox__legend">
+                                    {input}
+                          <span>Есть отзывы</span>
+                        </label>',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
 						false); ?>
 					<?= $form->field($model, 'favorite', [
-						'template' => '{input}{label}',
+                        'template' => '<label class="checkbox__legend">
+                                    {input}
+                          <span>В избранном</span>
+                        </label>',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
