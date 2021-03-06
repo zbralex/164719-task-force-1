@@ -33,9 +33,10 @@ class AccountController extends \yii\web\Controller
         $siteSettings = SiteSettings::findOne(['user_id' => Yii::$app->user->identity->getId()]);
 
 
-        if (Yii::$app->request->getIsPost()) {
 
-            if ($model->validate() && Yii::$app->request->getIsPost()) {
+
+
+            if (Yii::$app->request->getIsPost()) {
                 // n.b. обязательно загружать данные  POST-запроса из формы!
                 $model->load(Yii::$app->request->post());
 
@@ -53,13 +54,16 @@ class AccountController extends \yii\web\Controller
                 $userInfo->phone = $model->phone;
                 $userInfo->skype = $model->skype;
                 $userInfo->telegram = $model->another_messenger;
-                $userInfo->user_pic = UploadedFile::getInstance($model, 'user_pic');
+
+
+                $model->userPic = UploadedFile::getInstance($model, 'userPic');
+                $model->upload();
+
+                $path = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $model->userPic->baseName . '.' . $model->userPic->extension;
+                $userInfo->user_pic = $path;
+
+
                 $userInfo->save(false);
-
-
-
-
-                var_dump($model->user_pic);
 
 
                 if ($model->user_category) {
@@ -91,7 +95,7 @@ class AccountController extends \yii\web\Controller
                 $siteSettings->show_profile = $model->hide_account;
                 $siteSettings->save(false);
             }
-        }
+
 
 
         return $this->render('index', [

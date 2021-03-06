@@ -29,9 +29,6 @@ CustomAutoCompleteAsset::register($this);
                 'options' => [
                     'enctype' => 'multipart/form-data',
                 ],
-                'fieldConfig' => [
-                    'template' => "{label}{input}<span>{hint}</span><span style='color: red'>{error}</span>",
-                ],
 
             ]) ?>
 
@@ -39,23 +36,28 @@ CustomAutoCompleteAsset::register($this);
                     <h3 class="div-line">Настройки аккаунта</h3>
                     <div class="account__redaction-section-wrapper">
                         <div class="account__redaction-avatar">
-                            <img src="./img/man-glasses.jpg" width="156" height="156">
+
+                            <?php if ($userInfo->user_pic):?>
+                                <img src="<?= $userInfo->user_pic; ?>" width="156" height="156">
+                            <?php else: ?>
+                                <img src="./img/man-glasses.jpg" width="156" height="156">
+                            <?php endif; ?>
 
 
-                            <?= $form->field($model, 'user_pic', [
-                                'template' => "<div class='account__redaction-avatar'>". " {label}{input}<span>{error}</span> </div>",
+                            <?= $form->field($model, 'userPic', [
+                                'template' => "<div class='account__redaction-avatar'>" . " {label}{input}<span>{error}</span> </div>",
                                 'labelOptions' => [
-                                    'class'=> 'link-regular'
+                                    'class'=> 'link-regular',
                                 ]
                             ])->fileInput([
-                                'id' => 'upload-avatar',
-                                'name' => 'avatar'
+                                'id' => 'upload-avatar'
                             ]) ?></div>
                         <div class="account__redaction">
 
 
                                 <?= $form->field($model, 'name', [
-                                    'template' => "<div class='field-container account__input account__input--name'>". " {label}{input}<span>{error}</span> </div>",
+                                    'template' => "<div class='field-container account__input account__input--name'>"
+                                        . " {label}{input}<span>{error}</span> </div>",
                                 ])->textInput([
                                     'class' => 'input textarea',
                                     'placeholder' => 'DenisT@bk.ru',
@@ -67,7 +69,8 @@ CustomAutoCompleteAsset::register($this);
 
 
                                 <?= $form->field($model, 'email', [
-                                    'template' => "<div class='field-container account__input account__input--email'>". " {label}{input}<span>{error}</span> </div>",
+                                    'template' => "<div class='field-container account__input account__input--email'>"
+                                        . " {label}{input}<span>{error}</span> </div>",
                                 ])->textInput([
                                     'class' => 'input textarea',
                                     'placeholder' => 'DenisT@bk.ru',
@@ -77,7 +80,8 @@ CustomAutoCompleteAsset::register($this);
 
 
                                 <?= $form->field($model, 'address', [
-                                    'template' => "<div class='field-container account__input account__input--address'>". " {label}{input}<span>{error}</span> </div>",
+                                    'template' => "<div class='field-container account__input account__input--address'>"
+                                        . " {label}{input}<span>{error}</span> </div>",
                                 ])->textInput([
                                     'class' => 'input textarea',
                                     'placeholder' => 'Санкт-Петербург, Московский район',
@@ -89,7 +93,8 @@ CustomAutoCompleteAsset::register($this);
 
 
                                 <?= $form->field($model, 'date_of_birth', [
-                                    'template' => "<div class='field-container account__input account__input--date'>". " {label}{input}<span>{error}</span> </div>",
+                                    'template' => "<div class='field-container account__input account__input--date'>"
+                                        . " {label}{input}<span>{error}</span> </div>",
                                 ])->widget(\yii\jui\DatePicker::class,
                                     [ 'dateFormat' => 'php:Y-m-d',
                                         'clientOptions' => [
@@ -111,7 +116,8 @@ CustomAutoCompleteAsset::register($this);
 
                                 <?= $form->field($model, 'about_myself', [
                                     'options' => ['tag'=> false],
-                                    'template' => "<div class='field-container account__input account__input--info'>". " {label}{input}<span>{error}</span> </div>",
+                                    'template' => "<div class='field-container account__input account__input--info'>"
+                                        . " {label}{input}<span>{error}</span> </div>",
                                     'labelOptions' => [
                                         'style' => 'display: block;'
                                     ]

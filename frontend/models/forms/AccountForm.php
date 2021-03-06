@@ -7,31 +7,31 @@ use yii\base\Model;
 
 class AccountForm extends Model
 {
-    public
-        $name,
-        $user_pic,
-        $email,
 
-        $password,
-        $re_password,
+    public $name;
+    public $userPic;
+    public $email;
 
-        $address,
-        $hiddenLocation,
-        $date_of_birth,
-        $about_myself,
-        $user_category = [],
+    public $password;
+    public $re_password;
 
-        $photos_of_works,
+    public $address;
+    public $hiddenLocation;
+    public $date_of_birth;
+    public $about_myself;
+    public $user_category = [];
 
-        $phone,
-        $skype,
-        $another_messenger,
+    public $photos_of_works;
 
-        $show_new_messages,
-        $show_actions_of_task,
-        $show_new_review,
-        $show_my_contacts_customer,
-        $hide_account;
+    public $phone;
+    public $skype;
+    public $another_messenger;
+
+    public $show_new_messages;
+    public $show_actions_of_task;
+    public $show_new_review;
+    public $show_my_contacts_customer;
+    public $hide_account;
 
     public function rules(): array
     {
@@ -44,11 +44,12 @@ class AccountForm extends Model
             ['re_password', 'compare', 'compareAttribute'=>'password', 'message'=>"Пароли не совпадают" ],
 
             ['address', 'string', 'min' => 3, 'max' => 256],
-            ['date_of_birth', 'date', 'format' => 'php:Y-m-d', 'min' => date('Y-m-d')],
+            ['date_of_birth', 'date', 'format' => 'php:Y-m-d'],
             [['about_myself', 'name'], 'trim'],
 
             [['photos_of_works'], 'file', 'maxFiles' => 6],
-            ['user_pic', 'file', 'maxFiles' => 1],
+
+            [['userPic'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 1],
             [['skype','another_messenger'], 'string', 'max' => 256],
             [['skype','another_messenger'], 'trim'],
             ['phone', 'string', 'min' => 8],
@@ -69,7 +70,7 @@ class AccountForm extends Model
         return [
             "name" => 'ВАШЕ ИМЯ',
             "email" => 'EMAIL',
-            "user_pic" => 'Сменить аватар',
+            "userPic" => 'Сменить аватар',
 
             "password" => 'НОВЫЙ ПАРОЛЬ',
             "re_password" => 'ПОВТОР ПАРОЛЯ',
@@ -93,19 +94,19 @@ class AccountForm extends Model
         ];
     }
 
+
     public function upload()
     {
+
         $dir = Yii::getAlias('@app') . '/web/upload/' . date("Y-m-d") .'_'. date("H-m") . '/';
-        $path = '';
 
         if(!is_dir($dir)) {
             mkdir($dir, 0777);
         }
 
         if ($this->validate()) {
-                $this->user_pic->saveAs( $dir . $this->user_pic->baseName . '.' . $this->user_pic->extension);
-                $path = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $this->user_pic->baseName . '.' . $this->user_pic->extension;
-            return $path;
+            $this->userPic->saveAs( $dir . $this->userPic->baseName . '.' . $this->userPic->extension);
+            return true;
         } else {
             return false;
         }
