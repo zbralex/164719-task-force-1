@@ -54,13 +54,15 @@ class AccountController extends \yii\web\Controller
                 $userInfo->phone = $model->phone;
                 $userInfo->skype = $model->skype;
                 $userInfo->telegram = $model->another_messenger;
-
-
                 $model->userPic = UploadedFile::getInstance($model, 'userPic');
-                $model->upload();
+                if ($model->userPic) {
 
-                $path = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $model->userPic->baseName . '.' . $model->userPic->extension;
-                $userInfo->user_pic = $path;
+                    $model->upload();
+
+                    $path = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $model->userPic->baseName . '.' . $model->userPic->extension;
+                    $userInfo->user_pic = $path;
+                }
+
 
 
                 $userInfo->save(false);
