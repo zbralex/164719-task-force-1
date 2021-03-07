@@ -14,12 +14,28 @@ use frontend\models\UserCategory;
 use frontend\models\UserInfo;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
 
 class AccountController extends \yii\web\Controller
 {
     public $enableCsrfValidation = false;
+
+
+    public function actionUploadFile() {
+            $fileName = 'file';
+            $uploadPath =  Yii::getAlias('@app') . '/web/upload/';
+
+            $files = UploadedFile::getInstancesByName($fileName);
+            var_dump($files);
+            //echo  Json::encode($_FILES);
+            foreach($files as $file) {
+                $file->saveAs( $uploadPath . $file->baseName . '.' . $file->extension);
+            }
+
+    }
+
 
     public function actionIndex()
     {
@@ -34,9 +50,6 @@ class AccountController extends \yii\web\Controller
 
         $siteSettings = SiteSettings::findOne(['user_id' => Yii::$app->user->identity->getId()]);
 
-if (Yii::$app->request->getIsPost()) {
-    $model->file = UploadedFile::getInstances($model, 'file');
-}
 
 
 
@@ -65,7 +78,7 @@ if (Yii::$app->request->getIsPost()) {
                     $path = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $model->userPic->baseName . '.' . $model->userPic->extension;
                     $userInfo->user_pic = $path;
                 }
-                var_dump($model->file);
+
 
 
 
@@ -89,9 +102,6 @@ if (Yii::$app->request->getIsPost()) {
 
                     }
                 }
-
-
-
 
 
                 $siteSettings->user_id = Yii::$app->user->identity->getId();

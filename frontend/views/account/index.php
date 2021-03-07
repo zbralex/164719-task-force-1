@@ -178,9 +178,10 @@ DropZone::register($this);
 
                     <div class="account__files">
                         <?php  foreach ($userInfo->portfolioPhoto as $file): ?>
-                                <img src="<?= $file->url; ?>" width="156" height="156" alt="avatar">
+                                <img src="<?= $file->url; ?>" width="156" height="156" alt="<?= $file->id?>">
                         <?php endforeach; ?>
                     </div>
+
 
                     <div class="account__redaction-section-wrapper account__redaction">
                         <span class="dropzone">Выбрать фотографии</span>
@@ -328,9 +329,8 @@ DropZone::register($this);
         Dropzone.autoDiscover = false;
 
         var dropzone = new Dropzone(".dropzone", {
-            url: window.location.href, maxFiles: 6, uploadMultiple: true,
+            url: '../account/upload-file', maxFiles: 6, uploadMultiple: true,
             acceptedFiles: 'image/*', previewTemplate: '<a href="#"><img data-dz-thumbnail alt="Фото работы"></a>'
         });
-        console.log(dropzone)
     </script>
 </main>
