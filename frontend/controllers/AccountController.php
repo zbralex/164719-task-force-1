@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
 
 class AccountController extends \yii\web\Controller
 {
+    public $enableCsrfValidation = false;
 
     public function actionIndex()
     {
@@ -56,7 +57,7 @@ class AccountController extends \yii\web\Controller
                 $userInfo->skype = $model->skype;
                 $userInfo->telegram = $model->another_messenger;
                 $model->userPic = UploadedFile::getInstance($model, 'userPic');
-                $model->attaches = UploadedFile::getInstances($model, 'attaches');
+                $model->file = UploadedFile::getInstances($model, 'file');
                 if ($model->userPic) {
 
                     $model->upload();
@@ -65,13 +66,13 @@ class AccountController extends \yii\web\Controller
                     $userInfo->user_pic = $path;
                 }
 
-                if ($model->attaches) {
+                if ($model->file) {
 
 
                     $model->uploadAttaches();
                     $path = [];
 
-                    foreach ($model->attaches as $key => $attach) {
+                    foreach ($model->file as $key => $attach) {
                         $path [$key] ['url'] = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $attach->baseName . '.' . $attach->extension;
                         $path [$key] ['title'] = $attach->baseName;
                         $path [$key] ['description'] = $attach->baseName;

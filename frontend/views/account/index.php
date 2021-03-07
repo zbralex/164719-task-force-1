@@ -176,21 +176,12 @@ DropZone::register($this);
 
                     <h3 class="div-line">Фото работ</h3>
 
-                    <?= $form->field($model, 'attaches[]', [
+                    <?= $form->field($model, 'file[]', [
                         'template' => "<div class='account__redaction-section-wrapper account__redaction'>". " <span class='dropzone'>{label}</span><span>{error}</span> </div>",
                     ])->fileInput([
 //                        'style' => ['display'=> 'none'],
                         'multiple' => true
                     ]) ?>
-
-                    <?= $form->field($model, 'attaches[]', [
-                        'template' => "<div class='account__redaction-section-wrapper account__redaction'>". " {label}{input}<span>{error}</span> </div>",
-                    ])->fileInput([
-//                        'style' => ['display'=> 'none'],
-                        'multiple' => true
-                    ]) ?>
-
-
 
 
                     <h3 class="div-line">Контакты</h3>

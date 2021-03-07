@@ -21,7 +21,7 @@ class AccountForm extends Model
     public $about_myself;
     public $user_category;
 
-    public $attaches;
+    public $file;
 
     public $phone;
     public $skype;
@@ -47,7 +47,7 @@ class AccountForm extends Model
             ['date_of_birth', 'date', 'format' => 'php:Y-m-d'],
             [['about_myself', 'name'], 'trim'],
 
-            [['attaches'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 6],
+            [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 6],
 
             [['userPic'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 1],
             [['skype','another_messenger'], 'string', 'max' => 256],
@@ -80,7 +80,7 @@ class AccountForm extends Model
             "about_myself" => 'ИНФОРМАЦИЯ О СЕБЕ',
             "user_category" => 'Специализации',
 
-            "attaches" => 'Выбрать фотографии',
+            "file" => 'Выбрать фотографии',
 
             "phone" => 'ТЕЛЕФОН',
             "skype" => 'SKYPE',
@@ -112,7 +112,7 @@ class AccountForm extends Model
         }
     }
 
-    public function uploadAttaches() {
+    public function uploadFiles() {
         $dir = Yii::getAlias('@app') . '/web/upload/' . date("Y-m-d") .'_'. date("H-m") . '/';
 
         if(!is_dir($dir)) {
@@ -121,7 +121,7 @@ class AccountForm extends Model
 
 
         if ($this->validate()) {
-            foreach ($this->attaches as $file) {
+            foreach ($this->file as $file) {
                 $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
             }
             return true;
