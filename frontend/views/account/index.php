@@ -8,6 +8,7 @@
 use frontend\assets\AutoComplete;
 use frontend\assets\CustomAutoCompleteAsset;
 use frontend\models\Categories;
+use \frontend\assets\DropZone;
 use frontend\models\UserCategory;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -16,6 +17,8 @@ $formatter = \Yii::$app->formatter;
 $this->title = 'Редактирование настроек профиля';
 AutoComplete::register($this);
 CustomAutoCompleteAsset::register($this);
+DropZone::register($this);
+
 ?>
 
 <main class="page-main">
@@ -173,15 +176,22 @@ CustomAutoCompleteAsset::register($this);
 
                     <h3 class="div-line">Фото работ</h3>
 
-
-                    <?= $form->field($model, 'photos_of_works', [
-                        'template' => "<div class='account__redaction-section-wrapper account__redaction'>". " {label}{input}<span>{error}</span> </div>",
-                        'options' => ['tag' => false]
+                    <?= $form->field($model, 'attaches[]', [
+                        'template' => "<div class='account__redaction-section-wrapper account__redaction'>". " <span class='dropzone'>{label}</span><span>{error}</span> </div>",
                     ])->fileInput([
-                        'class' => 'dropzone',
-                        'placeholder' => 'Выбрать фотографии',
-                        'style' => ['display'=> 'none']
+//                        'style' => ['display'=> 'none'],
+                        'multiple' => true
                     ]) ?>
+
+                    <?= $form->field($model, 'attaches[]', [
+                        'template' => "<div class='account__redaction-section-wrapper account__redaction'>". " {label}{input}<span>{error}</span> </div>",
+                    ])->fileInput([
+//                        'style' => ['display'=> 'none'],
+                        'multiple' => true
+                    ]) ?>
+
+
+
 
                     <h3 class="div-line">Контакты</h3>
                     <div class="account__redaction-section-wrapper account__redaction">
@@ -320,4 +330,12 @@ CustomAutoCompleteAsset::register($this);
                 <?php ActiveForm::end(); ?>
         </section>
     </div>
+    <script>
+        Dropzone.autoDiscover = false;
+
+        var dropzone = new Dropzone(".dropzone", {
+            url: window.location.href, maxFiles: 6, uploadMultiple: true,
+            acceptedFiles: 'image/*', previewTemplate: '<a href="#"><img data-dz-thumbnail alt="Фото работы"></a>'
+        });
+    </script>
 </main>

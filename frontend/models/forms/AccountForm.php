@@ -19,9 +19,9 @@ class AccountForm extends Model
     public $hiddenLocation;
     public $date_of_birth;
     public $about_myself;
-    public $user_category = [];
+    public $user_category;
 
-    public $photos_of_works;
+    public $attaches;
 
     public $phone;
     public $skype;
@@ -47,7 +47,7 @@ class AccountForm extends Model
             ['date_of_birth', 'date', 'format' => 'php:Y-m-d'],
             [['about_myself', 'name'], 'trim'],
 
-            [['photos_of_works'], 'file', 'maxFiles' => 6],
+            [['attaches'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 6],
 
             [['userPic'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 1],
             [['skype','another_messenger'], 'string', 'max' => 256],
@@ -80,7 +80,7 @@ class AccountForm extends Model
             "about_myself" => 'ИНФОРМАЦИЯ О СЕБЕ',
             "user_category" => 'Специализации',
 
-            "photos_of_works" => 'Выбрать фотографии',
+            "attaches" => 'Выбрать фотографии',
 
             "phone" => 'ТЕЛЕФОН',
             "skype" => 'SKYPE',
@@ -106,6 +106,24 @@ class AccountForm extends Model
 
         if ($this->validate()) {
             $this->userPic->saveAs( $dir . $this->userPic->baseName . '.' . $this->userPic->extension);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function uploadAttaches() {
+        $dir = Yii::getAlias('@app') . '/web/upload/' . date("Y-m-d") .'_'. date("H-m") . '/';
+
+        if(!is_dir($dir)) {
+            mkdir($dir, 0777);
+        }
+
+
+        if ($this->validate()) {
+            foreach ($this->attaches as $file) {
+                $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
+            }
             return true;
         } else {
             return false;

@@ -6,6 +6,7 @@ namespace frontend\controllers;
 use frontend\models\Attachment;
 use frontend\models\Categories;
 use frontend\models\forms\AccountForm;
+use frontend\models\PortfolioPhoto;
 use frontend\models\SiteSettings;
 use frontend\models\Task;
 use frontend\models\User;
@@ -55,12 +56,36 @@ class AccountController extends \yii\web\Controller
                 $userInfo->skype = $model->skype;
                 $userInfo->telegram = $model->another_messenger;
                 $model->userPic = UploadedFile::getInstance($model, 'userPic');
+                $model->attaches = UploadedFile::getInstances($model, 'attaches');
                 if ($model->userPic) {
 
                     $model->upload();
 
                     $path = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $model->userPic->baseName . '.' . $model->userPic->extension;
                     $userInfo->user_pic = $path;
+                }
+
+                if ($model->attaches) {
+
+
+                    $model->uploadAttaches();
+                    $path = [];
+
+                    foreach ($model->attaches as $key => $attach) {
+                        $path [$key] ['url'] = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $attach->baseName . '.' . $attach->extension;
+                        $path [$key] ['title'] = $attach->baseName;
+                        $path [$key] ['description'] = $attach->baseName;
+                    }
+
+                    foreach ($path as $item) {
+                        $portfolioPhoto = new PortfolioPhoto();
+                        $portfolioPhoto->user_id = Yii::$app->user->identity->getId();
+                        $portfolioPhoto->rating = 0;
+                        $portfolioPhoto->url = $item['url'];
+                        $portfolioPhoto->title = $item['title'];
+                        $portfolioPhoto->description = $item['description'];
+                        $portfolioPhoto->save(false);
+                    }
                 }
 
 
