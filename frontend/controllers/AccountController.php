@@ -36,9 +36,9 @@ class AccountController extends \yii\web\Controller
 
 
 
+        $model->file = UploadedFile::getInstances($model, 'file');
 
-
-            if (Yii::$app->request->getIsPost()) {
+            if ($model->load(Yii::$app->request->post())) {
                 // n.b. обязательно загружать данные  POST-запроса из формы!
                 $model->load(Yii::$app->request->post());
 
@@ -57,37 +57,13 @@ class AccountController extends \yii\web\Controller
                 $userInfo->skype = $model->skype;
                 $userInfo->telegram = $model->another_messenger;
                 $model->userPic = UploadedFile::getInstance($model, 'userPic');
-                $model->file = UploadedFile::getInstances($model, 'file');
+
                 if ($model->userPic) {
-
                     $model->upload();
-
                     $path = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $model->userPic->baseName . '.' . $model->userPic->extension;
                     $userInfo->user_pic = $path;
                 }
 
-                if ($model->file) {
-
-
-                    $model->uploadAttaches();
-                    $path = [];
-
-                    foreach ($model->file as $key => $attach) {
-                        $path [$key] ['url'] = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $attach->baseName . '.' . $attach->extension;
-                        $path [$key] ['title'] = $attach->baseName;
-                        $path [$key] ['description'] = $attach->baseName;
-                    }
-
-                    foreach ($path as $item) {
-                        $portfolioPhoto = new PortfolioPhoto();
-                        $portfolioPhoto->user_id = Yii::$app->user->identity->getId();
-                        $portfolioPhoto->rating = 0;
-                        $portfolioPhoto->url = $item['url'];
-                        $portfolioPhoto->title = $item['title'];
-                        $portfolioPhoto->description = $item['description'];
-                        $portfolioPhoto->save(false);
-                    }
-                }
 
 
 

@@ -176,12 +176,9 @@ DropZone::register($this);
 
                     <h3 class="div-line">Фото работ</h3>
 
-                    <?= $form->field($model, 'file[]', [
-                        'template' => "<div class='account__redaction-section-wrapper account__redaction'>". " <span class='dropzone'>{label}</span><span>{error}</span> </div>",
-                    ])->fileInput([
-//                        'style' => ['display'=> 'none'],
-                        'multiple' => true
-                    ]) ?>
+                    <div class="account__redaction-section-wrapper account__redaction">
+                        <span class="dropzone">Выбрать фотографии</span>
+                    </div>
 
 
                     <h3 class="div-line">Контакты</h3>
@@ -328,5 +325,6 @@ DropZone::register($this);
             url: window.location.href, maxFiles: 6, uploadMultiple: true,
             acceptedFiles: 'image/*', previewTemplate: '<a href="#"><img data-dz-thumbnail alt="Фото работы"></a>'
         });
+        console.log(dropzone)
     </script>
 </main>
