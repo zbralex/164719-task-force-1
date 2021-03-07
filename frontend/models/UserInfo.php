@@ -120,4 +120,8 @@ class UserInfo extends ActiveRecord
 	{
 		return $this->hasOne(Cities::class, ['id' => 'city_id']);
 	}
+    public function getPortfolioPhoto()
+    {
+        return $this->hasMany(PortfolioPhoto::class, ['user_id' => 'user_id']);
+    }
 }

@@ -176,6 +176,12 @@ DropZone::register($this);
 
                     <h3 class="div-line">Фото работ</h3>
 
+                    <div class="account__files">
+                        <?php  foreach ($userInfo->portfolioPhoto as $file): ?>
+                                <img src="<?= $file->url; ?>" width="156" height="156" alt="avatar">
+                        <?php endforeach; ?>
+                    </div>
+
                     <div class="account__redaction-section-wrapper account__redaction">
                         <span class="dropzone">Выбрать фотографии</span>
                     </div>

@@ -34,9 +34,11 @@ class AccountController extends \yii\web\Controller
 
         $siteSettings = SiteSettings::findOne(['user_id' => Yii::$app->user->identity->getId()]);
 
+if (Yii::$app->request->getIsPost()) {
+    $model->file = UploadedFile::getInstances($model, 'file');
+}
 
 
-        $model->file = UploadedFile::getInstances($model, 'file');
 
             if ($model->load(Yii::$app->request->post())) {
                 // n.b. обязательно загружать данные  POST-запроса из формы!
@@ -63,6 +65,7 @@ class AccountController extends \yii\web\Controller
                     $path = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $model->userPic->baseName . '.' . $model->userPic->extension;
                     $userInfo->user_pic = $path;
                 }
+                var_dump($model->file);
 
 
 
