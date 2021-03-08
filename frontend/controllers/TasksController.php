@@ -9,6 +9,7 @@ use frontend\models\forms\taskActions\doneForm;
 use frontend\models\forms\taskActions\refuseForm;
 use frontend\models\forms\taskActions\responseForm;
 use frontend\models\forms\TaskForm;
+use frontend\models\PortfolioPhoto;
 use frontend\models\Response;
 use frontend\models\Task;
 use frontend\models\User;
@@ -16,11 +17,39 @@ use frontend\models\UserCategory;
 use taskForce\services\CreateTaskService;
 use taskForce\services\FilterTaskService;
 use Yii;
+use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 
 class TasksController extends SecuredController
+
 {
+    public $enableCsrfValidation = false;
+    public function actionUploadFile() {
+        $fileName = 'Attach';
+
+
+        $files = UploadedFile::getInstancesByName($fileName);
+        $dir = Yii::getAlias('@app') . '/web/upload/' . date("Y-m-d") .'_'. date("H-m") . '/';
+        if(!is_dir($dir)) {
+            mkdir($dir, 0777);
+        }
+        foreach($files as $file) {
+
+            $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
+
+            $portfolioPhoto = new PortfolioPhoto();
+            $portfolioPhoto->user_id = Yii::$app->user->identity->getId();
+            $portfolioPhoto->rating = 0;
+            $portfolioPhoto->url = '/upload/' . date("Y-m-d") .'_'. date("H-m") . '/' . $file->baseName . '.' . $file->extension;
+            $portfolioPhoto->title = $file->baseName;
+            $portfolioPhoto->description = $file->baseName;
+            $portfolioPhoto->save(false);
+        }
+
+
+    }
 	public function actionIndex()
 	{
 		$model = new TaskForm();
@@ -172,6 +201,8 @@ class TasksController extends SecuredController
 		}
 	}
 
+
+
 	public function actionCreate()
 	{
 		// По умолчанию, после регистрации пользователю присваивается роль «Заказчик». Чтобы стать исполнителем необходимо
@@ -208,5 +239,6 @@ class TasksController extends SecuredController
 			'errors' => $errors
 		]);
 	}
+
 
 }

@@ -11,12 +11,14 @@
 use frontend\assets\CreateTaskDropZone;
 use frontend\assets\AutoComplete;
 use frontend\assets\CustomAutoCompleteAsset;
+use frontend\assets\DropZone;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 // CreateTaskDropZone::register($this);
 AutoComplete::register($this);
 CustomAutoCompleteAsset::register($this);
+DropZone::register($this);
 $this->title = 'Публикация нового задания';
 ?>
 
@@ -77,22 +79,13 @@ $this->title = 'Публикация нового задания';
                             'style' => 'width: 100%'
                         ])->hint('Выберите категорию'); ?>
 
-                <?= $form->field($model, 'files[]', [
-                    'template' => " {label}
-                                        <span>Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу</span>
-                                        <div class='create__file'>
-										{input}
-										<span>{hint}</span><span>{error}</span></div>",
-                    'labelOptions' => [
-                        'style' => 'display: block;'
-                    ]
-                ])
-                    ->fileInput([
-                        'multiple' => 'multiple',
-                        'class' => 'dropzone',
-                        //'style' => 'display: none'
-                    ])
-                    ->hint('Добавить новый файл'); ?>
+                <div class="field-container">
+                    <label>Файлы</label>
+                    <span>Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу</span>
+                    <div class="create__file">
+                        <span>Добавить новый файл</span>
+                    </div>
+                </div>
 
 
 	            <?= $form->field($model, 'location', [
@@ -185,6 +178,13 @@ $this->title = 'Публикация нового задания';
         </section>
     </div>
 </main>
+<script>
+    Dropzone.autoDiscover = false;
 
+    var dropzone = new Dropzone("div.create__file", {
+        url: '../tasks/upload-file', maxFiles: 4, uploadMultiple: true, paramName: "Attach",
+        acceptedFiles: 'image/*', previewTemplate: '<a href="#"><img data-dz-thumbnail alt="Фото работы" width="90px"></a>'
+    });
+</script>
 
 
