@@ -75,19 +75,23 @@ class AccountController extends \yii\web\Controller
                 $userInfo->save(false);
 
 
-                if ($model->user_category) {
+                if (isset($model->user_category)) {
                     // удаляем предыдущие значения полей
                     $deleteAllCategories = UserCategory::find()->where(['user_id'=>Yii::$app->user->identity->getId()])->all();
                     foreach ($deleteAllCategories as $d) {
                         $d->delete();
                     }
-                    // записываем новые значения полей
-                    foreach ($model->user_category as $item) {
-                        $userCategories = new UserCategory();
-                        $userCategories->user_id = Yii::$app->user->identity->getId();
-                        $userCategories->category_id = intval($item);
-                        $userCategories->save(false);
+
+                    if($model->user_category) {
+                        // записываем новые значения полей
+                        foreach ($model->user_category as $item) {
+                            $userCategories = new UserCategory();
+                            $userCategories->user_id = Yii::$app->user->identity->getId();
+                            $userCategories->category_id = intval($item);
+                            $userCategories->save(false);
+                        }
                     }
+
                 }
 
 
