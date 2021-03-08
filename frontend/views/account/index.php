@@ -159,7 +159,7 @@ DropZone::register($this);
 							                            </label>";
                             },
                             'class' => 'search-task__categories account_checkbox--bottom'
-                        ]); ?>
+                        ])->label(false); ?>
 
 
                     </div>
