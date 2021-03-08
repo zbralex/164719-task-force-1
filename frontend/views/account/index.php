@@ -178,7 +178,7 @@ DropZone::register($this);
 
                     <div class="account__files">
                         <?php  foreach ($userInfo->portfolioPhoto as $file): ?>
-                                <img src="<?= $file->url; ?>" width="156" height="156" alt="<?= $file->id?>">
+                                <img src="<?= $file->url; ?>" width="156" height="156">
                         <?php endforeach; ?>
                     </div>
 
