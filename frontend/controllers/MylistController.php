@@ -14,18 +14,15 @@ class MylistController extends Controller {
 
     public function actionIndex($param)
     {
-var_dump($param);
         $model = new User();
         $userInfo = new UserInfo();
         $model->load(\Yii::$app->request->post());
         $errors = [];
         $tasks = [];
-        $currentItemClass = "menu_toggle__item--current";
-        $currentItemClass = $param;
+
         switch ($param) {
             case 'new':
                 $tasks = Task::find()->where(['status' => 'new'])->all();
-
                 break;
             case 'hidden':
 //                $tasks = Task::find()->where(['status' => 'new'])->all();
