@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Task;
 use frontend\models\User;
 use frontend\models\UserInfo;
 use Yii;
@@ -11,13 +12,30 @@ use yii\widgets\ActiveForm;
 
 class MylistController extends Controller {
 
-    public function actionIndex()
+    public function actionIndex($param)
     {
-
+var_dump($param);
         $model = new User();
         $userInfo = new UserInfo();
         $model->load(\Yii::$app->request->post());
         $errors = [];
+        $tasks = [];
+        $currentItemClass = "menu_toggle__item--current";
+        $currentItemClass = $param;
+        switch ($param) {
+            case 'new':
+                $tasks = Task::find()->where(['status' => 'new'])->all();
+
+                break;
+            case 'hidden':
+//                $tasks = Task::find()->where(['status' => 'new'])->all();
+                break;
+            case 'active':
+                break;
+        }
+//        var_dump($tasks);
+
+
 
 
         if (Yii::$app->request->isAjax) {
@@ -41,7 +59,41 @@ class MylistController extends Controller {
         }
 
         return $this->render('index', [
-            'model' => $model
+            'model' => $model,
+            'tasks' => $tasks,
+            'param' => $param,
+            'currentItemClass'=> $currentItemClass
         ]);
     }
+
+//    public function actionCompleted() {
+//        $model = new User();
+//        return $this->render('index', [
+//            'model' => $model
+//        ]);
+//    }
+//    public function actionNew() {
+//        $model = new User();
+//        return $this->render('index', [
+//            'model' => $model
+//        ]);
+//    }
+//    public function actionActive() {
+//        $model = new User();
+//        return $this->render('index', [
+//            'model' => $model
+//        ]);
+//    }
+//    public function actionRefused() {
+//        $model = new User();
+//        return $this->render('index', [
+//            'model' => $model
+//        ]);
+//    }
+//    public function actionHidden() {
+//        $model = new User();
+//        return $this->render('index', [
+//            'model' => $model
+//        ]);
+//    }
 }
