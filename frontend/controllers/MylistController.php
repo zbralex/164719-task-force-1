@@ -6,19 +6,23 @@ use frontend\models\Task;
 use frontend\models\User;
 use frontend\models\UserInfo;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\widgets\ActiveForm;
 
 
 class MylistController extends Controller {
 
-    public function actionIndex($param)
+    public function actionIndex($param = null)
     {
         $model = new User();
         $userInfo = new UserInfo();
         $model->load(\Yii::$app->request->post());
         $errors = [];
         $tasks = [];
+        if (!$param) {
+            Yii::$app->response->redirect(Url::to('/mylist/new'));
+        }
 
         switch ($param) {
             case 'new':
