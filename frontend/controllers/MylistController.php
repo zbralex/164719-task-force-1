@@ -57,9 +57,7 @@ class MylistController extends Controller {
 
         return $this->render('index', [
             'model' => $model,
-            'tasks' => $tasks,
-            'param' => $param,
-            'currentItemClass'=> $currentItemClass
+            'tasks' => $tasks
         ]);
     }
 

@@ -5,9 +5,10 @@
 
 use frontend\assets\AppAsset;
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 AppAsset::register($this);
 ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -77,16 +78,19 @@ AppAsset::register($this);
 				</a>
 			</div>
 			<?php if (Yii::$app->controller->id !== 'signup'): ?>
+
+
+
 				<div class="header__nav">
 					<ul class="header-nav__list site-list">
-						<li class="site-list__item site-list__item--active">
-							<a href="/tasks">Задания</a>
+						<li class="site-list__item  <?= Yii::$app->controller->id == 'tasks' ? 'site-list__item--active' : '' ?>">
+							<a href="<?= Url::to('/tasks')?>">Задания</a>
 						</li>
-						<li class="site-list__item">
-							<a href="/users">Исполнители</a>
+						<li class="site-list__item <?= Yii::$app->controller->id == 'users' ? 'site-list__item--active' : '' ?>">
+							<a href="<?= Url::to('/users')?>">Исполнители</a>
 						</li>
-						<li class="site-list__item">
-							<a href="/tasks/create">Создать задание</a>
+						<li class="site-list__item <?= Yii::$app->controller->action->id == 'create' ? 'site-list__item--active' : '' ?>">
+							<a href="<?= Url::to('/tasks/create')?>">Создать задание</a>
 						</li>
 						<li class="site-list__item">
 							<a href="#">Мой профиль</a>
