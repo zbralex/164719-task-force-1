@@ -150,7 +150,7 @@ class Task extends ActiveRecord
      */
     public function getAuthor()
     {
-        return $this->hasOne(UserInfo::className(), ['user_id' => 'author_id']);
+        return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
 
     /**

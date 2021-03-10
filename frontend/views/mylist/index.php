@@ -2,6 +2,8 @@
 /**
  * @var array $model
  * @var array $tasks
+ * @var array $status
+ * @var string $param
  * @var $this yii\web\View
  */
 use yii\helpers\Url;
@@ -11,14 +13,14 @@ use yii\helpers\Url;
     <div class="main-container page-container">
         <section class="menu-toggle">
             <ul class="menu-toggle__list">
-                <li class="menu-toggle__item <?= Yii::$app->request->get('param') == 'completed' ? 'menu_toggle__item--current' : '' ?> menu-toggle__item--completed">
+                <li class="menu-toggle__item <?= Yii::$app->request->get('param') == 'done' ? 'menu_toggle__item--current' : '' ?> menu-toggle__item--completed">
                     <div class="menu-toggle__svg-wrapper">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" <?= Yii::$app->request->get('param') == 'completed' ? 'style="fill: white"' : '' ?>>
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M0 10C0 4.47715 4.47715 0 10 0C12.6522 0 15.1957 1.05357 17.0711 2.92893C18.9464 4.8043 20 7.34784 20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10ZM9.73 13.61L14.3 7.61V7.58C14.5179 7.29419 14.5668 6.91382 14.4283 6.58218C14.2897 6.25054 13.9848 6.01801 13.6283 5.97218C13.2718 5.92635 12.9179 6.07419 12.7 6.36L8.92 11.36L7.29 9.28C7.07028 8.99776 6.71668 8.85418 6.36239 8.90334C6.00811 8.9525 5.70696 9.18694 5.57239 9.51834C5.43783 9.84974 5.49028 10.2278 5.71 10.51L8.15 13.62C8.34082 13.8615 8.63222 14.0017 8.94 14C9.2495 13.9993 9.54121 13.8552 9.73 13.61Z"/>
                         </svg>
                     </div>
-                    <a href="<?= Url::to(['./mylist/completed'])?>">
+                    <a href="<?= Url::to(['./mylist/done'])?>">
                         Завершённые
                     </a>
                 </li>
@@ -106,48 +108,27 @@ use yii\helpers\Url;
         <section class="my-list">
             <div class="my-list__wrapper">
                 <h1>Мои задания</h1>
+                <?php foreach ($tasks as $task):?>
                 <div class="new-task__card">
                     <div class="new-task__title">
-                        <a href="#" class="link-regular"><h2>Перевести войну и мир на клингонский</h2></a>
-                        <a class="new-task__type link-regular" href="#"><p>Переводы</p></a>
+                        <a href="<?= Url::to(['./task/view/'. $task->id])?>" class="link-regular"><h2><?=$task->name;?></h2></a>
+                        <a class="new-task__type link-regular" href="#"><p><?= $task->category->name?></p></a>
                     </div>
-                    <div class="task-status done-status">Завершено</div>
+                    <div class="task-status <?= $param; ?>-status"><?php echo $status[$task->status]; ?></div>
                     <p class="new-task_description">
-                        Значимость этих проблем настолько очевидна, что начало
-                        повседневной работы по формированию позиции
-                        требуют определения и уточнения позиций…
+                        <?= $task->description;?>
                     </p>
                     <div class="feedback-card__top ">
                         <a href="#"><img src="./img/man-glasses.jpg" width="36" height="36"></a>
                         <div class="feedback-card__top--name my-list__bottom">
-                            <p class="link-name"><a href="#" class="link-regular">Астахов Павел</a></p>
+                            <p class="link-name"><a href="#" class="link-regular"><?= $task->author->name ? $task->author->name : 'Имя автора не указано';?></a></p>
                             <a href="#" class="my-list__bottom-chat  my-list__bottom-chat--new"><b>3</b></a>
                             <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
                             <b>4.25</b>
                         </div>
                     </div>
                 </div>
-                <div class="new-task__card">
-                    <div class="new-task__title">
-                        <a href="#" class="link-regular"><h2>Убрать квартиру после вписки</h2></a>
-                        <a class="new-task__type link-regular" href="#"><p>Уборка</p></a>
-                    </div>
-                    <div class="task-status new-status">Новый</div>
-                    <p class="new-task_description">
-                        Значимость этих проблем настолько очевидна, что начало
-                        повседневной работы по формированию позиции
-                        требуют определения и уточнения позиций…
-                    </p>
-                    <div class="feedback-card__top ">
-                        <a href="#"><img src="./img/woman-glasses.jpg" width="36" height="36"></a>
-                        <div class="feedback-card__top--name my-list__bottom">
-                            <p class="link-name"><a href="#" class="link-regular">Морозова Евгения</a></p>
-                            <a href="#" class="my-list__bottom-chat"></a>
-                            <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-                            <b>4.25</b>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach;?>
             </div>
         </section>
 

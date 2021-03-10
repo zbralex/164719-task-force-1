@@ -1764,6 +1764,12 @@ footer {
 
 .new-status {
   background-color: #ff7f50; }
+.active-status {
+  background-color: yellowgreen; }
+.canceled-status {
+  background-color: tomato; }
+.hidden-status {
+  background-color: orangered; }
 
 .my-list__bottom {
   display: -webkit-box;

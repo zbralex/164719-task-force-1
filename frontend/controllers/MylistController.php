@@ -15,6 +15,13 @@ class MylistController extends Controller {
 
     public function actionIndex($param = null)
     {
+        $statuses = [
+            'new' => 'Новый',
+            'cancelled' => 'Отменено',
+            'progress' => 'В работе',
+            'failed' => 'Провалено',
+            'completed' => 'Завершено'
+        ];
         $model = new User();
         $userInfo = new UserInfo();
         $model->load(\Yii::$app->request->post());
@@ -26,15 +33,42 @@ class MylistController extends Controller {
 
         switch ($param) {
             case 'new':
-                $tasks = Task::find()->where(['status' => 'new'])->all();
+                $tasks = Task::find()->where(['status' => 'new'])
+                    ->andWhere(['or',
+                        ['author_id' => Yii::$app->user->identity->getId()],
+                        ['executor_id' => Yii::$app->user->identity->getId()]])
+                    ->all();
                 break;
             case 'hidden':
-//                $tasks = Task::find()->where(['status' => 'new'])->all();
+                $tasks = Task::find()->where(['status' => 'failed'])
+                    ->andWhere(['or',
+                        ['author_id' => Yii::$app->user->identity->getId()],
+                        ['executor_id' => Yii::$app->user->identity->getId()]])
+                    ->all();
                 break;
             case 'active':
+                $tasks = Task::find()->where(['status' => 'progress'])
+                    ->andWhere(['or',
+                        ['author_id' => Yii::$app->user->identity->getId()],
+                        ['executor_id' => Yii::$app->user->identity->getId()]])
+                    ->all();
+                break;
+            case 'canceled':
+                $tasks = Task::find()->where(['status' => 'cancelled'])
+                    ->andWhere(['or',
+                        ['author_id' => Yii::$app->user->identity->getId()],
+                        ['executor_id' => Yii::$app->user->identity->getId()]])
+                    ->all();
+                break;
+            case 'done':
+                $tasks = Task::find()->where(['status' => 'completed'])
+                    ->andWhere(['or',
+                        ['author_id' => Yii::$app->user->identity->getId()],
+                        ['executor_id' => Yii::$app->user->identity->getId()]])
+                    ->all();
                 break;
         }
-//        var_dump($tasks);
+
 
 
 
@@ -61,7 +95,9 @@ class MylistController extends Controller {
 
         return $this->render('index', [
             'model' => $model,
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'status'=>$statuses,
+            'param' => $param
         ]);
     }
 
