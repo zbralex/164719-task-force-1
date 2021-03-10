@@ -34,6 +34,7 @@ class MylistController extends Controller {
         switch ($param) {
             case 'new':
                 $tasks = Task::find()->where(['status' => 'new'])
+                    ->with(['category'])
                     ->andWhere(['or',
                         ['author_id' => Yii::$app->user->identity->getId()],
                         ['executor_id' => Yii::$app->user->identity->getId()]])
@@ -41,6 +42,7 @@ class MylistController extends Controller {
                 break;
             case 'hidden':
                 $tasks = Task::find()->where(['status' => 'failed'])
+                    ->with(['category'])
                     ->andWhere(['or',
                         ['author_id' => Yii::$app->user->identity->getId()],
                         ['executor_id' => Yii::$app->user->identity->getId()]])
@@ -48,6 +50,7 @@ class MylistController extends Controller {
                 break;
             case 'active':
                 $tasks = Task::find()->where(['status' => 'progress'])
+                    ->with(['category'])
                     ->andWhere(['or',
                         ['author_id' => Yii::$app->user->identity->getId()],
                         ['executor_id' => Yii::$app->user->identity->getId()]])
@@ -55,13 +58,15 @@ class MylistController extends Controller {
                 break;
             case 'canceled':
                 $tasks = Task::find()->where(['status' => 'cancelled'])
+                    ->with(['category'])
                     ->andWhere(['or',
                         ['author_id' => Yii::$app->user->identity->getId()],
                         ['executor_id' => Yii::$app->user->identity->getId()]])
                     ->all();
                 break;
             case 'done':
-                $tasks = Task::find()->where(['status' => 'completed'])
+                $tasks = Task::find()->with(['category'])->where(['status' => 'completed'])
+                    ->with(['category'])
                     ->andWhere(['or',
                         ['author_id' => Yii::$app->user->identity->getId()],
                         ['executor_id' => Yii::$app->user->identity->getId()]])
