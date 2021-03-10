@@ -4,12 +4,14 @@
  * @var array $filter
  * @var array $categories
  * @var array $model
+ * @var array $pages
  */
 
 use frontend\models\Categories;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use yii\widgets\LinkPager;
 
 $this->title = 'Исполнители';
 $this->params['breadcrumbs'][] = $this->title;
@@ -41,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 if ($user->user_pic) {
                                     echo '<img src="' . $user->user_pic . '" width="65" height="65">';
                                 } else {
-                                    echo '<img src="./img/man-glasses.jpg" width="65" height="65">';
+                                    echo '<img src="../img/man-glasses.jpg" width="65" height="65">';
                                 }
                                 ?>
                             </a>
@@ -73,6 +75,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php endforeach; ?>
 
             </div>
+            <?php
+            echo LinkPager::widget([
+                'pagination' => $pages,
+                'options' => [
+                    'class' => 'new-task__pagination-list',
+                ],
+                'activePageCssClass' => 'dddd'
+            ]);
+            ?>
 
         </section>
 

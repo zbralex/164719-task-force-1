@@ -7,15 +7,20 @@ use frontend\models\forms\UserForm;
 use frontend\models\UserInfo;
 use taskForce\services\FilterUserService;
 use Yii;
+use yii\data\Pagination;
 use yii\web\NotFoundHttpException;
 
 class UsersController extends SecuredController
 {
 	public function actionIndex()
 	{
-		$users = UserInfo::find()
-			->with('userCategories.category')
-			->all();
+		$query = UserInfo::find()
+			->with('userCategories.category');
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $users = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
 
 		$model = new UserForm();
 
@@ -33,7 +38,8 @@ class UsersController extends SecuredController
 
 		return $this->render('index', [
 			'users' => $users,
-			'model' => $model
+			'model' => $model,
+            'pages' => $pages
 		]);
 	}
 

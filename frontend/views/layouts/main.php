@@ -204,14 +204,14 @@ AppAsset::register($this);
             <div class="page-footer__copyright">
                 <a>
                     <img class="copyright-logo"
-                         src="./img/academy-logo.png"
+                         src="../img/academy-logo.png"
                          width="185" height="63"
                          alt="Логотип HTML Academy">
                 </a>
             </div>
 			<?php if (Yii::$app->controller->id == 'signup'): ?>
 				<div class="clipart-woman">
-					<img src="./img/clipart-woman.png" width="238" height="450">
+					<img src="../img/clipart-woman.png" width="238" height="450">
 				</div>
 				<div class="clipart-message">
 					<div class="clipart-message-text">

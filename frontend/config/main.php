@@ -49,6 +49,7 @@ return [
 				'task/refuse/<id:\d+>' => 'tasks/refuse',
 				'task/request/<id:\d+>' => 'tasks/request',
                 '<controller:mylist>/<param>' => '<controller>/index',
+                'users/<page:\d+>' => 'users/index'
 			],
 		],
 

@@ -119,7 +119,7 @@ use yii\helpers\Url;
                         <?= $task->description;?>
                     </p>
                     <div class="feedback-card__top ">
-                        <a href="#"><img src="./img/man-glasses.jpg" width="36" height="36"></a>
+                        <a href="#"><img src="../img/man-glasses.jpg" width="36" height="36"></a>
                         <div class="feedback-card__top--name my-list__bottom">
                             <p class="link-name"><a href="#" class="link-regular"><?= $task->author->name ? $task->author->name : 'Имя автора не указано';?></a></p>
                             <a href="#" class="my-list__bottom-chat  my-list__bottom-chat--new"><b>3</b></a>

@@ -44,7 +44,7 @@ DropZone::register($this);
                         <?php if ($userInfo->user_pic): ?>
                             <img src="<?= $userInfo->user_pic; ?>" width="156" height="156">
                         <?php else: ?>
-                            <img src="./img/man-glasses.jpg" width="156" height="156">
+                            <img src="../img/man-glasses.jpg" width="156" height="156">
                         <?php endif; ?>
 
 
