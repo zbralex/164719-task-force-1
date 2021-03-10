@@ -79,9 +79,6 @@ AppAsset::register($this);
 			</div>
 			<?php if (!Yii::$app->user->isGuest): ?>
 
-
-
-
 				<div class="header__nav">
 					<ul class="header-nav__list site-list">
 						<li class="site-list__item  <?= Yii::$app->controller->id == 'tasks' ? 'site-list__item--active' : '' ?>">
@@ -227,7 +224,12 @@ AppAsset::register($this);
 	</footer>
 </div>
 
-
+<script>
+    var lightbulb = document.getElementsByClassName('header__lightbulb')[0];
+    lightbulb.addEventListener('mouseover', function () {
+        fetch('/index.php?r=events/index');
+    });
+</script>
 <?php $this->endBody() ?>
 
 </body>
