@@ -52,7 +52,10 @@ class AccountController extends \yii\web\Controller
 
                 $user->id = Yii::$app->user->identity->getId();
                 $user->email = $model->email;
-                $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->re_password);
+                if ($model->re_password) {
+                    $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->re_password);
+                }
+
                 $user->save(false);
 
 
