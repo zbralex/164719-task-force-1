@@ -19,6 +19,7 @@ use taskForce\classes\uploader\Uploader;
 use taskForce\services\CreateTaskService;
 use taskForce\services\FilterTaskService;
 use Yii;
+use yii\data\Pagination;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -36,10 +37,16 @@ class TasksController extends SecuredController
 	public function actionIndex()
 	{
 		$model = new TaskForm();
-		$tasks = Task::find()
+        $query = Task::find()
 			->with('category', 'cities')
 			->where(['status' => \taskForce\classes\Task::STATUS_NEW])
-			->orderBy('created_at DESC')->all();
+			->orderBy('created_at DESC');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $tasks = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
 
 		if (Yii::$app->request->getIsPost()) {
 
@@ -54,7 +61,8 @@ class TasksController extends SecuredController
 		}
 		return $this->render('index', [
 			'tasks' => $tasks,
-			'model' => $model
+			'model' => $model,
+            'pages' => $pages
 		]);
 	}
 

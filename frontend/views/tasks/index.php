@@ -3,12 +3,15 @@
  * @var yii\web\View $this
  * @var array $tasks
  * @var array $categories
+ * @var array $pages
  */
 
 use frontend\models\Categories;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use yii\widgets\LinkPager;
+
 $this->title = 'Новые задания';
 
 ?>
@@ -39,16 +42,23 @@ $this->title = 'Новые задания';
 
 
 			</div>
-			<div class="new-task__pagination">
-				<ul class="new-task__pagination-list">
-					<li class="pagination__item"><a href="#"></a></li>
-					<li class="pagination__item pagination__item--current">
-						<a>1</a></li>
-					<li class="pagination__item"><a href="#">2</a></li>
-					<li class="pagination__item"><a href="#">3</a></li>
-					<li class="pagination__item"><a href="#"></a></li>
-				</ul>
-			</div>
+
+            <div class="new-task__pagination">
+                <?php
+                echo LinkPager::widget([
+                    'pagination' => $pages,
+                    'options' => [
+                        'class' => 'new-task__pagination-list',
+                    ],
+                    'linkContainerOptions' => [
+                        'class' => 'pagination__item',
+                    ],
+                    'activePageCssClass' => 'pagination__item--current',
+                    'nextPageLabel' => '&nbsp;',
+                    'prevPageLabel' => '&nbsp;'
+                ]);
+                ?>
+            </div>
 		</section>
 		<section class="search-task">
 			<div class="search-task__wrapper">
