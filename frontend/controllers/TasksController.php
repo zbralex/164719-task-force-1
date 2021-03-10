@@ -36,6 +36,7 @@ class TasksController extends SecuredController
     }
 	public function actionIndex()
 	{
+
 		$model = new TaskForm();
         $query = Task::find()
 			->with('category', 'cities')
@@ -44,6 +45,7 @@ class TasksController extends SecuredController
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->defaultPageSize = 5;
         $tasks = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();

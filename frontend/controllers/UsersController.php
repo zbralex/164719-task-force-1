@@ -18,6 +18,8 @@ class UsersController extends SecuredController
 			->with('userCategories.category');
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->defaultPageSize = 10;
+
         $users = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
