@@ -75,15 +75,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php endforeach; ?>
 
             </div>
-            <?php
-            echo LinkPager::widget([
-                'pagination' => $pages,
-                'options' => [
-                    'class' => 'new-task__pagination-list',
-                ],
-                'activePageCssClass' => 'dddd'
-            ]);
-            ?>
+            <div class="new-task__pagination">
+                <?php
+                echo LinkPager::widget([
+                    'pagination' => $pages,
+                    'options' => [
+                        'class' => 'new-task__pagination-list',
+                    ],
+                    'linkContainerOptions' => [
+                        'class' => 'pagination__item',
+                    ],
+                    'activePageCssClass' => 'pagination__item--current',
+                    'nextPageLabel' => '&nbsp;',
+                    'prevPageLabel' => '&nbsp;'
+                ]);
+                ?>
+            </div>
+
 
         </section>
 
