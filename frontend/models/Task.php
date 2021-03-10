@@ -148,6 +148,10 @@ class Task extends ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    public function getRole()
+    {
+        return $this->hasOne(UserInfo::className(), ['user_id' => 'author_id']);
+    }
     public function getAuthor()
     {
         return $this->hasOne(User::className(), ['id' => 'author_id']);

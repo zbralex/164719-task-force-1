@@ -137,7 +137,7 @@ $this->title = 'Задание';
 
 					$task = new Task($detail->status);
 
-					foreach ($task->getAvailableActions($detail->author->role_id, $detail->author_id, Yii::$app->user->id, $resp) as $item) {
+					foreach ($task->getAvailableActions($detail->role->role_id, $detail->author_id, Yii::$app->user->id, $resp) as $item) {
 						echo Html::button($item->actionName, [
 							'class' => 'button button__big-color ' . $item->class . '-button open-modal',
 							'data-for' => $item->innerName . '-form'
@@ -189,7 +189,7 @@ $this->title = 'Задание';
 								<div class="feedback-card__actions">
 
 									<?php
-									foreach ($task->getAvailableActionsClient($detail->author->role_id) as $action) {
+									foreach ($task->getAvailableActionsClient($detail->role->role_id) as $action) {
 
 										echo Html::a($action->actionName, '/task/' . $action->innerName . '/' . $detail->id, [
 											'class' => 'button__small-color ' . $action->class . '-button button',
@@ -217,8 +217,8 @@ $this->title = 'Задание';
 					<div class="profile-mini__top">
 						<img src="/img/man-brune.jpg" width="62" height="62" alt="Аватар заказчика">
 						<div class="profile-mini__name five-stars__rate">
-							<p><?php if ($detail->author) {
-									echo $detail->author->name . ' ' . $detail->author->surname;
+							<p><?php if ($detail->role) {
+									echo $detail->role->name . ' ' . $detail->role->surname;
 								} else {
 									echo Yii::$app->user->identity->name;
 								} ?></p>
@@ -226,8 +226,8 @@ $this->title = 'Задание';
 					</div>
 					<p class="info-customer"><span><?= $count_tasks; ?> заданий</span>
 						<span class="last-">2 года на сайте</span></p>
-					<?php if ($detail->author): ?>
-						<a href="<?= Url::to(['user/view/' . $detail->author->id]); ?>" class="link-regular">Смотреть
+					<?php if ($detail->role): ?>
+						<a href="<?= Url::to(['user/view/' . $detail->role->id]); ?>" class="link-regular">Смотреть
 							профиль</a>
 					<?php endif; ?>
 				</div>
