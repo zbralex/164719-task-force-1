@@ -77,7 +77,8 @@ AppAsset::register($this);
 					</svg>
 				</a>
 			</div>
-			<?php if (Yii::$app->controller->id !== 'signup'): ?>
+			<?php if (!Yii::$app->user->isGuest): ?>
+
 
 
 
@@ -124,14 +125,18 @@ AppAsset::register($this);
 				</div>
 				<div class="header__account">
 					<a class="header__account-photo">
-						<img src="/img/user-photo.png"
-							width="43" height="44"
-							alt="Аватар пользователя">
+
+                        <?php
+
+                            echo '<img src="/img/user-photo.png" width="43" height="44" alt="Аватар пользователя">';
+
+                        ?>
 					</a>
 					<span class="header__account-name">
 						<?php
+
 						if (!empty(Yii::$app->user->getIdentity()->name)) {
-							Html::encode(Yii::$app->user->getIdentity()->name);
+							echo Html::encode(Yii::$app->user->getIdentity()->name);
 						}
 						?>
 

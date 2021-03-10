@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use DateTime;
 use frontend\models\forms\UserForm;
 use frontend\models\UserInfo;
 use taskForce\services\FilterUserService;
@@ -38,12 +39,20 @@ class UsersController extends SecuredController
 
 	public function actionView($id)
 	{
+        function getFullYears($birthdayDate) {
+            $datetime = new DateTime($birthdayDate);
+            $interval = $datetime->diff(new DateTime(date("Y-m-d")));
+            return $interval->format("%Y");
+        }
+
 		$detail = UserInfo::findOne($id);
+        $dateOfBirth = getFullYears($detail->date_birth);
 		if (empty($detail)) {
 			throw new NotFoundHttpException("Пользователь под номером $id не найден");
 		}
 		return $this->render('view', [
-			'detail' => $detail
+			'detail' => $detail,
+            'dateOfBirth' => $dateOfBirth
 		]);
 	}
 }
