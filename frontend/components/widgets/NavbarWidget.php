@@ -17,7 +17,12 @@ class NavbarWidget extends Widget {
     {
         $notifications = [];
         if (!Yii::$app->user->isGuest) {
-            $notifications = Notification::find()->where(['user_id'=> Yii::$app->user->identity->getId()])->all();
+            $notifications = Notification::find()
+                ->where(['user_id'=> Yii::$app->user->identity->getId()])
+                ->andWhere(['and', ['is_view' => 0]])
+                ->all();
+
+
         }
         return $this->render('navbar', [
            'notifications' => $notifications
