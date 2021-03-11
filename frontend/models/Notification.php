@@ -11,9 +11,9 @@ use  \yii\db\ActiveRecord;
  * @property int $user_id
  * @property string $title
  * @property int $is_view
- * @property string $url
+ * @property string $description
  * @property string|null $created_at
- * @property string $type
+ * @property string $icon
  * @property int $task_id
  *
  * @property User $user
