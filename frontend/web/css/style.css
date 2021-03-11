@@ -918,6 +918,7 @@ footer {
   border-right: 1px solid #2436ab; }
 
 .pagination__item a {
+  padding: 10px 15px;
   color: #ffffff;
   text-decoration: none; }
 
