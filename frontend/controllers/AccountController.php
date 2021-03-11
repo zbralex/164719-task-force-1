@@ -111,26 +111,7 @@ class AccountController extends \yii\web\Controller
 
         return $this->render('index', [
             'model' => $model,
-            'userInfo' => $userInfo,
-            'checkedCategories'=> $this->getCheckedCategories()
+            'userInfo' => $userInfo
         ]);
     }
-    public function getCheckedCategories()
-    {
-        $checked_categories = [];
-        $all_categories = Categories::find()->all();
-        $user_categories = UserCategory::find()->where(['user_id'=> Yii::$app->user->identity->getId()])->all();
-
-        foreach ($all_categories as $key => $cat) {
-            $checked = false;
-            foreach ($user_categories as $j => $u_category) {
-                if ($cat->id == $u_category->category_id) {
-                    $checked = true;
-                }
-            }
-            $checked_categories [] = ['id'=> $key, 'name' => $cat->name, 'checked' => $checked ];
-        }
-        return $checked_categories;
-    }
-
 }
