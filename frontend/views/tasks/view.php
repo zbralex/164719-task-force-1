@@ -215,12 +215,15 @@ $this->title = 'Задание';
 				<div class="profile-mini__wrapper">
 					<h3>Заказчик</h3>
 					<div class="profile-mini__top">
-						<img src="<?= $detail->userInfo->user_pic;?>" width="62" height="62" alt="Аватар заказчика">
+						<img src="<?php
+                        if ($detail->userInfo->user_pic) {
+                            echo $detail->userInfo->user_pic;
+                        } else {
+						    echo 'https://via.placeholder.com/150/';
+                        }?>" width="62" height="62" alt="Аватар заказчика">
 						<div class="profile-mini__name five-stars__rate">
 							<p><?php if ($detail->role) {
-									echo $detail->role->name . ' ' . $detail->role->surname;
-								} else {
-									echo Yii::$app->user->identity->name;
+									echo  $detail->user->name;
 								} ?></p>
 						</div>
 					</div>
