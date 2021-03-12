@@ -83,7 +83,7 @@ class TasksController extends SecuredController
 			->count('author_id');
 
 
-		$user_created_at = User::findOne($detail->author_id);
+
 
 		$actionResponseForm = new responseForm();
 		$actionRefuseForm = new refuseForm();
@@ -149,7 +149,6 @@ class TasksController extends SecuredController
 		return $this->render('view', [
 			'detail' => $detail,
 			'count_tasks' => $count_tasks,
-			'user' => $user_created_at,
 			'actionResponseForm' => $actionResponseForm,
 			'actionRefuseForm' => $actionRefuseForm,
 			'actionDoneForm' => $actionDoneForm,

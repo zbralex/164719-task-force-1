@@ -158,11 +158,7 @@ $this->title = 'Задание';
 										<p class="link-name">
 											<a href="#" class="link-regular">
 												<?php
-												if (isset($item->userInfo)) {
-													echo Html::encode($item->userInfo->name) . ' ' . Html::encode($item->userInfo->surname);
-												} else {
 													echo Html::encode($item->user->name);
-												}
 												?>
 											</a></p>
 										<span></span><span></span><span></span><span></span><span
