@@ -151,9 +151,9 @@ $this->title = 'Задание';
 					<h2>Отклики <span>(<?= count($detail->response) ?>)</span></h2>
 					<div class="content-view__feedback-wrapper">
 						<div class="content-view__feedback-card">
-							<?php foreach ($detail->responses as $item): ?>
+							<?php foreach ($detail->response as $item): ?>
 								<div class="feedback-card__top">
-									<a href="#"><img src="/img/man-blond.jpg" width="55" height="55"></a>
+									<a href="#"><img src="<?= $item->userInfo->user_pic?>" width="55" height="55"></a>
 									<div class="feedback-card__top--name">
 										<p class="link-name">
 											<a href="#" class="link-regular">

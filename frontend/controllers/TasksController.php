@@ -71,7 +71,14 @@ class TasksController extends SecuredController
 	public function actionView($id = null)
 	{
 
-		$detail = Task::findOne($id);
+		$detail = Task::find()
+            ->where(['id'=>$id])
+            ->with('response')
+            ->with('userInfo')
+            ->with('attachments')
+            ->with('category')
+            ->with('user')->one();
+
 		$resp = Response::find()
 			->where(['user_id' => Yii::$app->user->id, 'task_id' => $detail->id, 'status' => 'new'])
 			->count();
