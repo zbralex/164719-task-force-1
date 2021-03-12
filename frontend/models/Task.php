@@ -183,6 +183,6 @@ class Task extends ActiveRecord
 	}
 
     public function getUserInfo() {
-    	return $this->hasOne(UserInfo::className(), ['user_id' => 'executor_id']);
+    	return $this->hasOne(UserInfo::className(), ['user_id' => 'author_id']);
     }
 }

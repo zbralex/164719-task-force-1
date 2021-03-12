@@ -215,7 +215,7 @@ $this->title = 'Задание';
 				<div class="profile-mini__wrapper">
 					<h3>Заказчик</h3>
 					<div class="profile-mini__top">
-						<img src="/img/man-brune.jpg" width="62" height="62" alt="Аватар заказчика">
+						<img src="<?= $detail->userInfo->user_pic;?>" width="62" height="62" alt="Аватар заказчика">
 						<div class="profile-mini__name five-stars__rate">
 							<p><?php if ($detail->role) {
 									echo $detail->role->name . ' ' . $detail->role->surname;
