@@ -19,6 +19,7 @@ class NavbarWidget extends Widget {
         if (!Yii::$app->user->isGuest) {
             $notifications = Notification::find()
                 ->where(['user_id'=> Yii::$app->user->identity->getId()])
+                ->orderBy(['created_at'=> SORT_DESC])
                 ->andWhere(['and', ['is_view' => 0]])
                 ->all();
 
