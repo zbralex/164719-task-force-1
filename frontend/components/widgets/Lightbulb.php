@@ -5,7 +5,7 @@ use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 
-class NavbarWidget extends Widget {
+class Lightbulb extends Widget {
 
 
     public function init()
@@ -22,10 +22,8 @@ class NavbarWidget extends Widget {
                 ->orderBy(['created_at'=> SORT_DESC])
                 ->andWhere(['and', ['is_view' => 0]])
                 ->all();
-
-
         }
-        return $this->render('navbar', [
+        return $this->render('lightbulb', [
            'notifications' => $notifications
         ]);
     }

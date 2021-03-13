@@ -4,9 +4,10 @@
 /* @var string $content */
 
 use frontend\assets\AppAsset;
+use frontend\components\widgets\UserWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use frontend\components\widgets\NavbarWidget;
+use frontend\components\widgets\Lightbulb;
 AppAsset::register($this);
 ?>
 
@@ -106,26 +107,10 @@ AppAsset::register($this);
 						<option value="Vladivostok">Владивосток</option>
 					</select>
 				</div>
-                <?= NavbarWidget::widget() ?>
-				<div class="header__account">
-					<a class="header__account-photo">
 
-                        <?php
+                <?= Lightbulb::widget() ?>
+                <?= UserWidget::widget() ?>
 
-                            echo '<img src="/img/user-photo.png" width="43" height="44" alt="Аватар пользователя">';
-
-                        ?>
-					</a>
-					<span class="header__account-name">
-						<?php
-
-						if (!empty(Yii::$app->user->getIdentity()->name)) {
-							echo Html::encode(Yii::$app->user->getIdentity()->name);
-						}
-						?>
-
-             </span>
-				</div>
 				<div class="account__pop-up">
 					<ul class="account__pop-up-list">
 						<li>
