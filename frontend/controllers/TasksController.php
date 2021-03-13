@@ -59,7 +59,14 @@ class TasksController extends SecuredController
 			$request = Yii::$app->request;
 			$formContent = $request->post('TaskForm');
 
-			$tasks = FilterTaskService::taskFilter($formContent)->all();
+			$query = FilterTaskService::taskFilter($formContent);
+
+            $countQuery = clone $query;
+            $pages = new Pagination(['totalCount' => $countQuery->count()]);
+            $pages->defaultPageSize = 5;
+            $tasks = $query->offset($pages->offset)
+                ->limit($pages->limit)
+                ->all();
 		}
 		return $this->render('index', [
 			'tasks' => $tasks,
