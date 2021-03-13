@@ -111,6 +111,7 @@ class TasksController extends SecuredController
 			$formDone = $request->post('doneForm');
 			$formRefuse = $request->post('refuseForm');
 			$response = new Response();
+			$task = Task::findOne($id);
 
 			if ($formResponse) {
 
@@ -136,6 +137,7 @@ class TasksController extends SecuredController
 			}
 
 			if ($formDone) {
+                $task->status = $formDone['isDone'] == 0 ? 'completed' : 'failed';
 				$response->user_id = Yii::$app->user->id;
 				$response->task_id = $detail->id;
 
@@ -144,6 +146,7 @@ class TasksController extends SecuredController
 				$response->comment = $formDone['comment'];
 
 				$response->save(false);
+				$task->save(false);
 				return $this->refresh();
 
 			}
