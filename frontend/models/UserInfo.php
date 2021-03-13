@@ -124,4 +124,8 @@ class UserInfo extends ActiveRecord
     {
         return $this->hasMany(PortfolioPhoto::class, ['user_id' => 'user_id']);
     }
+    public function getSiteSettings()
+    {
+        return $this->hasOne(SiteSettings::class, ['user_id' => 'user_id']);
+    }
 }

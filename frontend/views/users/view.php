@@ -46,17 +46,23 @@ $this->title = Html::encode($detail->user->name);
                             ?>
                         </div>
                         <h3 class="content-view__h3">Контакты</h3>
+                        <?php
+                        //  показывает, когда не выбрано ни одной категории в настройках акк пользователя
+                        // когда чекбокс показывать только заказчику (заказчик - пользователь, у которого не выбрано ни одной категории)
+                        if ($detail->siteSettings->show_contacts_client AND count($detail->userCategories) == 0 OR !$detail->siteSettings->show_contacts_client):?>
                         <div class="user__card-link">
                             <a class="user__card-link--tel link-regular" href="#"><?= $detail->phone?></a>
                             <a class="user__card-link--email link-regular" href="#"><?= $detail->user->email?></a>
                             <a class="user__card-link--skype link-regular" href="#"><?= $detail->skype?></a>
                         </div>
+                        <?php endif;?>
                     </div>
                     <div class="user__card-photo">
                         <h3 class="content-view__h3">Фото работ</h3>
-                        <a href="#"><img src="/img/rome-photo.jpg" width="85" height="86" alt="Фото работы"></a>
-                        <a href="#"><img src="/img/smartphone-photo.png" width="85" height="86" alt="Фото работы"></a>
-                        <a href="#"><img src="/img/dotonbori-photo.png" width="85" height="86" alt="Фото работы"></a>
+
+                        <?php foreach ($detail->portfolioPhoto as $item):?>
+                            <a href="<?= $item->url;?>"><img src="<?= $item->url;?>" width="85" height="86" alt="<?= $item->title;?>"></a>
+                        <?php endforeach;?>
                     </div>
                 </div>
             </div>
