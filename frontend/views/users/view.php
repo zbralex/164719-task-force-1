@@ -6,12 +6,15 @@
  */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 $this->title = Html::encode($detail->user->name);
 ?>
 <main class="page-main">
     <div class="main-container page-container">
         <section class="content-view">
             <div class="user__card-wrapper">
+
+
                 <div class="user__card">
                     <img src="<?= $detail->user_pic; ?>" width="120" height="120" alt="Аватар пользователя">
                     <div class="content-view__headline">
@@ -67,40 +70,30 @@ $this->title = Html::encode($detail->user->name);
                 </div>
             </div>
             <div class="content-view__feedback">
-                <h2>Отзывы<span>(2)</span></h2>
+                <h2>Отзывы <span><?php
+                        if (count($detail->review)) {
+                            echo count($detail->review);
+                        } else {
+                            echo '0';
+                        } ?></span></h2>
                 <div class="content-view__feedback-wrapper reviews-wrapper">
+                    <?php foreach ($detail->review as $item):?>
                     <div class="feedback-card__reviews">
-                        <p class="link-task link">Задание <a href="#" class="link-regular">«Выгулять моего боевого петуха»</a></p>
+                        <p class="link-task link">Задание <a href="<?= Url::to(['./task/view/'. $item->task->id])?>" class="link-regular">«<?= $item->task->name?>»</a></p>
                         <div class="card__review">
-                            <a href="#"><img src="/img/man-glasses.jpg" width="55" height="54"></a>
+                            <a href="<?= Url::to(['./user/view/'. $item->userInfo->user_id])?>"><img src="<?= $item->userInfo->user_pic?>" width="55" height="54"></a>
                             <div class="feedback-card__reviews-content">
-                                <p class="link-name link"><a href="#" class="link-regular">Астахов Павел</a></p>
+                                <p class="link-name link"><a href="<?= Url::to(['./user/view/'. $item->userInfo->user_id])?>" class="link-regular"><?= $item->user->name?></a></p>
                                 <p class="review-text">
-                                    Кумар сделал всё в лучшем виде.  Буду обращаться к нему в будущем, если
-                                    возникнет такая необходимость!
+                                    <?= $item->description;?>
                                 </p>
                             </div>
                             <div class="card__review-rate">
-                                <p class="five-rate big-rate">5<span></span></p>
+                                <p class="five-rate big-rate"><?= $item->rating;?><span></span></p>
                             </div>
                         </div>
                     </div>
-                    <div class="feedback-card__reviews">
-                        <p class="link-task link">Задание <a href="#" class="link-regular">«Повесить полочку»</a></p>
-                        <div class="card__review">
-                            <a href="#"><img src="/img/woman-glasses.jpg" width="55" height="54"></a>
-                            <div class="feedback-card__reviews-content">
-                                <p class="link-name link"><a href="#" class="link-regular">Морозова Евгения</a></p>
-                                <p class="review-text">
-                                    Кумар приехал позже, чем общал и не привез с собой всех
-                                    инстументов. В итоге пришлось еще ходить в строительный магазин.
-                                </p>
-                            </div>
-                            <div class="card__review-rate">
-                                <p class="three-rate big-rate">3<span></span></p>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach;?>
                 </div>
             </div>
         </section>

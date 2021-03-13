@@ -103,7 +103,7 @@ class UserInfo extends ActiveRecord
 
 	public function getReview()
 	{
-		return $this->hasMany(Review::class, ['user_id' => 'user_id']);
+		return $this->hasMany(Review::class, ['author_id' => 'user_id']);
 	}
 
 	public function getFavorites()
@@ -128,4 +128,5 @@ class UserInfo extends ActiveRecord
     {
         return $this->hasOne(SiteSettings::class, ['user_id' => 'user_id']);
     }
+
 }

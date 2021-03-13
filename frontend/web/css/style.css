@@ -1574,6 +1574,7 @@ footer {
     display: none; }
 
 .user__card-photo {
+  max-width: 50%;
   margin-right: 70px; }
 
 .five-stars__rate {
