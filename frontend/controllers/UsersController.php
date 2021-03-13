@@ -53,7 +53,7 @@ class UsersController extends SecuredController
             return $interval->format("%Y");
         }
 
-		$detail = UserInfo::findOne($id);
+		$detail = UserInfo::find()->where(['user_id'=>$id])->one();
         $dateOfBirth = getFullYears($detail->date_birth);
 		if (empty($detail)) {
 			throw new NotFoundHttpException("Пользователь под номером $id не найден");

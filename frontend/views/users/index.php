@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <span>6 отзывов </span>
                         </div>
                         <div class="feedback-card__top--name user__search-card">
-                            <p class="link-name"><a href="<?= Url::to(['user/view/' . $user->id]); ?>"
+                            <p class="link-name"><a href="<?= Url::to(['user/view/' . $user->user->id]); ?>"
                                                     class="link-regular">
                                     <?= $user->user->name; ?>
                                 </a></p>
