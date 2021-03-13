@@ -156,7 +156,7 @@ $this->title = 'Задание';
 									<a href="#"><img src="<?= $item->userInfo->user_pic?>" width="55" height="55"></a>
 									<div class="feedback-card__top--name">
 										<p class="link-name">
-											<a href="#" class="link-regular">
+											<a href="<?= Url::to('/user/view/' . $item->userInfo->id)?>" class="link-regular">
 												<?php
 													echo Html::encode($item->user->name);
 												?>

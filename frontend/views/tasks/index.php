@@ -34,7 +34,7 @@ $this->title = 'Новые задания';
 						</p>
 						<b class="new-task__price new-task__price--<?= $task->category->icon ?>"><?= $task->price ?><b>
 								₽</b></b>
-						<p class="new-task__place"><?= !isset($task->cities->city) ? 'Город не установлен' : $task->cities->city ?> </p>
+						<p class="new-task__place"><?= !isset($task->userInfo->address) ? 'Город не установлен' : $task->userInfo->address ?> </p>
 						<span
 							class="new-task__time"><?= Yii::$app->formatter->asRelativeTime(strtotime($task->created_at)) ?></span>
 					</div>

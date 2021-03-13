@@ -39,7 +39,7 @@ class TasksController extends SecuredController
 
 		$model = new TaskForm();
         $query = Task::find()
-			->with('category', 'cities')
+			->with('category', 'userInfo')
 			->where(['status' => \taskForce\classes\Task::STATUS_NEW])
 			->orderBy('created_at DESC');
 
