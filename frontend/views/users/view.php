@@ -16,7 +16,7 @@ $this->title = Html::encode($detail->user->name);
                     <img src="<?= $detail->user_pic; ?>" width="120" height="120" alt="Аватар пользователя">
                     <div class="content-view__headline">
                         <h1><?= Html::encode($detail->user->name) ?></h1>
-                        <p><?= $detail->address ?>, <?= $dateOfBirth; ?></p>
+                        <p><?= $detail->address ?>, <?= $dateOfBirth; ?> лет</p>
                         <div class="profile-mini__name five-stars__rate">
                             <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
                             <b>4.25</b>
