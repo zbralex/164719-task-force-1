@@ -26,7 +26,7 @@ $this->title = 'Новые задания';
 						<div class="new-task__title">
 							<a href="<?= Url::to(['task/view/' . $task->id]); ?>" class="link-regular">
 								<h2><?= Html::encode($task->name) ?></h2></a>
-							<a class="new-task__type link-regular" href="#"><p><?= Html::encode($task->category->name) ?></p></a>
+							<a class="new-task__type link-regular" href="#"><p><?= $task->category->name ?></p></a>
 						</div>
 						<div class="new-task__icon new-task__icon--<?= $task->category->icon ?>"></div>
 						<p class="new-task_description">
@@ -34,7 +34,7 @@ $this->title = 'Новые задания';
 						</p>
 						<b class="new-task__price new-task__price--<?= $task->category->icon ?>"><?= $task->price ?><b>
 								₽</b></b>
-						<p class="new-task__place"><?= !isset($task->userInfo->address) ? 'Город не установлен' : $task->userInfo->address ?> </p>
+						<p class="new-task__place"><?= !isset($task->address_description) ? 'Город не установлен' : $task->address_description ?> </p>
 						<span
 							class="new-task__time"><?= Yii::$app->formatter->asRelativeTime(strtotime($task->created_at)) ?></span>
 					</div>
