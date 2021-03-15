@@ -37,9 +37,9 @@ $this->title = 'Задание';
                                     <a href="#" class="link-regular"><?= $detail->category->name ?></a>
                                    <?= Yii::$app->formatter->asRelativeTime(strtotime($detail->created_at)) ?></span>
 						</div>
-						<b class="new-task__price new-task__price--clean content-view-price"><?= $detail->price; ?><b>
+						<b class="new-task__price new-task__price--<?= $detail->category->icon?> content-view-price"><?= $detail->price; ?><b>
 								₽</b></b>
-						<div class="new-task__icon new-task__icon--clean content-view-icon"></div>
+						<div class="new-task__icon new-task__icon--<?= $detail->category->icon?> content-view-icon"></div>
 					</div>
 					<div class="content-view__description">
 						<h3 class="content-view__h3">Общее описание</h3>
