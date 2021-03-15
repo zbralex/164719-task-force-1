@@ -83,7 +83,7 @@ $this->title = Html::encode($detail->user->name);
                         <div class="card__review">
                             <a href="<?= Url::to(['./user/view/'. $item->userInfo->user_id])?>"><img src="<?= $item->userInfo->user_pic?>" width="55" height="54"></a>
                             <div class="feedback-card__reviews-content">
-                                <p class="link-name link"><a href="<?= Url::to(['./user/view/'. $item->userInfo->user_id])?>" class="link-regular"><?= $item->user->name?></a></p>
+                                <p class="link-name link"><a href="<?= Url::to(['./user/view/'. $item->userInfo->user_id])?>" class="link-regular"><?= Html::encode($item->user->name);?></a></p>
                                 <p class="review-text">
                                     <?= $item->description;?>
                                 </p>

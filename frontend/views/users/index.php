@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="feedback-card__top--name user__search-card">
                             <p class="link-name"><a href="<?= Url::to(['user/view/' . $user->user->id]); ?>"
                                                     class="link-regular">
-                                    <?= $user->user->name; ?>
+                                    <?= Html::encode($user->user->name); ?>
                                 </a></p>
                             <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
                             <b><?= $user->rating ?></b>

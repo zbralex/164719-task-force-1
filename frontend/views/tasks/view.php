@@ -219,7 +219,7 @@ $this->title = 'Задание';
                         }?>" width="62" height="62" alt="Аватар заказчика">
 						<div class="profile-mini__name five-stars__rate">
 							<p><?php if ($detail->role) {
-									echo  $detail->user->name;
+									echo  Html::encode($detail->user->name);
 								} ?></p>
 						</div>
 					</div>
