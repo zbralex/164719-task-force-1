@@ -52,7 +52,7 @@ $this->title = Html::encode($detail->user->name);
                         <?php
                         //  показывает, когда не выбрано ни одной категории в настройках акк пользователя
                         // когда чекбокс показывать только заказчику (заказчик - пользователь, у которого не выбрано ни одной категории)
-                        if ($detail->siteSettings->show_contacts_client AND count($detail->userCategories) == 0 OR !$detail->siteSettings->show_contacts_client):?>
+                        if ($detail->siteSettings->show_contacts_client AND !count($detail->userCategories)):?>
                         <div class="user__card-link">
                             <a class="user__card-link--tel link-regular" href="#"><?= $detail->phone?></a>
                             <a class="user__card-link--email link-regular" href="#"><?= $detail->user->email?></a>
