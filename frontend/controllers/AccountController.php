@@ -24,7 +24,8 @@ class AccountController extends \yii\web\Controller
     public $enableCsrfValidation = false;
 
 
-    public function actionUploadFile() {
+    public function actionUploadFile()
+    {
             $fileName = 'file';
             Uploader::uploadFiles($fileName);
     }

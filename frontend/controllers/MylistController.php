@@ -11,7 +11,8 @@ use yii\web\Controller;
 use yii\widgets\ActiveForm;
 
 
-class MylistController extends Controller {
+class MylistController extends Controller
+{
 
     public function actionIndex($param = null)
     {
@@ -74,10 +75,6 @@ class MylistController extends Controller {
                 break;
         }
 
-
-
-
-
         if (Yii::$app->request->isAjax) {
             return ActiveForm::validate($model);
         }
@@ -106,34 +103,4 @@ class MylistController extends Controller {
         ]);
     }
 
-//    public function actionCompleted() {
-//        $model = new User();
-//        return $this->render('index', [
-//            'model' => $model
-//        ]);
-//    }
-//    public function actionNew() {
-//        $model = new User();
-//        return $this->render('index', [
-//            'model' => $model
-//        ]);
-//    }
-//    public function actionActive() {
-//        $model = new User();
-//        return $this->render('index', [
-//            'model' => $model
-//        ]);
-//    }
-//    public function actionRefused() {
-//        $model = new User();
-//        return $this->render('index', [
-//            'model' => $model
-//        ]);
-//    }
-//    public function actionHidden() {
-//        $model = new User();
-//        return $this->render('index', [
-//            'model' => $model
-//        ]);
-//    }
 }

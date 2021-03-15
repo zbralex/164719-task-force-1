@@ -26,11 +26,11 @@ use yii\web\UploadedFile;
 
 
 class TasksController extends SecuredController
-
 {
     public $enableCsrfValidation = false;
 
-    public function actionUploadFile() {
+    public function actionUploadFile()
+    {
         $fileName = 'Attach';
         Uploader::uploadFiles($fileName);
     }

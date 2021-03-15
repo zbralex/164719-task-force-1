@@ -4,7 +4,8 @@ namespace  frontend\controllers;
 use Yii;
 use yii\filters\AccessControl;
 
-class LogoutController extends SecuredController {
+class LogoutController extends SecuredController
+{
 
 	public function actionLogout()
 	{

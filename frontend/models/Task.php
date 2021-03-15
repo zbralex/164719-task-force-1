@@ -177,11 +177,13 @@ class Task extends ActiveRecord
 		return $this->hasMany(Response::className(), ['task_id' => 'id']);
 	}
 
-    public function getUserInfo() {
+    public function getUserInfo()
+    {
     	return $this->hasOne(UserInfo::className(), ['user_id' => 'author_id']);
     }
 
-    public function getUser() {
+    public function getUser()
+    {
         return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
 }

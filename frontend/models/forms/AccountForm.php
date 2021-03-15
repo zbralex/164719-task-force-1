@@ -111,23 +111,4 @@ class AccountForm extends Model
             return false;
         }
     }
-
-//    public function uploadFiles() {
-//        $dir = Yii::getAlias('@app') . '/web/upload/' . date("Y-m-d") .'_'. date("H-m") . '/';
-//
-//        if(!is_dir($dir)) {
-//            mkdir($dir, 0777);
-//        }
-//
-//
-//        if ($this->validate()) {
-//            foreach ($this->file as $file) {
-//                $file->saveAs( $dir . $file->baseName . '.' . $file->extension);
-//            }
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
 }
