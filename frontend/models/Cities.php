@@ -44,8 +44,4 @@ class Cities extends ActiveRecord
             'longitude' => 'Longitude',
         ];
     }
-//	public function getTasks()
-//	{
-//		return $this->hasMany(Task::className(), ['city_id' => 'id']);
-//	}
 }
