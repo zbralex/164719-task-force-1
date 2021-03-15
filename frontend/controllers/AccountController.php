@@ -19,7 +19,7 @@ use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
 use taskForce\classes\uploader\Uploader;
 
-class AccountController extends \yii\web\Controller
+class AccountController extends SecuredController
 {
     public $enableCsrfValidation = false;
 
