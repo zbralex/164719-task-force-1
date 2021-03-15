@@ -47,14 +47,8 @@ class UsersController extends SecuredController
 
 	public function actionView($id)
 	{
-        function getFullYears($birthdayDate) {
-            $datetime = new DateTime($birthdayDate);
-            $interval = $datetime->diff(new DateTime(date("Y-m-d")));
-            return $interval->format("%Y");
-        }
-
 		$detail = UserInfo::find()->where(['user_id'=>$id])->one();
-        $dateOfBirth = getFullYears($detail->date_birth);
+        $dateOfBirth = $this->getFullYears($detail->date_birth);
 		if (empty($detail)) {
 			throw new NotFoundHttpException("Пользователь под номером $id не найден");
 		}
@@ -63,4 +57,11 @@ class UsersController extends SecuredController
             'dateOfBirth' => $dateOfBirth
 		]);
 	}
+    // выносим в приватный метод, тк глобальный может выдать ошибку
+    private function getFullYears($birthdayDate)
+    {
+        $datetime = new DateTime($birthdayDate);
+        $interval = $datetime->diff(new DateTime(date("Y-m-d")));
+        return $interval->format("%Y");
+    }
 }
