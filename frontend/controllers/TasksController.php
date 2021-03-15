@@ -122,7 +122,7 @@ class TasksController extends SecuredController
 				$response->task_id = $detail->id;
 				$response->status = 'new';
 
-				$response->save(false);
+				$response->save();
 				return $this->refresh();
 			}
 
@@ -132,7 +132,7 @@ class TasksController extends SecuredController
 				$response->user_id = Yii::$app->user->id;
 				$response->task_id = $detail->id;
 
-				$response->save(false);
+				$response->save();
 				return $this->refresh();
 			}
 
@@ -145,8 +145,8 @@ class TasksController extends SecuredController
 				$response->rating = $_POST['rating'];
 				$response->comment = $formDone['comment'];
 
-				$response->save(false);
-				$task->save(false);
+				$response->save();
+				$task->save();
 				return $this->refresh();
 
 			}
@@ -183,7 +183,7 @@ class TasksController extends SecuredController
 			}
 
 			$response->status = 'cancelled';
-			$response->save(false);
+			$response->save();
 			return $this->redirect(['../task/view/' . $id]);
 		}
 	}
@@ -200,7 +200,7 @@ class TasksController extends SecuredController
 			$executor_id = Yii::$app->request->post('executor');
 			$detail->status = 'progress';
 			$detail->executor_id = $executor_id;
-			$detail->save(false);
+			$detail->save();
 			return $this->redirect(['../task/view/' . $id]);
 		}
 	}

@@ -60,9 +60,9 @@ class MessagesController extends ActiveController
             $notification->icon = 'message';
             $notification->description = 'Новое сообщение в чате';
             $notification->task_id = $message_body['task_id'];
-            $notification->save(false);
+            $notification->save();
 
-            $message->save(false);
+            $message->save();
             Yii::$app->getResponse()->setStatusCode(201);
             return $message;
         }

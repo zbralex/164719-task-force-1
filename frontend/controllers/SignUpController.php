@@ -37,15 +37,15 @@ class SignupController extends Controller
 
             if ($model->validate()) {
                 $model->setPassword($model->password);
-                $model->save(false);
+                $model->save();
 
 
                 $userInfo->role_id = 1;
                 $userInfo->user_id = $model->id;
                 $userInfo->address = $model->city_id;
-                $userInfo->save(false);
+                $userInfo->save();
                 $siteSettings->user_id = $model->id;
-                $siteSettings->save(false);
+                $siteSettings->save();
 
                 return $this->goHome();
             }

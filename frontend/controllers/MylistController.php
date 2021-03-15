@@ -86,12 +86,12 @@ class MylistController extends Controller {
 
             if ($model->validate()) {
                 $model->setPassword($model->password);
-                $model->save(false);
+                $model->save();
 
 
                 $userInfo->role_id = 1;
                 $userInfo->user_id = $model->id;
-                $userInfo->save(false);
+                $userInfo->save();
 
                 return $this->goHome();
             }

@@ -29,7 +29,7 @@ abstract class Uploader
             $portfolioPhoto->url = '/upload/' . date("Y-m-d") . '_' . date("H-m") . '/' . $file->baseName . '.' . $file->extension;
             $portfolioPhoto->title = $file->baseName;
             $portfolioPhoto->description = $file->baseName;
-            $portfolioPhoto->save(false);
+            $portfolioPhoto->save();
         }
     }
 }

@@ -25,7 +25,7 @@ abstract class CreateTaskService
 
 	    $task->address_description = $model->location;
 	    $task->geocode = $model->hiddenLocation;
-        $task->save(false);
+        $task->save();
 
         $paths = [];
         $names = [];
@@ -41,7 +41,7 @@ abstract class CreateTaskService
                 $attachment->task_id = $task->id;
                 $attachment->name = $names[$key];
                 $attachment->url = $item;
-                $attachment->save(false);
+                $attachment->save();
             }
         }
     }

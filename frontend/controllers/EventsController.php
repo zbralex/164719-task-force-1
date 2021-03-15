@@ -13,7 +13,7 @@ class EventsController extends Controller {
 
         foreach ($notifications as $notification) {
             $notification->is_view = 1;
-            $notification->save(false);
+            $notification->save();
         }
     }
 }

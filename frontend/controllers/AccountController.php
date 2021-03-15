@@ -56,7 +56,7 @@ class AccountController extends \yii\web\Controller
                     $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->re_password);
                 }
 
-                $user->save(false);
+                $user->save();
 
 
                 $userInfo->user_id = Yii::$app->user->identity->getId();
@@ -75,7 +75,7 @@ class AccountController extends \yii\web\Controller
                     $userInfo->user_pic = $path;
                 }
 
-                $userInfo->save(false);
+                $userInfo->save();
 
 
                 if (isset($model->user_category)) {
@@ -91,7 +91,7 @@ class AccountController extends \yii\web\Controller
                             $userCategories = new UserCategory();
                             $userCategories->user_id = Yii::$app->user->identity->getId();
                             $userCategories->category_id = intval($item);
-                            $userCategories->save(false);
+                            $userCategories->save();
                         }
                     }
 
@@ -104,7 +104,7 @@ class AccountController extends \yii\web\Controller
                 $siteSettings->new_review = $model->show_new_review;
                 $siteSettings->show_contacts_client = $model->show_my_contacts_customer;
                 $siteSettings->show_profile = $model->hide_account;
-                $siteSettings->save(false);
+                $siteSettings->save();
             }
 
 
