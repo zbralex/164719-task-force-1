@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View
  * @var array $cities
+ * @var array $model
  */
 
 
@@ -8,6 +9,7 @@ use frontend\models\Cities;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+$this->title = 'Регистрация аккаунта';
 ?>
 
 <main class="page-main">
@@ -82,7 +84,7 @@ use yii\widgets\ActiveForm;
 
                 ?>
 
-                <?= Html::submitButton('Cоздать аккаунт', [
+                <?= Html::submitButton('Создать аккаунт', [
                     'class' => 'button button__registration'
                 ]) ?>
                 <?php ActiveForm::end(); ?>

@@ -2,19 +2,27 @@
 
 namespace frontend\controllers;
 
+use DateTime;
 use frontend\models\forms\UserForm;
 use frontend\models\UserInfo;
 use taskForce\services\FilterUserService;
 use Yii;
+use yii\data\Pagination;
 use yii\web\NotFoundHttpException;
 
 class UsersController extends SecuredController
 {
 	public function actionIndex()
 	{
-		$users = UserInfo::find()
-			->with('userCategories.category')
-			->all();
+		$query = UserInfo::find()
+			->with('userCategories.category');
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->defaultPageSize = 10;
+
+        $users = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
 
 		$model = new UserForm();
 
@@ -32,18 +40,28 @@ class UsersController extends SecuredController
 
 		return $this->render('index', [
 			'users' => $users,
-			'model' => $model
+			'model' => $model,
+            'pages' => $pages
 		]);
 	}
 
 	public function actionView($id)
 	{
-		$detail = UserInfo::findOne($id);
+		$detail = UserInfo::find()->where(['user_id'=>$id])->one();
+        $dateOfBirth = $this->getFullYears($detail->date_birth);
 		if (empty($detail)) {
 			throw new NotFoundHttpException("Пользователь под номером $id не найден");
 		}
 		return $this->render('view', [
-			'detail' => $detail
+			'detail' => $detail,
+            'dateOfBirth' => $dateOfBirth
 		]);
 	}
+    // выносим в приватный метод, тк глобальный может выдать ошибку
+    private function getFullYears($birthdayDate)
+    {
+        $datetime = new DateTime($birthdayDate);
+        $interval = $datetime->diff(new DateTime(date("Y-m-d")));
+        return $interval->format("%Y");
+    }
 }

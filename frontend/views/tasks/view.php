@@ -22,6 +22,7 @@ use yii\widgets\ActiveForm;
 
 TaskActionsAsset::register($this);
 YandexAPIKey::register($this);
+$this->title = 'Задание';
 ?>
 
 <main class="page-main">
@@ -36,9 +37,9 @@ YandexAPIKey::register($this);
                                     <a href="#" class="link-regular"><?= $detail->category->name ?></a>
                                    <?= Yii::$app->formatter->asRelativeTime(strtotime($detail->created_at)) ?></span>
 						</div>
-						<b class="new-task__price new-task__price--clean content-view-price"><?= $detail->price; ?><b>
+						<b class="new-task__price new-task__price--<?= $detail->category->icon?> content-view-price"><?= $detail->price; ?><b>
 								₽</b></b>
-						<div class="new-task__icon new-task__icon--clean content-view-icon"></div>
+						<div class="new-task__icon new-task__icon--<?= $detail->category->icon?> content-view-icon"></div>
 					</div>
 					<div class="content-view__description">
 						<h3 class="content-view__h3">Общее описание</h3>
@@ -83,14 +84,14 @@ YandexAPIKey::register($this);
 											            iconContent: "",
 											            hintContent: "Перетащите метку и кликните, чтобы узнать адрес"
 											        }, {
-											 
+
 											            preset: "islands#blueStretchyIcon",
 											            // Заставляем балун открываться даже если в нем нет содержимого.
 											            openEmptyBalloon: true
 											        });
-											
-								
-											    	
+
+
+
 											    	var cityContent = document.querySelector(".address__town");
 											            ymaps.geocode(placemark.geometry.getCoordinates(), {
 											                results: 1
@@ -99,7 +100,7 @@ YandexAPIKey::register($this);
 											            		//показывает данные в панели карты
 											                var newContent = res.geoObjects.get(0) ?
 											                        res.geoObjects.get(0).properties.get("name") : "Не удалось определить адрес.";
-											
+
 											                console.log(res.geoObjects.get(0).properties.get("name"),
 											                res.geoObjects.get(0).properties.get("description"))
 											                if ( res.geoObjects.get(0)) {
@@ -108,11 +109,11 @@ YandexAPIKey::register($this);
 											                } else {
 											                	cityContent.innerText = "Адрес не указан";
 											                }
-											               
+
 											                placemark.properties.set("balloonContent", newContent);
 											            });
-											  
-											
+
+
 											    myMap.geoObjects.add(placemark);
 											}
 								</script>';
@@ -136,7 +137,7 @@ YandexAPIKey::register($this);
 
 					$task = new Task($detail->status);
 
-					foreach ($task->getAvailableActions($detail->author->role_id, $detail->author_id, Yii::$app->user->id, $resp) as $item) {
+					foreach ($task->getAvailableActions($detail->role->role_id, $detail->author_id, Yii::$app->user->id, $resp) as $item) {
 						echo Html::button($item->actionName, [
 							'class' => 'button button__big-color ' . $item->class . '-button open-modal',
 							'data-for' => $item->innerName . '-form'
@@ -150,18 +151,14 @@ YandexAPIKey::register($this);
 					<h2>Отклики <span>(<?= count($detail->response) ?>)</span></h2>
 					<div class="content-view__feedback-wrapper">
 						<div class="content-view__feedback-card">
-							<?php foreach ($detail->responses as $item): ?>
+							<?php foreach ($detail->response as $item): ?>
 								<div class="feedback-card__top">
-									<a href="#"><img src="/img/man-blond.jpg" width="55" height="55"></a>
+									<a href="#"><img src="<?= $item->userInfo->user_pic?>" width="55" height="55"></a>
 									<div class="feedback-card__top--name">
 										<p class="link-name">
-											<a href="#" class="link-regular">
+											<a href="<?= Url::to('/user/view/' . $item->userInfo->id)?>" class="link-regular">
 												<?php
-												if (isset($item->userInfo)) {
-													echo Html::encode($item->userInfo->name) . ' ' . Html::encode($item->userInfo->surname);
-												} else {
 													echo Html::encode($item->user->name);
-												}
 												?>
 											</a></p>
 										<span></span><span></span><span></span><span></span><span
@@ -188,7 +185,7 @@ YandexAPIKey::register($this);
 								<div class="feedback-card__actions">
 
 									<?php
-									foreach ($task->getAvailableActionsClient($detail->author->role_id) as $action) {
+									foreach ($task->getAvailableActionsClient($detail->role->role_id) as $action) {
 
 										echo Html::a($action->actionName, '/task/' . $action->innerName . '/' . $detail->id, [
 											'class' => 'button__small-color ' . $action->class . '-button button',
@@ -214,19 +211,22 @@ YandexAPIKey::register($this);
 				<div class="profile-mini__wrapper">
 					<h3>Заказчик</h3>
 					<div class="profile-mini__top">
-						<img src="/img/man-brune.jpg" width="62" height="62" alt="Аватар заказчика">
+						<img src="<?php
+                        if ($detail->userInfo->user_pic) {
+                            echo $detail->userInfo->user_pic;
+                        } else {
+						    echo 'https://via.placeholder.com/150/';
+                        }?>" width="62" height="62" alt="Аватар заказчика">
 						<div class="profile-mini__name five-stars__rate">
-							<p><?php if ($detail->author) {
-									echo $detail->author->name . ' ' . $detail->author->surname;
-								} else {
-									echo Yii::$app->user->identity->name;
+							<p><?php if ($detail->role) {
+									echo  Html::encode($detail->user->name);
 								} ?></p>
 						</div>
 					</div>
 					<p class="info-customer"><span><?= $count_tasks; ?> заданий</span>
 						<span class="last-">2 года на сайте</span></p>
-					<?php if ($detail->author): ?>
-						<a href="<?= Url::to(['user/view/' . $detail->author->id]); ?>" class="link-regular">Смотреть
+					<?php if ($detail->role): ?>
+						<a href="<?= Url::to(['user/view/' . $detail->role->id]); ?>" class="link-regular">Смотреть
 							профиль</a>
 					<?php endif; ?>
 				</div>
@@ -282,10 +282,10 @@ YandexAPIKey::register($this);
 				[
 					'item' => function ($index, $label, $name) {
 						$class = ['yes', 'difficult'];
-						return "<input class=\"visually-hidden completion-input completion-input--{$class[$index]}\" 
-							id='{$index}' 
-							type='radio' 
-							name='{$name}' 
+						return "<input class=\"visually-hidden completion-input completion-input--{$class[$index]}\"
+							id='{$index}'
+							type='radio'
+							name='{$name}'
 							value='{$index}' >
 							<label class=\"completion-label completion-label--{$class[$index]}\" for='{$index}'>{$label}</label>";
 					}

@@ -15,11 +15,14 @@ use yii\db\ActiveRecord;
  * @property int $city_id
  * @property string|null $edited_at
  * @property string $date_birth
+ * @property string $user_pic
  * @property int $role_id
  * @property float|null $rating
  * @property string $phone
  * @property string $telegram
  * @property string $skype
+ * @property string $about
+ * @property string $address
  *
  * @property UserCategory[] $userCategories
  * @property User $user
@@ -47,8 +50,8 @@ class UserInfo extends ActiveRecord
 			[['rating'], 'number'],
 			[['name', 'surname', 'telegram', 'skype'], 'string', 'max' => 255],
 			[['phone'], 'string', 'max' => 11],
-			[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-			[['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::className(), 'targetAttribute' => ['city_id' => 'id']],
+			[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+			[['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::class, 'targetAttribute' => ['city_id' => 'id']],
 		];
 	}
 
@@ -80,7 +83,7 @@ class UserInfo extends ActiveRecord
 	 */
 	public function getUserCategories()
 	{
-		return $this->hasMany(UserCategory::className(), ['user_id' => 'user_id']);
+		return $this->hasMany(UserCategory::class, ['user_id' => 'user_id']);
 	}
 
 	/**
@@ -90,22 +93,22 @@ class UserInfo extends ActiveRecord
 	 */
 	public function getUser()
 	{
-		return $this->hasOne(User::className(), ['id' => 'user_id']);
+		return $this->hasOne(User::class, ['id' => 'user_id']);
 	}
 
 	public function getTasks()
 	{
-		return $this->hasMany(Task::className(), ['executor_id' => 'user_id']);
+		return $this->hasMany(Task::class, ['executor_id' => 'user_id']);
 	}
 
 	public function getReview()
 	{
-		return $this->hasMany(Review::className(), ['user_id' => 'user_id']);
+		return $this->hasMany(Review::class, ['author_id' => 'user_id']);
 	}
 
 	public function getFavorites()
 	{
-		return $this->hasMany(FavoriteList::className(), ['user_who_select_id' => 'user_id']);
+		return $this->hasMany(FavoriteList::class, ['user_who_select_id' => 'user_id']);
 	}
 
 	/**
@@ -113,8 +116,17 @@ class UserInfo extends ActiveRecord
 	 *
 	 * @return \yii\db\ActiveQuery
 	 */
-	public function getCity()
+	public function getCities()
 	{
-		return $this->hasOne(Cities::className(), ['id' => 'city_id']);
+		return $this->hasOne(Cities::class, ['id' => 'city_id']);
 	}
+    public function getPortfolioPhoto()
+    {
+        return $this->hasMany(PortfolioPhoto::class, ['user_id' => 'user_id']);
+    }
+    public function getSiteSettings()
+    {
+        return $this->hasOne(SiteSettings::class, ['user_id' => 'user_id']);
+    }
+
 }

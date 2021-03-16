@@ -3,12 +3,16 @@
  * @var yii\web\View $this
  * @var array $tasks
  * @var array $categories
+ * @var array $pages
  */
 
 use frontend\models\Categories;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use yii\widgets\LinkPager;
+
+$this->title = 'Новые задания';
 
 ?>
 <main class="page-main">
@@ -22,7 +26,7 @@ use yii\widgets\ActiveForm;
 						<div class="new-task__title">
 							<a href="<?= Url::to(['task/view/' . $task->id]); ?>" class="link-regular">
 								<h2><?= Html::encode($task->name) ?></h2></a>
-							<a class="new-task__type link-regular" href="#"><p><?= Html::encode($task->category->name) ?></p></a>
+							<a class="new-task__type link-regular" href="#"><p><?= $task->category->name ?></p></a>
 						</div>
 						<div class="new-task__icon new-task__icon--<?= $task->category->icon ?>"></div>
 						<p class="new-task_description">
@@ -30,7 +34,7 @@ use yii\widgets\ActiveForm;
 						</p>
 						<b class="new-task__price new-task__price--<?= $task->category->icon ?>"><?= $task->price ?><b>
 								₽</b></b>
-						<p class="new-task__place"><?= !isset($task->cities->city) ? 'Город не установлен' : $task->cities->city ?> </p>
+						<p class="new-task__place"><?= !isset($task->address_description) ? 'Город не установлен' : $task->address_description ?> </p>
 						<span
 							class="new-task__time"><?= Yii::$app->formatter->asRelativeTime(strtotime($task->created_at)) ?></span>
 					</div>
@@ -38,16 +42,23 @@ use yii\widgets\ActiveForm;
 
 
 			</div>
-			<div class="new-task__pagination">
-				<ul class="new-task__pagination-list">
-					<li class="pagination__item"><a href="#"></a></li>
-					<li class="pagination__item pagination__item--current">
-						<a>1</a></li>
-					<li class="pagination__item"><a href="#">2</a></li>
-					<li class="pagination__item"><a href="#">3</a></li>
-					<li class="pagination__item"><a href="#"></a></li>
-				</ul>
-			</div>
+
+            <div class="new-task__pagination">
+                <?php
+                echo LinkPager::widget([
+                    'pagination' => $pages,
+                    'options' => [
+                        'class' => 'new-task__pagination-list',
+                    ],
+                    'linkContainerOptions' => [
+                        'class' => 'pagination__item',
+                    ],
+                    'activePageCssClass' => 'pagination__item--current',
+                    'nextPageLabel' => '&nbsp;',
+                    'prevPageLabel' => '&nbsp;'
+                ]);
+                ?>
+            </div>
 		</section>
 		<section class="search-task">
 			<div class="search-task__wrapper">
@@ -72,21 +83,30 @@ use yii\widgets\ActiveForm;
 							[
 								'item' => function ($index, $label, $name, $checked, $value)  {
 									$checked = $checked ? 'checked':'';
-									return "<input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
-										<label for='{$index}'>{$label}</label>";
+									return "
+										<label class='checkbox__legend' for='{$index}'><input class=\"visually-hidden checkbox__input\" id='{$index}' type='checkbox' name='{$name}' value='{$value}' $checked >
+										<span>{$label}</span>
+										</label>";
 								}])->label(false) ?>
 
 				</fieldset>
 				<fieldset class="search-task__categories">
 					<legend>Дополнительно</legend>
-					<?= $form->field($model, 'noResponse', [
-						'template' => '{input}{label}',
+					<?= $form->field($model, 'noResponse',
+                        [
+						'template' => '<label class="checkbox__legend">
+                                    {input}
+                  <span>Без откликов</span>
+                </label>',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],
 						false); ?>
 					<?= $form->field($model, 'remote', [
-						'template' => '{input}{label}',
+						'template' => '<label class="checkbox__legend">
+                                    {input}
+                  <span>Удаленная работа</span>
+                </label>',
 					])->checkbox([
 						'class' => 'visually-hidden checkbox__input',
 					],

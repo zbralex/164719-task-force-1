@@ -8,9 +8,11 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use Yii;
 
-class LandingController extends Controller {
+class LandingController extends Controller
+{
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
 
         if(!Yii::$app->user->isGuest) {
             return $this->redirect('/tasks');

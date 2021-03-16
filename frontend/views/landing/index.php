@@ -8,6 +8,7 @@ use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 AppAsset::register($this);
+$this->title = 'TaskForce | Работа там, где ты!';
 ?>
 <div class="table-layout">
 	<header class=" page-header--index">
@@ -249,7 +250,7 @@ AppAsset::register($this);
 			<div class="page-footer__copyright">
 				<a href="https://htmlacademy.ru">
 					<img class="copyright-logo"
-						src="./img/academy-logo.png"
+						src="../img/academy-logo.png"
 						width="185" height="63"
 						alt="Логотип HTML Academy">
 				</a>

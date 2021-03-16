@@ -3,6 +3,7 @@
 namespace app\modules\api\v1\messages\controllers;
 
 use frontend\models\Message;
+use frontend\models\Notification;
 use frontend\models\Task;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -23,7 +24,6 @@ class MessagesController extends ActiveController
         $actions = parent::actions();
         unset($actions['index']);
 
-
         return $actions;
     }
 
@@ -42,14 +42,27 @@ class MessagesController extends ActiveController
 
 
         if ($request->isPost) {
-            $message = new Message();
 
+
+            $message = new Message();
             $message->user_id = Yii::$app->user->getId();
             $message_body = json_decode(Yii::$app->getRequest()->getRawBody(), true);
             $message->task_id = $message_body['task_id'];
             $message->text = $message_body['message'];
 
-            $message->save(false);
+
+            // сохраняем уведомление о новом сообщении
+            $notification = new Notification();
+            $notification->user_id = Yii::$app->user->getId();
+            $task = Task::findOne($message_body['task_id']);
+            $notification->title = $task->name;
+            $notification->is_view = 0;
+            $notification->icon = 'message';
+            $notification->description = 'Новое сообщение в чате';
+            $notification->task_id = $message_body['task_id'];
+            $notification->save();
+
+            $message->save();
             Yii::$app->getResponse()->setStatusCode(201);
             return $message;
         }

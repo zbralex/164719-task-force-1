@@ -9,25 +9,46 @@ use frontend\models\forms\taskActions\doneForm;
 use frontend\models\forms\taskActions\refuseForm;
 use frontend\models\forms\taskActions\responseForm;
 use frontend\models\forms\TaskForm;
+use frontend\models\PortfolioPhoto;
 use frontend\models\Response;
 use frontend\models\Task;
 use frontend\models\User;
 use frontend\models\UserCategory;
+
+use taskForce\classes\uploader\Uploader;
 use taskForce\services\CreateTaskService;
 use taskForce\services\FilterTaskService;
 use Yii;
+use yii\data\Pagination;
+use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 
 class TasksController extends SecuredController
 {
+    public $enableCsrfValidation = false;
+
+    public function actionUploadFile()
+    {
+        $fileName = 'Attach';
+        Uploader::uploadFiles($fileName);
+    }
 	public function actionIndex()
 	{
+
 		$model = new TaskForm();
-		$tasks = Task::find()
-			->with('category', 'cities')
+        $query = Task::find()
+			->with('category', 'userInfo')
 			->where(['status' => \taskForce\classes\Task::STATUS_NEW])
-			->orderBy('created_at DESC')->all();
+			->orderBy('created_at DESC');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->defaultPageSize = 5;
+        $tasks = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
 
 		if (Yii::$app->request->getIsPost()) {
 
@@ -38,18 +59,28 @@ class TasksController extends SecuredController
 			$request = Yii::$app->request;
 			$formContent = $request->post('TaskForm');
 
-			$tasks = FilterTaskService::taskFilter($formContent)->all();
+			$query = FilterTaskService::taskFilter($formContent);
+
+            $countQuery = clone $query;
+            $pages = new Pagination(['totalCount' => $countQuery->count()]);
+            $pages->defaultPageSize = 5;
+            $tasks = $query->offset($pages->offset)
+                ->limit($pages->limit)
+                ->all();
 		}
 		return $this->render('index', [
 			'tasks' => $tasks,
-			'model' => $model
+			'model' => $model,
+            'pages' => $pages
 		]);
 	}
 
 	public function actionView($id = null)
 	{
 
-		$detail = Task::findOne($id);
+		$detail = Task::find()
+            ->where(['id'=>$id])->one();
+
 		$resp = Response::find()
 			->where(['user_id' => Yii::$app->user->id, 'task_id' => $detail->id, 'status' => 'new'])
 			->count();
@@ -61,7 +92,7 @@ class TasksController extends SecuredController
 			->count('author_id');
 
 
-		$user_created_at = User::findOne($detail->author_id);
+
 
 		$actionResponseForm = new responseForm();
 		$actionRefuseForm = new refuseForm();
@@ -80,6 +111,7 @@ class TasksController extends SecuredController
 			$formDone = $request->post('doneForm');
 			$formRefuse = $request->post('refuseForm');
 			$response = new Response();
+			$task = Task::findOne($id);
 
 			if ($formResponse) {
 
@@ -90,7 +122,7 @@ class TasksController extends SecuredController
 				$response->task_id = $detail->id;
 				$response->status = 'new';
 
-				$response->save(false);
+				$response->save();
 				return $this->refresh();
 			}
 
@@ -100,11 +132,12 @@ class TasksController extends SecuredController
 				$response->user_id = Yii::$app->user->id;
 				$response->task_id = $detail->id;
 
-				$response->save(false);
+				$response->save();
 				return $this->refresh();
 			}
 
 			if ($formDone) {
+                $task->status = $formDone['isDone'] == 0 ? 'completed' : 'failed';
 				$response->user_id = Yii::$app->user->id;
 				$response->task_id = $detail->id;
 
@@ -112,7 +145,8 @@ class TasksController extends SecuredController
 				$response->rating = $_POST['rating'];
 				$response->comment = $formDone['comment'];
 
-				$response->save(false);
+				$response->save();
+				$task->save();
 				return $this->refresh();
 
 			}
@@ -127,7 +161,6 @@ class TasksController extends SecuredController
 		return $this->render('view', [
 			'detail' => $detail,
 			'count_tasks' => $count_tasks,
-			'user' => $user_created_at,
 			'actionResponseForm' => $actionResponseForm,
 			'actionRefuseForm' => $actionRefuseForm,
 			'actionDoneForm' => $actionDoneForm,
@@ -150,7 +183,7 @@ class TasksController extends SecuredController
 			}
 
 			$response->status = 'cancelled';
-			$response->save(false);
+			$response->save();
 			return $this->redirect(['../task/view/' . $id]);
 		}
 	}
@@ -167,10 +200,12 @@ class TasksController extends SecuredController
 			$executor_id = Yii::$app->request->post('executor');
 			$detail->status = 'progress';
 			$detail->executor_id = $executor_id;
-			$detail->save(false);
+			$detail->save();
 			return $this->redirect(['../task/view/' . $id]);
 		}
 	}
+
+
 
 	public function actionCreate()
 	{
@@ -208,5 +243,6 @@ class TasksController extends SecuredController
 			'errors' => $errors
 		]);
 	}
+
 
 }

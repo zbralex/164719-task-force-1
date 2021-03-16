@@ -60,9 +60,15 @@ new autoComplete({
 	},
 	onSelection: feedback => {             // Action script onSelection event | (Optional)
 		let inputValue = document.querySelector("#autoComplete");
+
 		inputValue.value = feedback.selection.value.description + ', ' + feedback.selection.value.name;
+
+
 		let hiddenInputLocation = document.querySelector('#hiddenLocation');
-		hiddenInputLocation.value = feedback.selection.value.Point.pos;
-		console.log(inputValue.value);
+    if (hiddenInputLocation) {
+      hiddenInputLocation.value = feedback.selection.value.Point.pos;
+      console.log(inputValue.value);
+    }
+
 	}
 });
